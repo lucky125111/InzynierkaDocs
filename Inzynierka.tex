@@ -1,0 +1,1220 @@
+\documentclass[a4paper,11pt,twoside]{report}
+
+
+% -------------- Kodowanie znaków, język polski -------------
+
+\usepackage[utf8]{inputenc}
+\usepackage[MeX]{polski}
+%\usepackage[T1]{fontenc}
+\usepackage[english, polish]{babel}
+
+
+% ----------------- Przydatne pakiety ----------------------
+\usepackage{amsfonts}
+\usepackage{mathrsfs} 
+\usepackage{amsmath,amsthm,latexsym,xpatch}
+\usepackage[dvips]{graphicx,color}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{verbatim}
+\usepackage{array}
+\usepackage{pstricks}
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[none]{hyphenat}
+\usepackage{float}
+\usepackage{flafter}
+\usepackage{pdfpages}
+\usepackage{caption} \captionsetup[table]{singlelinecheck=false}		
+\usepackage{listings,xcolor}
+
+% ---------------- Marginesy, akapity, interlinia ------------------
+
+\usepackage[inner=20mm, outer=20mm, bindingoffset=10mm, top=25mm, bottom=25mm]{geometry}
+
+
+\linespread{1.15}
+%\allowdisplaybreaks
+\usepackage{indentfirst} % opcjonalnie; pierwszy akapit z wcięciem
+\setlength{\parindent}{5mm}
+
+\hyphenation{Syl-ves-tra}
+\hyphenation{Syl-ves-ter-a}
+
+%--------------------------- ŻYWA PAGINA ------------------------
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+% numery stron: lewa do lewego, prawa do prawego 
+\fancyfoot[LE,RO]{\thepage} 
+% prawa pagina: zawartość \rightmark do lewego, wewnętrznego (marginesu) 
+\fancyhead[LO]{\sc \nouppercase{\rightmark}}
+% lewa pagina: zawartość \leftmark do prawego, wewnętrznego (marginesu) 
+\fancyhead[RE]{\sc \leftmark}
+
+\renewcommand{\chaptermark}[1]{
+\markboth{\thechapter.\ #1}{}}
+
+% kreski oddzielające paginy (górną i dolną):
+\renewcommand{\headrulewidth}{0 pt} % 0 - nie ma, 0.5 - jest linia
+
+
+\fancypagestyle{plain}{% to definiuje wygląd pierwszej strony nowego rozdziału - obecnie tylko numeracja
+  \fancyhf{}%
+  \fancyfoot[LE,RO]{\thepage}%
+  
+  \renewcommand{\headrulewidth}{0pt}% Line at the header invisible
+  \renewcommand{\footrulewidth}{0.0pt}
+}
+
+
+
+% ---------------- Nagłówki rozdziałów ---------------------
+
+\usepackage{titlesec}
+\titleformat{\chapter}%[display]
+  {\normalfont\Large \bfseries}
+  {\thechapter.}{1ex}{\Large}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries}
+  {\thesection.}{1ex}{}
+\titlespacing{\section}{0pt}{30pt}{20pt} 
+%\titlespacing{\co}{akapit}{ile przed}{ile po} 
+    
+\titleformat{\subsection}
+  {\normalfont \bfseries}
+  {\thesubsection.}{1ex}{}
+
+
+% ----------------------- Spis treści ---------------------------
+\def\cleardoublepage{\clearpage\if@twoside
+\ifodd\c@page\else\hbox{}\thispagestyle{empty}\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
+
+% kropki dla chapterów
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\l@chapter}
+  {\hfil}
+  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill}
+  {}{}
+\makeatother
+
+\usepackage{titletoc}
+\makeatletter
+\titlecontents{chapter}% <section-type>
+  [0pt]% <left>
+  {}% <above-code>
+  {\bfseries \thecontentslabel.\quad}% <numbered-entry-format>
+  {\bfseries}% <numberless-entry-format>
+  {\bfseries\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill\contentspage}% <filler-page-format>
+
+\titlecontents{section}
+  [1em]
+  {}
+  {\thecontentslabel.\quad}
+  {}
+  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill\contentspage}
+
+\titlecontents{subsection}
+  [2em]
+  {}
+  {\thecontentslabel.\quad}
+  {}
+  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill\contentspage}
+\makeatother
+
+
+
+% ---------------------- Spisy tabel i obrazków ----------------------
+
+\renewcommand*{\thetable}{\arabic{chapter}.\arabic{table}}
+\renewcommand*{\thefigure}{\arabic{chapter}.\arabic{figure}}
+%\let\c@table\c@figure % jeśli włączone, numeruje tabele i obrazki razem
+
+
+% --------------------- Definicje, twierdzenia etc. ---------------
+
+
+\makeatletter
+\newtheoremstyle{definition}%    % Name
+{3ex}%                          % Space above
+{3ex}%                          % Space below
+{\upshape}%                      % Body font
+{}%                              % Indent amount
+{\bfseries}%                     % Theorem head font
+{.}%                             % Punctuation after theorem head
+{.5em}%                            % Space after theorem head, ' ', or \newline
+{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%  % Theorem head spec (can be left empty, meaning `normal')
+\makeatother
+
+% ----------------------------- POLSKI --------------------------------
+\theoremstyle{definition}
+\newtheorem{theorem}{Twierdzenie}[chapter]
+\newtheorem{lemma}[theorem]{Lemat}
+\newtheorem{example}[theorem]{Przykład}
+\newtheorem{proposition}[theorem]{Stwierdzenie}
+\newtheorem{corollary}[theorem]{Wniosek}
+\newtheorem{definition}[theorem]{Definicja}
+\newtheorem{remark}[theorem]{Uwaga}
+
+% If in English, comment this and uncomment below:
+
+% ----------------------------- ENGLISH -----------------------------
+%\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}[chapter]
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{example}[theorem]{Example}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{remark}[theorem]{Remark}
+
+
+
+% ----------------------------- Dowód -----------------------------
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]
+{\par
+  \vspace{-12pt}% remove the space after the theorem
+  \pushQED{\qed}%
+  \normalfont
+  \topsep0pt \partopsep0pt % no space before
+  \trivlist
+  \item[\hskip\labelsep
+        \sc
+    #1\@addpunct{:}]\ignorespaces
+}
+{%
+  \popQED\endtrivlist\@endpefalse
+  \addvspace{20pt} % some space after
+}
+
+\renewcommand{\qedhere}{\hfill \qedsymbol}
+\makeatother
+
+
+
+
+
+% -------------------------- POCZĄTEK --------------------------
+
+
+% --------------------- Ustawienia użytkownika ------------------
+
+\newcommand{\tytul}{Implementacja aplikacji wspomagającej diagnostykę nowotworu prostaty, wykorzystującej standard DICOM do integracji z realnym systemem szpitalnym}
+\renewcommand{\title}{Implementation of Prostate Cancer (PCa) Computer Aided Diagnosis (CAD) system using DICOM standard for integration in the hospital information system environment.}
+\renewcommand{\author}{Łukasz Berwid, Rafał Buzun,  Jakub Karolak}
+\newcommand{\album}{268740, 268744, 268758}
+\newcommand{\type}{inżyniers} % magisters, licencjac (Master or Engineer in English)
+\newcommand{\supervisor}{mgr. inż. Piotr Sobecki}
+
+\lstdefinestyle{sharpc}{language=[Sharp]C, rulecolor=\color{blue!80!black}}
+
+
+\begin{document}
+\sloppy
+
+% \selectlanguage{english} % uncomment this for English 
+
+\includepdf[pages=-]{strona-tytulowa-kilku-autorow.pdf}
+
+
+% ----------------------- Abstrakty -----------------------------
+
+%\selectlanguage{polish}
+\begin{abstract}
+
+\begin{center}
+\tytul
+\end{center}
+
+Celem pracy dyplomowej jest stworzenie narzędzia wspomagającego diagnostykę nowotworu prostaty oraz jego integracja ze szpitalną bazą danych. Proponowane narzędzie będzie umożliwiało obliczanie objętości prostaty bazując na wysegmentowanym fragmencie obrazu pochodzącego z obrazowania metodą multiparametrycznego Rezonansu Magnetycznego. Dodatkowo stworzona zostanie testowa baza badań zawierająca informacje o referencyjnych wartościach objętości gruczołu krokowego pochodzących z estymacji bazującej na obrazowaniu Ultrasonografem. Narzędzie zostanie przygotowane do wdrożenia w szpitalnym systemie informatycznym.
+
+\noindent \textbf{Słowa kluczowe:} przetwarzanie obrazu, analiza danych, bioinformatyka
+\end{abstract}
+
+\null\thispagestyle{empty}\newpage
+
+{\selectlanguage{english}
+\begin{abstract}
+
+\begin{center}
+%\title
+\end{center}
+
+The aim of the diploma thesis is to create a tool that supports the diagnostics of prostate cancer and its integration with the hospital database. The proposed tool will be able to calculate prostate volume based on the segmented image from multiparameter Magnetic Resonance imaging. In addition, a test database containing information on reference prostate volume values from the estimation based on ultrasound imaging will be created. The tool will be prepared for implementation in the hospital IT system.
+
+\noindent \textbf{Keywords:} image processing, data analysis, bioinformatics
+\end{abstract}}
+
+\null\thispagestyle{empty}\newpage
+
+\null \hfill Warszawa, dnia ..................\\
+
+\par\vspace{5cm}
+
+\begin{center}
+Oświadczenie % Declaration - for English
+\end{center}
+
+\indent Oświadczam, że moją część pracy \type kiej (zgodnie z podziałem zadań opisanym w~pkt. ...) pod tytułem; ,,\tytul '', której promotorem jest \supervisor \ wykonałem samodzielnie, co poświadczam własnoręcznym podpisem.
+\vspace{2cm}
+
+
+\begin{flushright}
+  \begin{minipage}{50mm}
+    \begin{center}
+      ..............................................
+
+    \end{center}
+  \end{minipage}
+\end{flushright}
+
+\thispagestyle{empty}
+\newpage
+
+\null\thispagestyle{empty}\newpage
+% ------------------- 4. Spis treści ---------------------
+% \selectlanguage{english} - for English
+
+\thispagestyle{empty}
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+% -------------- 5. ZASADNICZA CZĘŚĆ PRACY --------------------
+\setcounter{page}{11}
+\pagestyle{fancy}
+
+% -------------------- Wstęp -----------------------
+\chapter{Wstęp} % Intruduction
+
+Rak prostaty to drugi – zaraz po raku płuc – najczęściej diagnozowany nowotwór u mężczyzn. W ciągu ostatnich lat w Polsce wzrasta zachorowalności na raka stercza, a także – choć w mniejszym stopniu – umieralność. KRN prognozuje, że w naszym kraju w 2015 r. zostanie wykrytych 14 tys. nowych przypadków raka prostaty, a 5 tys. chorych z wcześniej wykrytą chorobą umrze, na ogół po kilku latach leczenia. W 2012 r., zaledwie trzy lata temu, z powodu tego nowotworu zachorowało 11 tys. mężczyzn, a 4,1 tys. zmarło. Odwrotną tendencję obserwuje się w zachodniej Europie i Stanach Zjednoczonych, gdzie odnotowuje się spadek zachorowalności i umieralności na ten nowotwór. Wszystko dzięki zastosowaniu najnowszych metod leczenia i wczesnej diagnostyce. \cite{rynekZdrowia}
+\par
+Dlatego też, w niniejszej pracy podjęto się zbadania możliwości automatyzacji wykrywania prostaty na zdjęciach rezonansu magnetycznego, aby wspomóc pracę lekarza i ułatwić diagnostykę. Opisane poniżej algorytmy obliczania objętości gruczołu prostaty mogą być wskazówka dla lekarza podczas stawiania diagnozy. 
+\par
+System powstały jako produkt poniższej pracy dzięki zastosowaniu modularnej architektury może być dostosowany do bardziej zaawansowanych systemów szpitalnych oraz rozszerzony o bardziej zaawansowane algorytmy na przykład oparte o głębokie uczenie maszynowe.
+\par
+Za implementację oraz wdrożenie algorytmu segmentacji prostaty bazującej na danych konkursowych przy użyciu konwolucyjnych sieci neuronowych oraz moduł prezentacji aplikacji odpowiada Rafał Buzun.
+\par
+Za stworzenie, opisanie zbioru testowego, przeprowadzenie analizy statystycznej wyników badań rezonansu magnetycznego oraz rozpoznanie architektury szpitalnego systemu informatycznego i integrację z systemem PACS odpowiada Jakub Karolak.
+\par
+Za zaprojektowanie architektury oraz implementacje serwera, w tym obsługę bazy danych i przetwarzanie plików DICOM oraz implementacja wybranych metod obliczania objętości prostaty odpowiada Łukasz Berwid
+
+\section{Diagnostyka raka prostaty}
+Podstawowym objawem świadczącym o problemach z gruczołem prostaty jest ból lub pieczenie przy oddawaniu moczu lub nieregularne oddawanie moczu. Takie same objawy ma schorzenie nazywane "łagodnym rozrostem gruczołu krokowego". Mężczyźni nie zwykli bagatelizować takich problemów, więc rak prostaty w 75\% jest wykrywany w bezobjawowym stadium ograniczonym do narządu, dzięki czemu łatwo jest go wyleczyć. 
+\par
+Pierwszym z badań, które jest wykonywane w przypadku podejrzenia występowania nowotworu jest badanie poziomu PSA we krwi. PSA jest antygenem sterczowym, który jednoznacznie może określić fakt posiadania problemów z prostatą. Jeśli pacjent ma znikomą obecność antygenu we krwi, to nie może on mieć raka. Jeśli poziom PSA jest zawyżony, następują kolejne badania.
+\par
+Zazwyczaj następnym badaniem jest badanie palpacyjne per rectum. W przypadku tego badania, lekarz szuka nieprawidłowości w kształcie i twardości stercza. Niestety to badanie nie przynosi idealnych efektów, ponieważ ok. 30\% nowotworów znajduje się w rejonie prostaty nieosiągalnym przez badanie palpacyjne. 
+\par
+W przypadku podejrzeń nowotworu zazwyczaj wykonuje się dwa kolejne badania. Jest to biopsja stercza oraz badanie USG. Biopsja o wyniku pozytywnym jednoznacznie definiuje posiadanie nowotworu. Badanie USG jest mniej dokładne, zazwyczaj jest robione w celu określenia wytycznych do badania MR, czyli rezonansu magnetycznego.
+\par
+Badanie MR jest bardzo dokładne, radiolog za pomocą oprogramowania jest w stanie znaleźć nawet najmniejsze zmiany w strukturze gruczołu. Często po wynikach rezonansu zlecana jest biopsja celowana, która ma sięgnąć do już zbadanych przez rezonans rejonów prostaty. 
+Pełny zestaw badań, tj, badanie PSA, badanie palpacyjne, USG, MR oraz biopsja jest w stanie jednoznacznie postawić diagnozę.
+\par
+W obecnej chwili, w szpitalu MSWiA w Warszawie, do opisu prawdopodobieństwa istnienia nowotworu w danym miejscu prostaty jest używana skala PI-RADS v2.
+
+\subsubsection{PIRADS} 
+Ocena PI-RADS v2 opiera się na wykorzystaniu pięciopunktowej skali opracowanej w oparciu o obserwację, że istnieje zależność pomiędzy trzema badanymi obszarami: T2W, DWI oraz DCE a prawdopodobieństwem, że uwidocznione zmiany mają charakter nowotworowy.Zaszeregowanie do określonej kategorii według PI-RADS v2 powinno opierać się na wynikach badań mpMRI i nie powinno uwzględniać innych czynników, takich jak stężenie PSA, wynik badania per rectum, dane uzyskane z wywiadu lub przebytego leczenia. Przy wynikach rzędu 4-5 w skali PIRADS występuje bardzo wysokie prawdopodobieństwo posiadania istotnej klinicznie formy nowotworu. W takich przypadkach, jeśli jeszcze nie została wystawiona diagnoza, należy bezzwłocznie wykonać biopsję.
+
+\subsubsection{PSA}
+PSA czyli swoisty antygen sterczowy. Jest to związek wytwarzany w gruczole krokowym (prostacie). Obecność tego enzymu we krwi jest wykorzystywana w diagnostyce, monitorowaniu i leczeniu raka prostaty od 1986 roku. Fakt posiadania podwyższonego poziomu PSA we krwi nie jest zawsze jednoznaczny z chorobą. Badanie to daje około 25\% fałszywie dodatnich wyników. Niestety fakt nieposiadania podwyższonego PSA może być równie mylący. W 20\% przypadków to badanie daje fałszywie ujemny wynik. Standardy Europejskiego Towarzystwa Urologicznego zalecają coroczne oznaczanie PSA u mężczyzn po 50 roku życia. 
+Kompletnie zdrowy mężczyzna powinien mieć PSA na poziomie <1,5 ng/ml. Przy tak niskiej wartości zaleca się kolejny pomiar w odstępie 5 lat. 
+
+\subsubsection{PSAD}
+W celu poprawienia wykrywalności raka stercza opracowano współczynnik gęstości PSA, tzw.
+PSAD, który oblicza się dzieląc stężenia PSA w ng/ml przez objętość stercza. Ta kalkulacja powinna, teoretycznie rzecz biorąc, pomóc w ustaleniu, czy mamy do czynienia z rakiem stercza, czy też łagodnym rozrostem prostaty, podczas którego także wydziela się antygen PSA.
+
+\subsubsection{Rezonans magnetyczny}
+Rezonans magnetyczny (MRI) to metoda uzyskiwania obrazów wnętrza człowieka. Nie wykorzystująca promieniowania rentgenowskiego. Zamiast tego wykorzystuje fale o częstotliwości radiowej i intensywne pole magnetyczne do wzbudzania atomów w badanym obiekcie. Rezonans może zapewniać w czasie rzeczywistym trójwymiarowe widoki narządów, mięśni lub stawów.
+\par
+Pełna nazwa badania brzmi "Obrazowanie metodą rezonansu magnetycznego". Warto jest zaznaczyć fakt obrazowania, ponieważ istnieje jeszcze drugie zastosowanie tego aparatu, mianowicie spektroskopia, wykorzystywana w chemii i fizyce molekularnej. 
+
+\subsubsection{Badanie objętości gruczołu}
+W szpitalach używane są dwie konwencjonalne metody pomiaru objętości stercza. Obie opierają się na tych samych obliczeniach, różnią się sposobem pozyskiwania danych. Pierwszym z nich jest badanie MR, a drugim TRUS, czyli przezodbytnicze badanie USG. Kiedy lekarz wykona badanie może przeglądać jego wyniki w odpowiednim specjalistycznym programie. Lekarz ogląda gruczoł w różnych płaszczyznach, zaznaczając punkty skrajne. Po zaznaczeniu najbardziej skrajnych punktów wyliczane są trzy wymiary prostaty: szerokość, wysokość i długość. Aby uzyskać objętość prostaty należy zastosować wzór 
+
+\[V = d * h * l * 0.54\]
+gdzie
+d - szerokość
+h - wysokość
+l - długość
+Stała 0.52 jest próbą przybliżenia kształtu prostaty figurą geometryczną. Gruczoł przypomina elipsoidę, więc zastosowany został wzór na objętość elipsy
+
+\[V = pi/6 * a*b*c\]
+gdzie abc, to kolejne wymiary elipsy. 
+
+W naszych danych, wśród pacjentów, którzy przeszli zarówno badanie MR jak i badanie TRUS odchylenie standardowe różnicy objętości wynosi 20 ml. Jest to bardzo dużo, zważywszy na to, że prostata zdrowego mężczyzny powinna mieć objętość poniżej 25 ml. 
+
+\section{Architektura szpitala}
+
+Architektura szpitalna składa się z wielu komponentów w poniższej pracy musieliśmy zlokalizować komponenty, które będą niezbędne do integracji z naszym systemu. Podstawowym elementem w sieci IT szpitala jest system informacji szpitalnej (HIS), który koncentruje się głównie na potrzebach administracyjnych szpitali. W wielu wdrożeniach system HIS jest kompleksowym, zintegrowanym systemem informatycznym zaprojektowanym do zarządzania wszystkimi aspektami funkcjonowania szpitala, takimi jak zarządzają danymi demograficznymi pacjentów, ubezpieczeniem informacje, planowaniem leczenia klinicznego, działaniem laboratorium oraz zarządzaniem historią pacjenta i badaniami pacjenta
+Poniżej opiszemy najważniejsze dla nas elementy.
+
+\subsection{System archiwizacji obrazu PACS}
+PACS czyli system archiwizacji i komunikacji obrazu) to technologia obrazowania medycznego stosowana głównie w szpitalach i jednostkach medycznych do bezpiecznego przechowywania i cyfrowej transmisji obrazów elektronicznych i raportów o znaczeniu klinicznym. Korzystanie z PACS eliminuje potrzebę ręcznego przechowywania i przechowywania, wyszukiwania i wysyłania poufnych informacji, filmów i raportów. Zamiast tego dokumentacja medyczna i obrazy mogą być bezpiecznie przechowywane w zewnętrznych serwerach i bezpiecznie dostępne w zasadzie z dowolnego miejsca na świecie przy użyciu oprogramowania PACS, stacji roboczych i urządzeń mobilnych.
+\par
+PACS ma cztery główne komponenty: sprzętowe urządzenia obrazujące; bezpieczna sieć do dystrybucji i wymiany obrazów pacjentów; stacja robocza lub urządzenie mobilne do przeglądania, przetwarzania i interpretowania obrazów; i elektroniczne archiwa do przechowywania i wyszukiwania obrazów oraz powiązanej dokumentacji i raportów.
+Dostawcy PACS stosują różne składnie w DICOM, co utrudnia dane z jednego systemu do pracy w innym systemie. 
+\par
+W poniższej pracy jednym z zadań była integracja ze szpitalnym systemem PACS 
+
+\subsection{Radiologiczny System Informatyczny RIS}
+System informacji radiologicznej (RIS) to sieciowy system oprogramowania do zarządzania obrazami medycznymi i powiązanymi danymi. RIS jest szczególnie przydatny do śledzenia zleceń obrazowania radiologicznego i informacji rozliczeniowych i jest często używany w połączeniu z PACS do zarządzania archiwami obrazów i rejestrowaniem.
+
+RIS ma kilka podstawowych funkcji:
+\begin{enumerate}
+\item Zarządzanie pacjentem - RIS może śledzić cały przebieg pracy pacjenta w dziale radiologii; Dostawcy radiologii mogą dodawać zdjęcia i raporty do EHRs, gdzie mogą być pozyskane i oglądane przez upoważniony personel radiologii.
+\item Planowanie - RIS umożliwia personelowi umawianie się na wizyty zarówno w szpitalach, jak i ambulatoriach.
+\item Monitorowanie pacjenta - Korzystając z systemu RIS, dostawcy mogą śledzić historię całej radiologii pacjenta od przyjęcia do wypisu i koordynować historię z przeszłymi, obecnymi i przyszłymi spotkaniami.
+\item Raportowanie wyników - RIS może generować raporty statystyczne dla pojedynczego pacjenta, grupy pacjentów lub poszczególnych procedur.
+\item Śledzenie obrazu - Tradycyjnie, dostawcy radiologii używają RIS do śledzenia poszczególnych filmów i związanych z nimi danych. Ponieważ EHR stały się standardem w branży medycznej, a zdigitalizowane obrazy i PACS zostały powszechnie przyjęte, działy radiologii i ich systemy RIS-PACS zostały bardziej wciągnięte w kliniczny obieg pracy całego przedsiębiorstwa medycznego.
+\end{enumerate}
+
+\subsection{Format DICOM}
+
+DICOM jest standardowym protokołem do zarządzania i przesyłania obrazów medycznych i powiązanych danych i jest stosowany w większości szpitali. DICOM to międzynarodowy standard komunikacji i zarządzania obrazami i danymi medycznymi. Główną ideą jest zapewnienie przechowywania, udostępniania, współdziałania systemów używanych do produkcji, wyświetlania, wysyłania, odpytywania, przetwarzania, pobierania i drukowania obrazów medycznych, a także do zarządzania powiązanymi przepływami pracy.
+\par
+DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania obrazów medycznych, umożliwiając integrację medycznych urządzeń obrazujących wielu producentów. Dane pacjenta i powiązane obrazy są wymieniane i przechowywane w znormalizowanym formacie.
+Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi urządzeniami do przetwarzania obrazu.
+
+\section{Metody wspomagania pracy lekarza}
+W dzisiejszym świecie praca radiologa jest ściśle powiązana z pracą z oprogramowaniem szpitalnym. Radiolog odczytuje, opisuje i analizuje wyniki badania na komputerze. Jednakże wiele badań przynoszonych jest przez pacjenta w formie papierowej. O problemie znajdowania odpowiednich danych w szpitalnej dokumentacji opowiemy w dalszej części pracy. 
+\par
+Narzędzia wykorzystywane przez radiologów są dalekie od ideału. Są to, w większości, przeglądarki zdjęć, które radiolog musi analizować. W tych programach brakuje automatyzacji i sugestii dla lekarza. Za bardzo pomocny został uznany pomysł dokładnego liczenia objętości prostaty na podstawie zdjęć. Skraca to bardzo czas pracy lekarza oraz daje dokładniejsze wyniki. Obecnie nie istnieje na rynku narzędzie automatycznie segmentujące zdjęcia i dające lekarzowi sugestie na temat przeglądanego obrazu.
+\par
+Celem poniższej pracy jest stworzenie i opis narzędzia, które zapewni automatyzację pracy lekarza oraz zapewni łatwą integrację z systemem szpitalnym
+
+\section{Słownik pojęć}
+Pojęcia których będziemy używać w poniższej pracy:
+\begin {enumerate}
+\item DICOM - (Digital Imaging and Communications in Medicine) Międzynarodowy standard służący do przesyłania, przechowywania, pobierania, przetwarzania oraz wyświetlania obrazów medycznych. Darmowy standard umożliwiający unifikację zdjęć medycznych pochodzących z maszyn wielu producentów.
+\item Segmentacja – Proces podziału obrazu na części określane jako obszary (regiony), które są jednorodne pod względem pewnych wybranych własności.
+\item Slice - Warstwa obrazu DICOM zawierająca jeden obraz
+\item Maska - Obraz przedstawiający wysegmentowaną prostatę
+\item Komponent - Web serwis lub element jednego z serwisów spełniający jedno określone zadanie
+\item Endpoint - Adres pozwalający na dostęp do API aplikacji z zewnątrz
+\item API - Interfejs pozwalający na komunikowanie się aplikacji między sobą 
+\item Backend - Część serwerowa aplikacji 
+\item Frontend - Warstwa prezentacji aplikacji, w przypadku naszej pracy to strona internetowa
+\item HTTP - Internetowy protokół komunikacyjny
+\item Web serwis - Usługa sieciowa, do której można się odwołać za pomocą wywołań funkcji określonych przez jej API za pomocą protokołu komunikacyjnego
+\item JSON - Format wymiany danych komputerowych
+\item Base64 - Rodzaj kodowania 
+\item RIS – (Radiological Information System) System zarządzania pacjentami 
+\item PACS - (Picture Archiving And Communication System) System archiwizacji zdjęć medycznych
+\item Użytkownik – osoba mająca dostęp do aplikacji oraz bazy danych
+\item Baza danych – baza z badaniami pacjentów, zawiera obraz w DICOM oraz dodatkowe informacje z badania
+\item Aplikacja – aplikacja do przeglądania obrazów medycznych
+\item Anonimizacja – proces usuwający dane wrażliwe pacjenta
+\end {enumerate}
+
+% -------------------- Opis danych -----------------------
+\chapter{Dane szpitalne}
+Zaczęliśmy rozmów z doktor Sklindą jeszcze na naszej uczelni. Odbyliśmy 2 spotkania, na których doktor tłumaczyła nam problemy z jakimi się zmaga oraz pokazywała nam potencjalne problemy, które można rozwiązać łącząc je z pisaniem pracy inżynierskiej przez trzyosobowy zespół. Zgodziliśmy się na pewien zestaw wymagań, który w czasie się zmieniał. Po finalnym ustaleniu wymagań, jeden z nas udał się do szpitala MSWiA w Warszawie w celu poznania szpitalnej architektury oraz zgromadzeniu danych. 
+\par
+Niestety żadnego ze szpitalnych informatyków tego dnia nie zastaliśmy w pracy, więc pierwsza wizyta zakończyła się jedynie na gromadzeniu danych. Wkrótce potem zaczęliśmy wymieniać komunikację mailową z zespołem informatyków ze szpitala. Nasz początkowy pomysł, czyli integracja z bazą HIS upadł bardzo szybko, ponieważ okazało się, że oprogramowanie używane w szpitalu nie może być w żaden sposób modyfikowane przez ludzi nie będących pracownikami firmy dostarczającej to oprogramowanie. 
+\par
+Następnie, gdy znaleźliśmy przeglądarkę zdjęć DICOM, napisaliśmy maila do zespołu szpitalnych informatyków z pytaniem o możliwość instalacji tej przeglądarki na komputerach szpitalnych. Dostaliśmy przeczącą odpowiedź, argumentowaną niepewnością dotyczącą bezpieczeństwa oprogramowania, które chcieliśmy zainstalować. Po wspólnej naradzie uznaliśmy, że najlepszym rozwiązaniem będzie kopiowanie danych na dysk twardy i przenoszenie ich na komputer, który nie jest podłączony do sieci szpitalnej. Doktor Sklinda zgodziła się pracować w ten sposób, uznając, że i tak jest to dla niej pomoc, pomimo niewygody związanej z fizycznym transferem danych.
+
+\section{Proces pozyskania danych}
+
+\par
+Kompleksowe dane pacjentów w szpitalu MSWiA są przechowywane w formie papierowej. Każdy pacjent ma oddzielną koszulkę w segregatorze, w której znajdują się wyniki wszystkich badań wykonanych poza szpitalem MSWiA, wywiady z wizyt u lekarzy specjalistów oraz wyniki badań krwi zrobionych w szpitalu. W szpitalnej bazie danych przechowywane są wywiady środowiskowe, wyniki oraz opisy badań MR. 
+\par
+Nie dostaliśmy pozwolenia na instalację zewnętrznego oprogramowania na komputerach podłączonych do sieci szpitalnej. Według nas jest to zrozumiały ruch ze strony szpitalnych informatyków. Oprogramowanie otwartego przez nas wykorzystywane mogłoby być łatwym punktem ataku hakerskiego. Gdy wszystkie dotychczasowe plany poniosły porażkę, zdecydowaliśmy na jedyne rozwiązanie, które zadowoliłoby obie strony. Używamy dysku twardego, ponieważ kompleksowy plik zawierający badanie jednego pacjenta zajmuje średnio ponad Gigabajt danych. 
+\par
+Na komputerze niepodłączonym do sieci szpitalnej doktor może dokonać analizy i predykcji za pomocą naszego oprogramowania. Następnie musi sprawdzić identyfikator pacjenta w arkuszu kalkulacyjnym i odnieść się z wynikami wygenerowanymi przez nas do prawdziwego przypadku.
+\par
+Uzyskane rozwiązanie jest dalekie od optymalnego. Nie jest ono ani wygodne ani szybkie. Jest natomiast bezpieczne, ponieważ eliminuje większość potencjalnych punktów ataków hakerskich. Przy pracy z bardzo delikatnymi danymi kryterium bezpieczeństwa musi być priorytetem. 
+\par
+Procedura pozyskiwania danych polegała na otworzeniu karty pacjenta leczonego przez współpracującego z nami lekarza (dr n. med. Katarzyna Sklinda), znalezieniu jego wywiadu środowiskowego oraz opisu badania w bazie danych RIS. Następnie należało ręcznie wypełnić wszystkie pola w arkuszu kalkulacyjnym, które dotyczyły badanego pacjenta. Dane z wywiadu środowiskowego zostały zakodowane, w celu przyspieszenia wypełniania arkusza oraz zachowania ogólnej estetyki. Legendę opisu tych danych przedstawimy w dalszej części pracy. 
+\par
+Karty pacjentów były diametralnie różne. Wahały się od jednej strony do całego pliku kartek. Naszym zadaniem było wypełnienie jak największej ilości kolumn na podstawie otrzymanych danych. 
+\par
+Największym kłopot podczas wykonywania tej pracy sprawił nam fakt, iż każdy szpital używa innego formatowania swoich dokumentów, więc nierzadko mieliśmy trudności z odczytaniem istotnych dla nas informacji. 
+\par
+Po uzupełnieniu arkusza kalkulacyjnego należało jeszcze wykonać niezbędne obliczenia objętości oraz PSAD. 
+\par
+Jedną z dróg, którą zamierzaliśmy obrać na początku tego wyzwania było użycie systemu OCR na zeskanowanych kartach pacjentów. System OCR ( z ang. Optical Character Recognition) to oprogramowanie pozwalające na znajdowanie i rozpoznawanie fragmentów tekstu w plikach graficznych. Niestety musieliśmy porzucić tę drogę z powodu niejasności kart pacjentów i niejednoznacznych wyników oraz korekt niejednokrotnie nanoszonych długopisem przez lekarza. 
+\par
+Taka procedura pozyskiwania danych jest wyjątkowo nieoptymalna oraz podatna na błędy. Przy obecnej infrastrukturze szpitalnej ręczne przepisywanie danych jest jedynym sposobem na digitalizację zasobów pacjentów. Komfort pracy lekarzy znacząco by się podniósł gdyby zostały wyeliminowane wszystkie papierowe karty pacjentów. Na wypełnienie kompletnych danych jednego pacjenta potrzebowaliśmy ok. 15 minut. Lekarz radiolog dziennie wykonuje około 4 badań MR (w szpitalu MSWiA), więc można założyć, że marnuje około godziny dziennie na niepotrzebne przeglądanie papierowej dokumentacji. Wraz ze współpracującym z nami doktorem postanowiliśmy stworzyć program, który pozwoli na oszczędzanie tego czasu. Wszyscy lekarze, z którymi się konsultowaliśmy, przyznali, że w codziennych obowiązkach pomógłby im program wyliczający objętość prostaty na podstawie plików DICOM. Jest to jedna z płaszczyzn, na których informatyka jest w stanie pomóc oszczędzać czas lekarzy, co przekłada się na komfort oraz zdrowie pacjentów. Uznaliśmy ten problem za bardzo poważny, dlatego właśnie zdecydowaliśmy się na realizację obranego tematu. 
+\par
+
+\section{Dane szpitalne}
+W badaniach szczególną uwagę należało zwrócić poszczególne aspekty: \\
+\begin{description}
+\item wiek pacjenta - mężczyźni od 50 do 75 roku życia znajdują się w grupie ryzyka
+\item wywiad środowiskowy - ważnym aspektem podczas wywiadu jest obciążenie rodzinne, czyli fakt występowania raka prostaty w najbliższej rodzinie pacjenta. Warto oczywiście zwrócić uwagę w jakim momencie diagnozy znajduje się pacjent. Czy ma stwierdzony nowotwór prostaty? Kolejną ważną informacją jest historia choroby pacjenta. Czy miał wcześniej problemy z prostatą? Warto odnotować, iż niektórzy pacjenci byli badani po zakończeniu leczenia radioterapią bądź chemioterapią. Wtedy lekarz sprawdza czy udało się wyeliminować cały nowotwór, czy może pacjent jest w fazie nawrotu choroby.
+\item biopsja - jeśli była przeprowadzona to jaki był jej wynik? Kiedy była przeprowadzona? W której części prostaty znaleziono zmiany nowotworowe?
+\item wynik Gleasona - w przypadku pacjenta ze stwierdzonym nowotworem bardzo dużą rolę odgrywa skala Gleasona. Jest to skala opracowana z myślą o klasyfikacji nowotworów prostaty. Składa się ona z dwóch części, opisujących różne charakterystyki nowotworu. Po określeniu części składowych sumuje się je, aby otrzymać całościowy wynik Gleasona. Im wyższa punktacja tym bardziej niebezpieczny jest nowotwór.
+\item PSA - kolejnym dla nas istotnym wynikiem jest wynik ostatniego badania PSA we krwi. Specyfika antygeny PSA była przytoczona we wcześniejszej części tej pracy. 
+\item Objętość prostaty - wyliczona na podstawie wymiarów określonych w opisie badania USG oraz MR. Objętość prostaty potrzebna jest to wyliczenia współczynnika PSAD, oraz do ogólnej diagnozy. 
+\item PIRADS - najbardziej znaczące jest ognisko o najwyższej ocenie PIRADS. Gdy pacjent ma ocenę 5, co zdarzało się w 25\% zbadanych przypadków, to istnieje bardzo wysokie prawdopodobieństwo posiadania nowotworu prostaty w obserwowanym przez radiologa miejscu. 
+\end{description}
+\par
+
+Poniższa table przedstawia wybrane kolumny jakie uzyskaliśmy z danych szpitalnych
+\\
+\begin{table}[h!]
+\caption{Dane szpitalne}
+\centering
+\begin{tabular}{|l|p{10cm}|} \hline 
+PW & unikalne ID nadawane pacjentowi w naszym badaniu                                                             \\ \hline 
+Data & Data badania MR                                                                                              \\ \hline 
+Dane kliniczne & opisane poniżej, w legendzie                                                                       \\ \hline 
+Hist-pat & dane z badania histopatologicznego, czyli biopsji prostaty, także opisane w legendzie poniżej            \\ \hline 
+Data hist-pat & Data wykonania biopsji                                                                              \\ \hline 
+Gleason & klasyfikacja patomorfologiczna raka gruczołu krokowego                                                    \\ \hline 
+Płat & płat prostaty, w którym znajduje się zmiana nowotworowa                                                      \\ \hline 
+Liczba biopsji                                                                                                       \\ \hline 
+PSA & swoisty antygen sterczowy w ng/ml, opisane niżej                                                              \\ \hline 
+Liczba PSA & liczba wykonanych badań PSA                                                                            \\ \hline 
+X, Y, Z & wymiary stercza wyznaczone z badania USG                                                                  \\ \hline 
+Objętość z usg & liczona równaniem X*Y*Z*0,52                                                                       \\ \hline 
+PSAD USG & zależność między objętością prostaty, a PSA                                                              \\ \hline 
+X, Y, Z & wymiary stercza wyznaczone z badania MR                                                                   \\ \hline 
+Objętość z MR & liczona równaniem X*Y*Z*0,52                                                                         \\ \hline 
+PSAD MR & zależność między objętością prostaty, a PSA                                                               \\ \hline 
+PI-RADS V2 & radiologiczna skala wykorzystywana do wyznaczania prawdopodobieństwa wystąpienia zmian nowotworowych   \\ \hline 
+Płat & oznaczenie płatu prostaty z największym oznaczeniem PI-RADS V2                                               \\ \hline 
+Oznaczenie strefy & dokładna część prostaty, w której znajduje się zmiana                                           \\ \hline 
+\end{tabular}
+\end{table}
+
+
+\section{Wstępna analiza}
+Z łatwością można zauważyć, iż u wszystkich pacjentów z nowotworem poziom PSA jest zdecydowanie podwyższony (norma to ok 1 ng/ml), jednakże bywa on podwyższony u pacjentów, u których nie stwierdzono zmian nowotworowych. Skala PI-RADS V2 jest bardziej miarodajna, aczkolwiek, z założenia, nie może nigdy określić stuprocentowej pewności. Jedynym badaniem determinującym istnienie raka stercza jest bezpośrednia biopsja przezodbytnicza. 
+\par 
+Kolejną kwestią rzucają się w oczy jest rozbieżność między objętościami wyliczonymi z badania USG oraz MR. Lekarz tak naprawdę nie zna dokładnych wymiarów prostaty, dlatego właśnie zostaliśmy poproszeni o ich obliczenie. 
+\par 
+Najniższe wyniki PSA zazwyczaj mają pacjenci, którzy przeszli resekcję prostaty, co potwierdza tezę, że pacjenci z wyciętą prostatą nie chorują już na raka prostaty. Najwyższe wyniki, natomiast, mają pacjenci ze stwierdzoną, przez biopsję, zmianą nowotworową.
+
+\section{Statystyki}
+
+Pierwsza statystyka jaką wykonaliśmy był rozkład PSA względem wieku. Chcieliśmy uzyskać informację jak wiek pacjentów przekłada się na potencjalna zachorowalność na raka prostaty.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Wykresy/PSAAge.png}
+	\captionof{figure}{PSA względem wieku}
+\end{minipage}
+\\
+Wiek pacjentów został pogrupowany. Widać, że największe średnie PSA mają mężczyźni między 50 a 60 rokiem życia. Jest to obserwacja, którą dało się przewidzieć, ponieważ mężczyźni często dopiero zaczynają się badać po 50. roku życia. 
+\\ \\
+Kolejnym badaniem jakie przeprowadziliśmy było sprawdzenie powiązania czy wynik badania w skali Gleasona ma przełożenie na objętość gruczołu (uzyskana już po wycięciu).
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Wykresy/VolG.png}
+	\captionof{figure}{Objętość względem Gleasona}
+\end{minipage}
+\\
+Na tym wykresie można zobaczyć różnice między średnią objętością prostaty z badań USG i MR. Jak widać różnice są dość znaczące.
+\\ \\
+Następnie chcieliśmy sprawdzić czy istnieje korelacja pomiędzy poziomem PSA i wynikiem uzyskanym w skali Gleasona.
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Wykresy/PSAG.png}
+	\captionof{figure}{PSA względem Gleasona}
+\end{minipage}
+\\
+U dwóch badanych pacjentów zdiagnozowano raka z oceną Gleasona na poziomie 9. Średnie PSA tych pacjentów wynosiło ponad 50 ng/ml co jest pięćdziesięciokrotnym przekroczeniem normy.
+\\ \\
+Ostatnim testem było sprawdzenie czy istnieje zależność pomiędzy PSA oraz PIRADS.
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Wykresy/PSAPIRADS.png}
+	\captionof{figure}{PSA względem PIRADS}
+\end{minipage}
+\\
+Na wykresie poziomy PIRADS 2,3 i 4 mają stosunkowo podobne wyniki średniego PSA, natomiast poziom PIRADS 5 ma zdecydowanie zawyżony poziom PSA. 
+
+
+\section{Ciekawe przypadki}
+\par
+\begin{description}
+\item  PW86 -- PSA na poziomie 483,3 ng/ml, najwyższe dotychczas spotkane. Przy PSA rzędu 10 jest silne podejrzenie raka, więc skala problemu w tym przypadku jest ogromna. Podwyższone PSA, oczywiście jest następstwem raka znalezionego w obu płatach prostaty. Jednakże aż taki niespotykany poziom może być przykładem błędu aparatury pomiarowej.
+\item  PW55 -- przykład obrazujący skuteczność radioterapii. W 2013 roku został zdiagnozowany rak, w 2017, po radioterapii PSA na poziomie 0.1, czyli jak u przeciętnego 20 latka, a warto wspomnieć, że pacjent ma 75 lat.
+\item  PW35 -- ognisko PI-RADS V2 o mocy 5 znalezione w prawym płacie prostaty, natomiast po biopsji stwierdzono raka w lewym płacie.
+\item  PW143 -- zaskakująca liczba wykonanych badań PSA. Na każdym z nich wynik jest podwyższony, natomiast ani badanie rektalne, ani MR ani biopsja nie wykazały obecności raka
+\end{description}
+
+% -------------------- Opis rozwiązania -----------------------
+\chapter{Specyfikacja} % Cel i założenia projektu
+
+Celem pracy dyplomowej jest stworzenie narzędzia wspomagającego diagnostykę nowotworu prostaty. Powinno ono wspierać pracę lekarza w diagnozie oraz zapewnić automatyczne znajdowania prostaty na zdjęciach rezonansu magnetycznego. Priorytetem aplikacji jest to aby posiadała modularną strukturę, która zapewni łatwą integracja ze szpitalną bazą danych oraz szybki rozwój lub zamianę istniejących komponentów. Aplikacja aby zapewnić łatwy dostęp do szpitalnych baz danych musi posiadać komponent odpowiadający za integrację z systemem PACS. Na potrzeby poniższej pracy utworzyliśmy naszą bazę danych PACS w celach deweloperskich.
+\par
+Narzędzie będzie w stanie przyjąć nowe dane pacjenta w formacie DICOM, przetworzyć zdjęcia zawarte w pliku, wykonać segmentację gruczołu prostaty oraz wyświetlić użytkownikowi przewidywaną maskę. Ponadto użytkownik jest w stanie samodzielnie modyfikować predykcję maski używając do tego opcji edycji. W takim wypadku jako segmentacja zostaje zapisana najnowsza wersja maski stworzonej przez lekarza. Kolejny moduł to moduł liczenia wysegmentowanego gruczołu. Aplikacja powinna zapewniać kilka alternatywnych algorytmów obliczania, dzięki czemu będziemy mogli porównywać otrzymane wyniki.
+\par
+Ponieważ chcemy dostosować aplikację pod jak największą ilość środowisk, serwer backendowy powinien być możliwy do instalacji na każdym systemie operacyjnym.
+
+\section{Opis biznesowy}
+
+Aktualnie jest dostępnych wiele przeglądarek formatu DICOM, lecz żadna z nich nie zawiera modułu pozwalającego na segmentację gruczołu prostaty. Jedną z ważniejszych informacji jakie wykorzystuje się przy diagnostyce raka gruczołu prostaty jest objętość. Na tej podstawie podejmowana jest decyzja o usunięciu gruczołu krokowego (radykalna prostatektomia laparoskopowa). Ponadto, żadne z narzędzi nie ma moduły pozwalającego na liczenie objętości gruczołu.
+\par
+Nasze rozwiązanie ułatwia pracę lekarza przedstawiając maskę nałożoną na obraz przewidując miejsce występowania gruczołu prostaty. Dodatkowo użytkownik jest w stanie samodzielnie poprawić predykcję używając opcji edycji. Dzięki takiej informacji wraz z rozwojem systemu mamy dostęp do coraz dokładniejszych danych dotyczących segmentacji pacjenta. Aplikacja ułatwi pracę lekarza oraz zgromadzi dane zawierające dokładne segmentacje utworzone przy użyciu algorytmu, które następnie podlegają kontroli lekarza. Narzędzie dostarcza również informacje na temat objętości gruczołu krokowego biorąc pod uwagę precyzję urządzenia na którym zostały wykonane zdjęcia. 
+\par
+Objętość jest kluczową informacją dla lekarza przy wystawianiu diagnozy. Wizualizacja wysegmentowanego gruczołu prostaty oraz obliczona wartość objętości pomoże lekarzowi w diagnostyce, a dzięki łatwemu rozszerzaniu aplikacji rozwój i modyfikacje modułu obliczania objętości lub segmentacji można łatwo zmieniać algorytmy, za pomocą, których je wyznaczamy.
+
+\section{Wymagania funkcjonalne}
+
+Podstawowym wymaganiem aplikacji jest możliwość liczenia segmentacji, objętości oraz integracja ze szpitalnym systemem PACS. Metody realizacji każdego z nich zostały opisane w dalszej części pracy. 
+
+Podstawą interakcji użytkownika z systemem jest strona WWW - użytkownik powinien
+być w stanie otworzyć ją na dowolnym komputerze z dostępem do internetu, wyposażonym
+w przeglądarkę:
+\begin {enumerate}
+\item Google Chrome w wersji 49 lub wyższej
+\item Mozilla Firefox w wersji 52 lub wyższej
+\item Safari w wersji 10.1 lub wyższej
+\end {enumerate}
+Posiadanie przeglądarki innej niż wymienione lub w starszej wersji nie oznacza że strona nie będzie działać, jednak nie da się zagwarantować że będzie to działanie w pełni poprawne.
+Każdy z użytkowników ma dostęp do tych samych danych oraz takie same możliwości
+Funkcjonalność aplikacji WWW rozbita jest na trzy podstrony:
+\begin {enumerate}
+\item Wyświetlenie listy dostępnych pacjentów z aplikacyjnej bazy danych lub ze szpitalnego systemu PACS po wpisaniu danych logowania lekarza
+\item Dodanie nowego pacjenta z pliku lub ze szpitalnej bazy danych. Dane szpitalne przed wysłaniem na stronę serwera powinny być zanonimizowane tak aby serwer nie przechowywał żadnych danych wrażliwych.
+\item Wyświetlenie danych pacjenta w tym obrazu z rezonansu magnetycznego, maski uzyskanej poprzez segmentacje obrazu, danych z pliku DICOM oraz wartości objętości gruczoły na podstawie aktualnej maski.
+\end {enumerate}
+
+\section{Diagram przypadków użycia}
+
+Lekarz po wejściu na stronę internetową dostaje listę pacjentów znajdujących się obecnie w bazie danych. Dodatkowo po wcześniejszym połączeniu się z systemem szpitalnym PACS ma możliwość wyświetlenia pacjentów ze szpitalnej bazy danych. Dane, którymi inicjalnie zasilona jest aplikacyjna baza danych pochodzą z konkursu. \cite{konkurs}
+Lekarz ma możliwość dodania nowego pacjenta z pliku lub ze szpitalnej bazy danych. Aby dodać pacjenta z pliku wystarczy w przeglądarce wybrać pacjenta, obraz DICOM zostanie pobrany z bazy PACS, zanonimizowany po stronie przeglądarki, a następnie wysłany do serwera. Dodatkowo użytkownik ma możliwość dodania pacjenta z pliku DICOM poprzez przeciągnięcie zbioru zdjęć pacjenta na okno przeglądarki. W przypadku gdy wybrany pacjent nie znajduje się jeszcze w bazie danych aplikacja tworzy nowa encję opisującą tego pacjenta, w przeciwnym przypadku, jeżeli obraz nie znajduje się jeszcze w bazie danych dla pacjenta o takim identyfikatorze, aplikacja dodaje kolejne zdjęcia dla już istniejącego pacjenta.
+Następnie lekarz ma możliwość oglądania zdjęć pacjenta, oraz danych jakie o tym pacjencie aktualnie znajdują się w bazie danych. Strona wyświetla kolejne obrazy, które zostały dodane dotyczące wybranego przypadku. Dodatkowo wyświetlane są informacje z pliku DICOM dotyczące informacji o pacjencie i wyników badań jeżeli taki znajdowały się w pliku, który  został wysłany do bazy danych. Ponadto aplikacja wyświetla maskę przedstawiającą wynik procesu segmentacji prostaty. Użytkownik ma możliwość ukrycia maski oraz jej edycji za pomocą dostarczonych narzędzi. 
+Aplikacja dodatkowo liczy objętość wysegmentowanej prostaty na podstawie masek znajdujących się w bazie danych. W aplikacji dostępne jest kilka alternatywnych algorytmów liczenia objętości. Wartość nie jest przeliczana automatycznie w przypadku edycji. Lekarz po edycji wszystkich masek, naciska przycisk na stronie, który uruchamia proces liczenia objętości 
+\par
+Na poniższym rysunku przedstawiono w postaci diagramu UML zbiór przypadków użycia platformy dla lekarza i dla administratora systemu (programisty).
+\par
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{useCase.png}
+	\captionof{figure}{Diagram przypadków użycia}
+\end{minipage}
+\par
+
+W poniższej tabeli zebrano szczegółowe opisy przypadków użycia.
+
+\begin{table}[h!]
+\caption{Przypadki użycia}
+\centering
+\begin{tabular}{|p{3cm}|p{7cm}|p{6cm}|} \hline 
+	Nazwa & Opis & Odpowiedź systemu \\ \hline 
+	Połącz z systemem PACS & Użytkownik po podaniu informacji dostępu do szpitalnego systemu PACS zostaje z nim połączony & Lista pacjentów znajdujących się w wybranym systemie \\ \hline 
+	Pobierz pacjenta z systemu PACS & Pobranie obrazu lub obrazów w formacie DICOM i wysłanie ich po uprzedniej anonimizacji do serwera aplikacyjnego & Informacja o sukcesie lub błędzie przy dodawaniu użytkownika \\ \hline 
+	Dodaj pacjenta z pliku & Wysłanie pliku lub plików DICOM do serwera aplikacyjnego & Informacja o sukcesie lub błędzie przy dodawaniu użytkownika \\ \hline 
+	Wyświetl listę pacjentów dostępnych w systemie & Pobiera listę pacjentów dostepnych w systemowej bazie danych, inicjalnie baza danych jest zasilona danymi pochodzącymi z archiwum danych pacjentów ze zdiagnozowanym rakiem prostaty & Lista identyfikatorów dostępnych pacjentów \\ \hline 
+	Zobacz pacjenta & Wyświetla dane dotyczące danego pacjenta aktualnie znajdujące się w bazie danych, w szczególności listę obrazów rezonansu magnetycznego oraz maskę z wysegmentowaną prostatą & Dane pacjenta \\ \hline 
+	Segmentuj & Oblicza segmentację dla wybranego obrazu & Maska opisująca prostatę na wybranym obrazie \\ \hline 
+	Policz objętość & Liczy objętość na podstawie listy masek na podstawie wybranego algorytmu & Wartość objętości prostaty\\ \hline 
+\end{tabular}
+\end{table}
+
+\section{Wymagania niefunkcjonalne}
+
+Poniższa table przedstawia wymagania niefunkcjonalne w naszym systemie.
+
+\begin{table}[h!]
+\caption{Wymagania niefunkcjonalne}
+\centering
+\begin{tabular}{|r|r|p{10cm}|} \hline 
+	Obszar wymagań & Nr wymagania & Opis \\ \hline 
+	Użyteczność & 1 & Aplikacja będzie aplikacją internetową dostępną na systemach Linux lub Windows. Aplikacja będzie zawierać przyjazne użytkownikowi karty z opcją segmentacji oraz obliczania objętości prostaty. Dodatkowo lekarz będzie miał możliwość dodawania kolejnych pacjentów \\ \hline 
+	Niezawodność & 2 & Aplikacja będzie w stanie wykonywać funkcjonalności opisane wyżej. Ponadto Aplikacja będzie zapisywać logi z błędami oraz przyczyną awarii \\ \hline 
+	Wydajność & 3 & Aplikacja WWW powinna działać płynnie na każdym
+komputerze z dowolnym systemem operacyjnym wyposażonym
+w odpowiednią przeglądarkę. Obliczenia zależnie od rozmiarów danych wejściowych aplikacja powinna wykonywać takim czasie aby praca użytkownika nie była przez nią spowolniona, przy tym nie blokując interfejsu użytkownika \\ \hline 
+	Utrzymanie & 4 & Aplikacja będzie miała architekturę modułową, która będzie łatwo rozszerzalna. Cały kod aplikacji zostanie udokumentowany. W ramach środowiska developerskiego powstanie obraz Docker.  \\ \hline 
+\end{tabular}
+\end{table}
+
+\section{Środowisko sprzętowe i programowe}
+
+Opiszemy w dużym skrócie technologie wykorzystane w poniższej pracy, decyzje jakie stały za poszczególnymi wyborami, oraz alternatywne technologie i przyczyny dlaczego się na nie nie zdecydowaliśmy. 
+
+\subsection{Języki i technologie }
+
+\begin{description}
+\item [Docker] \hfill \\
+Podstawą całej architektury backendowej aplikacji jest wykożystanie kontenerów czyli środowisku w którym każdy serwis uruchamiany jest w odizolowanym środowisku zawierającym wszystkie zależności wymagane do jego działania. Ponieważ każdy z nas miał inne środowisko deweloperskie, docker zapewnia nam, że serwisy będą działały w dokładnie ten sam sposób na każdej maszynie. Ma to również zalety dla środowisk produkcyjnych, ponieważ niezależnie czy udostępnimy naszą aplikację jako program on-premise czy zdecydujemy się na umieszczenie go w chmurze, konfiguracja będzie tak samo nieskomplikowana. Zapewnia to niezależność poszczególnych komponentów oraz odizolowanie aplikacji od systemu operacyjnego. Zdecydowaną przewagą Docker’a nad wirtualizacją jest możliwość uruchomienia aplikacji w wydzielonym kontenerze, ale bez konieczności emulowania całej warstwy sprzętowej i systemu operacyjnego. Do zarządzania kontenerami użyliśmy udostępnianego przez Docker narzędzia docker-compose. W ten sposób w przypadku potrzeby modyfikacji jednego z serwisów, aplikacja dalej pozostaje aktywna a zmianie ulega tylko jeden moduł.
+\item [Środowisko .NET Core] \hfill \\
+Serwis backendowy, który odpowiada za integrację z bazą danych oraz komunikację z warstwą prezentacji został napisany przy użyciu frameworku .NET Core. Główną zaleta tego wyboru jest wieloplatformowość rozwiązania. Dzięki nowemu środowisku uruchomieniowemu aplikacja może działać na dowolnym systemie operacyjnym. Kożystamy z najnowszej na chwilę pisania pracy wersji (2.1), która wspiera większość pakietów dostępnych dla .NET Framework. Dodatkowo głównym założeniem przy powstawaniu systemu było aby był oparty o architekturę mikroserwisów przy użyciu kontenerów, które również są wspierane przez framework.
+\item [Język programowania C\# ] \hfill \\
+System został wykonany z wykorzystaniem języka programowania C\# oraz platformy programistycznej .NET Framework. Wybór tej technologii był podyktowany doświadczeniem zespołu w jej wykorzystaniu. .NET Framework został wykorzystany do napisania modułu backendowego odpowiedzialnego za obsługę akcji użytkownika oraz komunikację z bazą danych. Ponieważ serwer powinien działać na wszystkich systemach operacyjnych użyliśmy .Net core oraz ASP.NET MVC Core.
+\item [Entity Framework Core] \hfill \\
+Entity Framework Core jest dedykowanym frameworkiem dla aplikacji działających w środowisku .NET Core zapewniający dostęp i zarządzanie bazą danych. Jest to narzędziem typu ORM (ang. Object RelationalMapping). Dzięki użyciu tego narzędzia jako warstwy dostępu do bazy danych mogliśmy w łatwy sposób stosować podejście code-first przy projektowaniu aplikacji. Dodatkowo w przeciwieństwie do wersji z .NET Framework Entity Framework zapewnia wydajność porównywalną do natywnych wywołań zapytań bazodanowych za pomocą dedykowanego sterownika dla .NET czyli ADO.NET
+\item [SQL Server 2016] \hfill \\
+Microsoft SQL Server jest systemem służącym do zarządzania bazą danych stworzonym przez firmę Microsoft. Platforma spełnia wszystkie podstawowe funkcjonalności jakich oczekujemy od bazy danych ale dodatkowo ponieważ w przypadku operowania na dużych wolumenach danych, co jest bardzo prawdopodobne w przypadku danych szpitalnych, oferuje wiele możliwości optymalizacji oraz zaawansowane narzędzia do utrzymania oraz analityki. Jest to platforma preferowana do projektów działających w .NET Framework. Pomino stosowania w projekcie podejścia \textit{Code first} nie wykluczamy, że w przypadku rozwoju platformy będzie trzeba je zmienić.
+\item [Język programowania Python ] \hfill \\
+W aplikacji wykożystaliśmy język Python do modułu odpowiadającego za segmentację prostaty na obrazie. Wybór ten podyktowany jest dużą ilością dostępnych pakietów do uczenia maszynowego oraz głębokiego uczenia. Python jest wspierany na wszystkich większych systemach operacyjnych oraz łatwo tworzy się kontenery wykorzystujące Pythona. Ponadto brak procesu kompilacji wspomagał proces prototypowania algortytmu, co w przypadku uczenia maszynowego ma duże znaczenie. 
+\item [Framework Flask ] \hfill \\
+Aby zapewnić komunikację za pomocą protokołu http między serwisem segmentacji, a pozostałymi elementami systemu potrzebowaliśmy biblioteki, która udostępnia taką funkcjonalność.Framework zapewnia elementarną implementacją serwera http, który pozwala na komunikację z pozostałymi komponentami. Ponieważ segmentacja wspiera tylko i wyłącznie jeden punk dostępowy uznaliśmy, że wybór rozwiązania bardziej rozbudowanego jest nieuzasadniony. Django czy Pyramid, to dwa bardzo popularne rozwiązania dla serwerów http zaimplementowane w języku Python jednak o wiele bardziej rozbudowanej konfiguracji nie przynosząc zarazem odczuwalnych korzyści.
+\item [Biblioteka Keras] \hfill \\
+Do implementacji algorytmu segmenacji gruczołu krokowego na zdjęciach potrzebowaliśmy biblioteki pozwalającej na tworzenie sieci neuronowych. Podczas poszukiwań najbardziej odpowiedniego rozwiązania kierowaliśmy się kilkoma kryteriami. Przede wszystkim chcieliśmy aby rozwiązanie było napisane w języku Python oraz wspierało użycie biblioteki TensorFlow. Dodatkowo chcieliśmy aby biblioteka umożliwiała szybkie prototypowanie oraz była przenośna między systemami operacyjnymi. Keras jest obecnie jednym z najpopularniejszych bibliotek do takiego zastosowania. Zapewnia wysoko poziomowy interfejs ułatwiający tworzenie rozwiązań opartych o uczenie maszynowe. Decyzja o użyciu frameworku zapadła na podstawie spełeniania wszystkich powyższych założeń oraz doświadczeniem zespołu w jego wykorzystaniu.
+\item [OpenCV, OpenCvSharpCore] \hfill \\
+OpenCV \cite{OpenCV} to biblioteka oprogramowania do nauki i uczenia maszynowego typu open source. Jest to chyba najpopularniejsza biblioteka do przetwarzania obrazów. Do integracji z .NETem użyliśmy wrappera działającego w środowisku .NET Core OpenCVSharpCore. Zapewnia dostęp do metod biblioteki poprzez kod C\#. W naszej pracy została wykorzystana w module liczącym objętość do znajdowania otoczki maski oraz liczenia pola powierzchni poligonów.
+\item [Biblioteka interfejsu użytkownika: React] \hfill \\
+  React okazał się idealnym rozwiązaniem, ponieważ jest jedynie biblioteką dostarczającą komponenty, która może być rozszerzalna przez kolejne biblioteki. Projekt ten powstał w Facebook'u, ma więc wielkie wsparcie społeczności oraz jest dojrzałym framework'iem.
+	Przygotowując aplikację SPA postanowiliśmy znaleźć rozwiązanie, które najbardziej dopasuje sie do naszych wymagań. Nasze kryterium oceny polegało na:
+	  - wielości społeczności framework'u,
+	  - dojrzałości projektu,
+	  - modularności
+\end{description}
+
+Ponadto wszystkie wymienione technologie zostały wybrane do realizacji pracy, ponieważ zespół, który nad nią pracował, miał doświadczenie w pracy z nimi wyniesione z poprzednich projektów realizowanych w ramach studiów i pracy zawodowej.
+
+\subsection{Rozważane alternatywne technologie}
+W momencie pisania pracy ustaliliśmy, że najpopularniejszymi aktualnie rozwiązaniami są następujące projekty:
+	  
+\begin{description}
+	\item [Java] \hfill \\
+	Jeden z najpopularniejszych obecnie języków programowania, teoretycznie spełniający wszystkie nasze wymagania. Zapewnia modularność, jest wspierany przez wszystkie języki programowania, ma wiele dostępnych bibliotek gotowych do użycia w aplikacji. Odrzuciliśmy ten wybór z powodu dużej ilości konfiguracji potrzebnej do utworzenia systemu jaki tutaj opisujemy. Dodatkowo ponieważ przetwarzamy pliku zajmujące często nawet powyżej 100MB obawialiśmy się problemów z wydajnością zwalniania pamięci w Javie.
+\item[Angular] \hfill \\
+  	Projekt Angular jest jednym z najpopularniejszych obecnie rozwiązań do tworzenia warstwy prezentacji aplikacji. Początkowo wydawał się być doskonałym wyborem dla naszego zastosowania (dojrzały projekt, wspierany przez giganta technologicznego jakim jest Google), aczkolwiek wymuszał on używanie konkretnych rozwiązań stworzonych na potrzeby tego konkretnego frameworka do wykonywania zapytań oraz miał wiele niepotrzebnych zależności. Z tego powodu zdecydowaliśmy się zrezygnować z tego projektu, ponieważ naruszał nasze kryterium dotyczące modularności.
+\item[Vue] \hfill \\
+	Vue jest coraz bardziej popularnych frameworkiem, który wyróżnia się modularnością, przenośnością oraz niskim progiem wejścia. Nie dopasował się do naszych wymagań ze względu na nie dojrzałość projektu, przez co dostępne komponenty nie spełniały naszych oczekiwań. Wciąż jest rozwiązanie nie wspierane przez dużych klientów biznesowych.
+\end{description}
+
+% -------------------- Opis aplikacji -----------------------
+\chapter{Opis aplikacji}
+W tym rozdziale przedstawione zostaną efekty pracy. Na wstępie przedstawimy wysoko poziomową architekturę całego rozwiązania. Następnie opiszemy poszczególne moduły zawarte w aplikacji oraz zasadę ich działania, przedstawiając szczegóły techniczne implementacji. Dzięki podziałowi aplikacji na osobne serwisy działające niezależnie, zawarte w dalszej części opisu modułów również opiszemy niezależnie. Kontenery oddzielają aplikacje od siebie oraz infrastruktury, na której działają zapewniając dodatkową warstwę ochronną dla aplikacji.
+
+\section{Architektura systemu}
+
+System składa się z modułów realizujących ściśle określone zadania, niezależne zadania, dlatego też łatwo wydzielić je jako osobne serwisy działające niezależnie od siebie. Każdy z serwisów działa jako osobny kontener. Konteneryzacja polega na tym, że umożliwia się uruchomienie wskazanych procesów aplikacji w wydzielonych obiektach, które z punktu widzenia aplikacji są odrębnymi instancjami środowiska uruchomieniowego. Każdy kontener posiada wydzielony obszar pamięci, odrębny interface sieciowy z własnym prywatnym adresem IP oraz wydzielony obszar na dysku.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{Architektura.png}
+	\captionof{figure}{Schemat architektury aplikacji}
+\end{minipage}
+
+Jak można zauważyć rzeczą, która jest widoczna na pierwszy rzut oka jest komunikacja serwera backendowego z serwerem PACS odbywa się za pośrednictwem aplikacji internetowej, z której korzysta klient. Jest to zrobione specjalnie i daje nam możliwość łatwej integracji z systemem szpitalny. W zasadzie jest to jedyna opcja jaką znaleźliśmy w trakcie naszego badania architektury szpitalnej nie wymagająca ustawiania specjalnego połączenia VPN między naszym serwisem a serwerami szpitalnymi. Dzięki temu zyskujemy niezależność. Aplikacja może działać na dowolnym środowisku przy tym zapewniając klientowi dostęp i wysyłanie danych pacjenta na nasze serwisy do przetwarzania.
+Rozwiązanie w którym nasz serwer komunikuje się bezpośrednio z bazą danych szpitalnych ma kilka dużych wad. Przede wszystkim przesyłamy poufne dane pacjentów przez sieć. Aby to robić bezpiecznie potrzebowalibyśmy dedykowanego bezpiecznego połączenia, którego nie udało nam się uzyskać przez cały okres pisania pracy.
+\par
+Reszta architektury jest standardowa w przypadku aplikacji o architekturze mikroserwisowej. Mamy główny serwer odpowiadający za komunikację z użytkownikiem i obsługę bazy danych. Serwisy do liczenia objętości i segmentacji są niezależne i nie mają bezpośredniego dostępu do bazy danych.
+Jedyna modyfikacja jaką można by wykonać w przypadku intensywnego użytkowania aplikacji to skonfigurować osobne bazy dla każdego serwisu aby uniknąć niepotrzebnego przesyłania danych przez sieć. Jednak w naszym przypadku proponowane rozwiązanie jest bezpieczniejsze, łatwiejsze w utrzymaniu i w zupełności wystarczające.
+
+\section{Komunikacja między modułami}
+
+Komunikacja między komponentami odbywa się za pomocą protokołu \textit{http}. Każdy z serwisów udostępnia swoje punkty dostępu. W przypadku serwisu kalkulującego objętość oraz wykonującego segmentację dostęp jest jedynie z poziomu kontenera.
+\par
+Serwisy są lokalizowane dzięki mechanizmom Dockera, który tworzy podsieć dla wszystkich działających w obrębie jednego Docker-compose. Dostęp do serwisów odbywa się przez adres postaci http://\textit{nazwa-serwisu}:\textit{port} (jeżeli nie zmieniony to serwis działa na porcie 80). Dostęp z zewnątrz zapewnia jedynie serwis obsługujący komunikacje, a pozostałe serwisy są niedostępne.
+\par
+Każdy z naszych serwisów udostępnia REST API. Najwięcej metod ma moduł do komunikacji z klientem, którego pełna dokumentacja jest opisana w Załączniku 1. Może być przydatne w przypadku chęci użycia naszego rozwiązania z inną warstwą prezentacji np. aplikacją okienkową.
+
+\chapter{Opis modułów}
+
+W poniższym rozdziale opiszemy poszczególne moduły. Wytłumaczymy drogę dojścia do rozwiązania oraz ewentualne modyfikacje jakie można zastosować przy dalszym rozwoju. 
+
+\section{Moduł segmentacji}
+
+Moduł odpowiada za znajdowanie na obrazie wejściowym prostaty. Algorytm działa na zdjęciach w formacie PNG i zwraca również obraz w tym samym formacie. Do obliczeń użyliśmy konwolucyjnych sieci neuronowych, na podstawie danych z konkursu \cite{konkurs}. Problem segmentacji gruczołu prostaty jest niezwykle istotny z perspektywy lekarzy, którzy na podstawie wysegmentowanej maski gruczołu są w stanie łatwiej postawić diagnozę dotyczącą raka prostaty.
+
+\subsection{Segmentacja obrazu}
+
+Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  pewnych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każdej z wyżej wymienionych metod wynik nie zmienia się dla kolejnego uruchomienia algorytmu z tymi samymi danymi wejściowymi. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. W naszej pracy postanowiliśmy zastosować sieci neuronowe jako bardziej nowoczesne podejście. Mając nadzieję, że da ono lepsze rezultaty. 
+
+\subsection{Sieci neuronowe}
+
+Konwolucyjna sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania danych obrazów. Sieć neuronowa to system  wzorowany na działaniu neuronów w ludzkim mózgu. Tradycyjne sieci neuronowe nie są idealne do przetwarzania obrazu i muszą być dostarczane w obrazach o zmniejszonej rozdzielczości. CNN ma swoje "neurony" ułożone bardziej jak te z płata czołowego, obszar odpowiedzialny za przetwarzanie bodźców wzrokowych u ludzi i innych zwierząt. Warstwy neuronów są ułożone w taki sposób, aby pokryć całe pole widzenia, unikając fragmentarycznego problemu przetwarzania obrazu w tradycyjnych sieciach neuronowych. \\
+\begin{description}
+\item[Pełna sieć konwolucyjna (ang. FCN )]  \hfill \\
+	Nazwa pełnych sieci konwolucyjnych pochodzi od warstw wykorzystanych w modelu. Sieć zbudowana jest tylko i wyłącznie z warstw lokalnie połączonych takich jak warstwy konwolucyjne, warstwy pooling oraz warstwy upsampling. W tej architekturze nie występują warstwy dense co wpływa na liczbę parametrów oraz skraca czas uczenia. Ponadto architektura działa niezależnie od rozmiaru wejściowego obrazu, ponieważ nie posiada warstwy dense w żadnym miejscu. Pełne sieci przeważnie składają się z dwóch części.
+\begin{description}
+	\item [Ścieżka zchodząca] Zbiera informacje na temat kontekstu i znaczenia regionu (Interpretuje co znajduje się w regionie )
+	\item [Ścieżka wchodzaca] Odzyskuje informacje przestrzenne (Odtwarza dokładną lokalizację obszaru)
+\end{description}
+	
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=10cm]{segmentation/fcn.png}
+	\captionof{figure}{Architektura sieci FCN}
+\end{minipage}
+
+\item[U-Net] \hfill \\ 
+Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezulataty segmentacji na obrazach medycznych. Pełne sieci konwolucyjne zawdzięczają swoją nazwę warstwom z których sieć jest zbudowana tzn. jest zbudowana tylko z warstw połączonych lokalnie takich jak warstwa konwolucyjna, warstwa pooling, warstwa upsampling. Ponieważ architektura ta nie zawiera żadnych warstw dense, czas obliczeń jest zmniejszony oraz architektura przyjmie obraz wejściowy w każdej rozdzielczości.Sieć U-Net wprowadza dodatkowo dwa założenia, sieć powinna być symetryczna (stąd nazwa U, która symbolizuje dwie ścieżki sieci, kurczącą oraz rozciągającą).
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=10cm]{unet-architecture.png}
+	\captionof{figure}{Architektura sieci UNet}
+\end{minipage}
+
+\end{description}
+
+W naszej pracy posłużyliśmy się uproszczoną wersją sieci U-Net. Wybór potraktowany jest małą ilością danych treningowych oraz precyzyjnością architektury w segmentacji obrazów medycznych.
+
+\subsection{Opis danych}
+
+Najlepszym źródłem pozyskania daych dla naszych celów badawczych są strony konkursowe ponieważ zawierają obrazy z już odnalezioną prostatą na zdjęciu. Organizowanych jest wiele konkursów \cite{konkurs} w celu opracowania stabilnego algorytmu wyznacznia gruczołu prostaty, jednak my po analizie zdecydowaliśmy się na dane z konkursu - \textit{Automated Segmentation of Prostate Structures Challange} \cite{konkretny} który dostarczył danych użytych do trenowania naszej sieci.
+
+\begin{description}
+	\item [Dane] \hfill \\
+	Dostarczone dane składały się z plików DICOM zawierających dane pacjentów oraz z maski zawierających obszary gdzie znajduje się prostata. Dane były przygotowane przez lekarzy, oraz podległy wcześniejszemu procesowi anonimazacji, stąd w plikach nie ma żadnych danych wrażliwych na temat pacjentów. Osoby poddano badaniom za równo pod maszynami o mocy 1.5T oraz 3T z użyciem cewki endorektalnej oraz cewki powierzchniowej. Maski zostały przygotowane  przez zespól lekarzy z uniwersytetów Boston University School of Medicine oraz Case Western University. Zdjęcia zostały przygotowane w formacie nrrd, gdzie zaznaczone są dwa regiony: część obwodową gruczołu krokowego (PZ) oraz centralny gruczoł(CG). 
+	
+	\begin{minipage}{\linewidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{segmentation/prostate_seg.png}
+		\captionof{figure}{Zaznaczone regiony prostaty na zdjęciu z badania MR}
+	\end{minipage}
+	
+	\begin{description}
+		\item[Zbiór treningowy] 60 pacjentów, łącznie 1073 obrazów
+		\item[Zbiór testowy] 10 pacjentów, 147 obrazów
+		\item[Zbiór walidacyjny] 10 pacjentów, 146 obrazów
+	\end{description}
+
+
+\begin{description}
+	\item [Obrazy wejściowe] \hfill \\
+	Dane zostały przetransformowane z formatu DICOM w taki sposób, aby wyeksportować tag pixelData i przetransformować go do postaci tablicy zawierającą intensywność pixeli.
+	
+	\begin{minipage}{\linewidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{segmentation/example_MRI_image.png}
+		\captionof{figure}{Przykładowy obraz z badania MRI}
+	\end{minipage}
+\end{description}
+
+	\item [Oznaczone maski] \hfill \\
+Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Ponieważ nie zależało nam na rozróżnieniu tych obszarów znormalizowaliśmy maski do wartości z przedziału [0;1].
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{segmentation/example_mask.png}
+	\captionof{figure}{Przykładowy obraz z badania MRI}
+\end{minipage}
+
+
+\end{description}
+
+\subsection{Opis naszej sieci konwolucyjnych}
+
+Po zapoznaniu się z dostępnymi danymi z konkursu uświadomiliśmy sobie, że największym problemem jest wielkość zbioru testowego. Z tego powodu postanowiliśmy rozszerzyć zbiór dostępnych obrazów.
+Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie wartości pixeli. Pomysł ten pojawił się obserwując jak lekarz diagnozuje obrazy z badania MRI oraz na co zwraca uwagę. W celu poradzenia sobie ze słabym kontrastem Pani doktor odwracała kolory pixeli.
+
+
+\subsection{Wyniki}
+
+Rozwiązanie na którym się wzorowaliśmy 
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{segmentation/best_predictions.png}
+	\captionof{figure}{Zaznaczone regiony prostaty na zdjęciu z badania MR}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{segmentation/worst_predictions.png}
+	\captionof{figure}{Zaznaczone regiony prostaty na zdjęciu z badania MR}
+\end{minipage}
+
+Nasza sieć osiągnęła współczynnik podobieństwa Sørensena równy ~0.68.
+
+
+\section{Moduł obliczania objętości}
+
+Jedynym z celów pracy było zaproponowanie alternatywnej metody do liczenia objętości. Obecnie w szpitalu aby policzyć objętość gruczoły stosuje się prostą aproksymację przedstawiona wzorem:
+
+\[V = (h_{max} - h_{min}) * S_{max} * 0.54\]
+\\
+gdzie 
+\\
+\(h_{max}\) - wysokość górnego końca gruczoły prostaty                     
+\\
+\(h_{min}\) - wysokość dolnego końca gruczoły prostaty                     
+\\
+\(S_{max}\) - pole powierzchni warstwy o największym, każdym liczonym jako:  
+
+\[S_d = (i_{d_{max}} - i_{d_{min}}) * (j_{d_{max}} - j_{d_{min}})\] 
+\\
+gdzie \\
+\(i_{d_{max}}\) - pozycja najdalej wysuniętego pixela prostaty poziomo \\
+\(i_{d_{min}}\) - pozycja najmniej wysuniętego pixela prostaty poziomo \\
+\(j_{d_{max}}\) - pozycja najdalej wysuniętego pixela prostaty pionowo \\
+\(j_{d_{min}}\) - pozycja najmniej wysuniętego pixela prostaty pionowo \\
+d - indeks warstwy \\
+
+Innymi słowy obecnie metoda polega na znalezieniu prostopadłościaniu w który możemy wpisać gruczoł i obliczenie jego objętości. Następnie wartość jest przemnażana przez stałą aby przybliżyć kształt elipsą.
+\par
+Metoda wydaje się być bardzo niedokładna, co potwierdzają lekarze. Obecnie najdokładniejszą metodą jest zbadanie objętości po wycięciu gruczołu. Dowiedzieliśmy się, że wyniki uzyskane z aproksymacji objętości oraz wartości uzyskane po ekstrakcji są bardzo rozbieżne.
+\par
+Postanowiliśmy zaproponować alternatywne rozwiązanie. W dalszych obliczeniach oraz analizie nie uwzględniamy czynników skalujących jakimi są odległości między pixelami w osi poziomej, pionowej oraz odległość między warstwami. Każdy z nich traktujemy jako stałą równą 1. Nie wpływa to na wyniki analizy moduły. W aplikację wszystkie z tych czynników pochodzą z plików DICOM i są uwzględniane przy liczeniu pól powierzchni.
+
+\subsection{Liczenie objętości}
+
+Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty liczyć jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest suma objętości.
+
+\[V = \sum_{i=0}^{n-1} ((S_i + S_{i+1}) * (h_{d_{i+1}} - h_{d_i})) / 2 \]
+\\
+gdzie\\
+n - liczba warstw \\
+\(d_i\) - indeksy kolejnych warstw obrazu \\
+\(S_i\) - objętość kolejnych warstw obrazu \\
+
+Liczenie pola powierzchni maski została opisana w kolejnej sekcji. \\
+W przypadku naszego systemu algorytm poprawić o niedokładność segmentacji prostaty. Zdarzają się sytuacje gdzie kolejna warstwa nie jest warstwą ostatnią na której znajduje się prostata a algorytm nie znalazł na zdjęciu prostaty. W tym przypadku bierzemy kolejną następującą po niej niepustą warstwę.
+
+\subsection{Liczenie pola powierzchni}
+Proponujemy 3 alternatywne poprawy maski znalezionej w procesie segmentacji na potrzeby liczenia pola powierzchni
+\begin{enumerate}
+\item Pole powierzchni prostokąta na którym można opisać maskę. Najprostszy algorytm, wzorujący się bezpośrednio na obecnym podejściu stosowanym w szpitalu. Jednak w tym przypadku każdą warstwę opisujemy innym prostokątem, przez co wyniki powinny być dokładniejsze
+\item Znalezienie otoczki wypukłej największego spójnego fragmentu maski. Alternatywnym podejściem do rozwiązania problemu jest algorytm znajdujący otoczkę wypukła dla największego spójnego elementu. Jest rozwiązaniem gdzie wyszukujemy kształt o największym polu powierzchni, a następnie liczymy tylko jego pole pomijając miejsca gdzie również została znaleziona prostata. W tym przypadku pole powierzchni jest policzone dużo dokładniej, niż w pierwszym przypadku jednak gdy maska nie jest spójna mogą być mocno zaniżone. 
+\item Znalezienie otoczki wypukłej dla wszystkich elementów maski. Jest to modyfikacja poprzedniego algorytmu , w której szukamy otoczki wypukłej dla wszystkich pixeli maski.
+\end{enumerate}
+
+\subsection{Analiza wyników}
+
+Przedstawimy kilka przypadków i porównamy końcowe wyniki. Pacjent którego tutaj opiszemy pochodzi z danych konkursowych \cite{konkurs}, posiada identyfikator \textit{Prostate3T-03-0004}. Do testów przeprowadziliśmy segmentację i porównaliśmy wyniki obliczonej objętości dla 4 algorytmów 
+\begin{enumerate}
+\item Algorytm stosowany obecnie w szpitalu
+\item Algorytm wpisujacy prostatę w prostokąt
+\item Algorytm znajdujący otoczkę wypukłą dla największego spójnego elementu maski
+\item Algorytm znajdujący otoczkę wypukłą dla wszystkich elementów maski
+\end{enumerate}
+
+Przykłady różnych wyników pola powierzchni dla masek:
+
+Przykład pierwszy, w którym Wysegmentowana maska jest jednym spójnym elementem. \\ \\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/maska.png}
+	\captionof{figure}{Maska przykład 1}
+\end{minipage}
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/square.png}
+	\captionof{figure}{Maska przykład 1 Wpisana w prostokąt}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/hull.png}
+	\captionof{figure}{Maska przykład 1 Otoczka wokół największego elementu}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/hull.png}
+	\captionof{figure}{Maska przykład 1 Otoczka wypukła}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/hosp.png}
+	\captionof{figure}{Maska przykład 1 Algorytm szpitalny}
+\end{minipage}
+
+Porównując wyniki pierwsza rzecz jaka rzuca się w oczy to fakt, że dla maski znalezionej algorytmem szpitalnym daje zdecydowanie większy wynik niż we wszystkich pozostałych zdjęciach. Jest to spowodowane faktem, że największy wysegmentowany element ma właśnie takie pole. Kolejnym spostrzeżeniem jest fakt, że algorytmy liczenia otoczek wypukłych dają ten sam rezultat. Jest to oczekiwane zachowanie.
+
+Przykład drugi, w którym Wysegmentowana maska nie jest spójna. \\ \\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/mask.png}
+	\captionof{figure}{Maska przykład 2}
+\end{minipage}
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/square.png}
+	\captionof{figure}{Maska przykład 2 Wpisana w prostokąt}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/biggest.png}
+	\captionof{figure}{Maska przykład 2 Otoczka wokół największego elementu}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/hull.png}
+	\captionof{figure}{Maska przykład 2 Otoczka wypukła}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/hosp.png}
+	\captionof{figure}{Maska przykład 2 Algorytm szpitalny}
+\end{minipage}
+\\ \\
+Jak widać algorytm szpitalny i nasz opisujący prostatę na prostokącie daje ten sam rezultat, ponieważ jest to też największa maska z całego zbioru testowego. W tym przypadku widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ prostat jest znaleziona częściowo w kilku elementach obrazu, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla największego spójnego fragmentu. Przykład również obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
+
+Dane policzone objętości prostaty przedstawiono w tabli poniżej \\
+\begin{table}[h!]
+\caption{Wartości objętości}
+\centering
+\begin{tabular}{|p{5cm}|l|} \hline  
+Algorytm & Uzyskana objętość  \\ \hline 
+Algorytm szpitalny & 189255 * 0,54 = 102198  \\ \hline 
+Wpisanie gruczołu w prostokąt & 71910  \\ \hline 
+Otoczka wypukła dla największego elementu & 34419  \\ \hline 
+Otoczka wypukła wokół całej maski & 46958  \\ \hline          
+\end{tabular}
+\end{table}
+
+Jak widać algorytm stosowany obecnie w szpitalu daje rezultaty nawet do 3 razy większych względem proponowanych przez nas metod. Warto zauważyć, że w naszym algorytmie liczącym objętość poprawiającego obraza za pomocą wpisywania maski w prostokąt nie używamy czynnika skalującego a mimo to uzyskujemy mniejszy wynik. To pokazuje jak bardzo niedokładny jest algorytm szpitalny. Algorytmy stosujące otoczkę wypukłą dają wyniki najbardziej zbliżone do rzeczywistości.
+
+\subsection{Alternatywne podejścia}
+Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również
+\begin{description}
+\item Pole powierzchni prostokąta na którym można opisać największy spójny element uzyskany w procesie segmentacji. Z uwagi na małe zróżnicowanie względem opisanych przez nas metod nie uwzględniliśmy jej w algorytmach udostępnianych przez naszą aplikację
+\item Wybór elementów wokół których szukamy otoczki wypukłej na podstawie pewnej funkcji. Jest to zagadnienie skomplikowane, ponieważ możliwych funkcji jest bardzo dużo. Na przykład moglibyśmy szukać otoczki wokół wszystkich elementów maski znajdujących się w określonej odległości od środka największego elementu maski.
+\item Przy poprawianiu maski uwzględniamy wszystkie warstwy. Czyli w przypadku gdy aktualna maska jest niespójna z poprzedzającą oraz następującą po sobie, wówczas zamiast niej bierzemy maskę będącą średnią dwóch wymienionych.
+\end{description}
+Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na stopień skomplikowania nie podjęliśmy się badaniu ich w pracy inżynierskiej.
+
+\section{Moduł backedowy}
+
+Moduł zaimplementowany w .NET Framework odpowiada za komunikację z warstwą prezentacji, komunikację między resztą serwisów oraz dostępem do bazy danych. Podstawowe funkcje
+\begin{enumerate}
+\item Udostępnia API do komunikacji z naszym modułem frontendowym oraz umożliwiający integrację z dowolnym innym systemem, który mógłby wykorzystywać nasze API. Interfejs zapewnia pełen dostęp do tabel czyli wszystkie operacje \textit{CRUD} jakie mogą być potrzebne przy rozwoju systemu. Dodatkowo daje zapewnia komunikację użytkownika ze wszystkimi kontenerami. W tym przypadku zakres operacji jest ograniczony do minimum.
+\item Obsługę bazy danych. W tym obsługę dodawania nowych pacjentów z plików oraz systemu PACS, migrację bazy danych oraz obsługę kwerend i procedur.
+\item Komunikację z pozostałymi komponentami backendowymi.
+\end{enumerate}
+
+Staraliśmy się w pracy zastosować wszystkie najlepsze praktyki wykożystywane przy projektowaniu oprogramowania takie jak zasady \textit{SOLID} oraz wzorce projektowe jak \textit{Dependency Injection}. Za spełnienie tego ostatniego w aplikacji odpowiada kontener Autofac.
+
+\subsection{Diagram zależności}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Backend/ApplicationDependencies.png}
+	\captionof{figure}{Diagram zależności}
+\end{minipage}
+
+Jak widać podstawowe projekty w systemie to
+\begin{enumerate}
+\item Application.Data - który jest warstwą dostępu do danych w aplikacji, definiuje encje oraz zarządza połączeniem z bazą danych.
+\item Application - definiuje podstawowe obiektu współdzielone między modułami takie jak modele, wyjątki, logowanie, mapowanie obiektów.
+\item Applicaition.Interfaces - projekt definiuje wszystkie kontrakty za pomocą których klasy komunikują się ze sobą
+\item Applicaition.Services - zawiera implementację interfejsów zdefiniowanych w projekcie \textit{Interfaces}.
+\item Application.Dicom - odpowiada za obsługę plików DICOM. Moglibyśmy zaimplementować go w projekcie \textit{Services} jednak z uwagi na złożoność zdecydowaliśmy umieści go w osobnym module.
+\end{enumerate}
+
+Projektując architekturę rozwiązania zależało nam aby komponenty były ze sobą luźno powiązane, przez co unikniemy niepotrzebnych nad którymi trudno zapanować. Moduły podstawowe są zależne tylko do projektu \textit{Interfaces} co zapewnia oczekiwane luźne łączenie i komunikację pomiędzy nimi. Warto zauważyć, że projekt który udostępnia nasze REST API jest zależny tylko od projektu \textit{Interfaces}.
+
+\subsection{Baza danych}
+
+Plik wejściowy jest plikiem binarnym zawierającym wiele informacji o pacjencie, w przypadku aplikacji, którą tworzymy przy każdym odwołaniu do kolejnych warstw przetwarzanie pliku jest bardzo nieefektywne. Dlatego postanowiliśmy plik przetwarzać tylko raz przy dodawaniu, a przy odwołaniach zwracać dane z bazy danych.
+\par
+Ponieważ według standardu DICOM \cite{standardDICOM} zawiera ponad 4 tysiące tagów. Po przeanalizowaniu plików wejściowych zauważyliśmy, że w naszym przypadku uzupełniona jest tylko część danych. 
+\par
+W bazie danych przechowujemy wybrane dane istotne z punktu widzenia działania aplikacji oraz potrzeb lekarza. Wybraliśmy strukturę gdzie dla jednego pacjenta informację na temat obrazów oraz danych są wspólne i nie zmieniają się dla kolejnych warstw obrazu. Dlatego jedyne informacje dotyczące obrazu są przechowywane dla każdego pliku osobno. Poniżej zamieszczono diagram encji jakie znajdują się w bazie danych.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Backend/SchematBazy.png}
+	\captionof{figure}{Schemat bazy danych}
+\end{minipage}
+
+\section{Moduł prezentacji}
+Aplikacja jest stworzona w architekturze SPA (Single Page Application). Wykorzystanie tego podejścia pozwala na wyświetlanie wielu widoków bez konieczności pobierania ponownie tych samych informacji, dzięki temu zachowując płynne działanie strony internetowej. Stusując te podejście zyskujemy na płynności działania oraz lepsze odczucia użytkownika przy korzystaniu z serwisu.
+
+Naszą aplikację stworzyliśmy przy pomocy biblioteki React. Ułatwia ona myślenie o logice biznesowej aplikacji dzieląc stronę na komponenty. Każdy komponent składa się z co najmniej jednego HTML tagu i jest odpowiedzialny za inną część widoczną na stronie. Granulacja komponentów sprzyja pisaniu złożonych aplikacji poprzez separację stanów każdego z komponentów.
+Naszą aplikację stworzyliśmy przy pomocy biblioteki React. Ułatwia ona myślenie o logice biznesowej aplikacji dzieląc stronę na komponenty. Każdy komponent składa się z co najmniej jednego HTML tagu i jest odpowiedzialny za inną część widoczną na stronie. Granulacja komponentów sprzyja pisaniu złożonych aplikacji poprzez separację stanów każdego z komponentów.
+
+Opiszemy w skrócie dostępne akcje użytkownika oraz sposób w jaki zostały zaimplementowane.
+
+\subsection{Widok startowy}
+Pierwszy ekran jaki jest wyświetlany w naszej spełnia trzy podstawowe funkcjonalności.
+\begin{enumerate}
+\item Wyświetlenie listy pacjentów dostępnych w aplikacji.
+\item Dodanie nowego użytkownika do bazy danych.
+\item Integracja z systemem PACS.
+\end{enumerate}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/0.png}
+	\captionof{figure}{Ekran startowy}
+\end{minipage}
+
+Aby dodać nowego pacjenta, należy nacisnąć przycisk \textit{Add New Patient}.Pojawi się nowe okno w którym użytkownik powinien wybrać wszystkie pliki z danymi pacjenta, następnie nacisnąc \textit{Upload}. Po udanym procesie należy zamknąć okienko.
+\par
+Dodawanie pacjenta w zależności od ilości obrazów może potrwać dłużej. Jest to spowodowane wysyłaniem dużej ilości danych przez sieć.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/15.png}
+	\captionof{figure}{Dodawanie pacjenta}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/95.png}
+	\captionof{figure}{Wybór plików}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/114.png}
+	\captionof{figure}{Proces zakończony}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/410.png}
+	\captionof{figure}{Proces zakończony}
+\end{minipage}
+
+
+\subsection{Widok pacjenta}
+
+Lista pacjentów wyświetla ich identyfikatory w systemie. Aby przejść do widoku wyświetlającego wszystkie informacje o pacjencie należy nacisnąć na wybranego pacjenta.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Patient/0.png}
+	\captionof{figure}{Przejście do widoku pacjenta}
+\end{minipage}
+
+Widok pacjenta przedstawia nam wszystkie informacje jakie posiadamy na temat danego przypadku badanego. W szczególności:
+\begin{description}
+\item Dane pacjenta z pliku DICOM, takie jak: nazwa, wiek, płeć, wzrost, waga oraz inne. Wyświetlamy tylko informacje, które w danym pliku się znajdowały. Jeżeli jakieś dane miały wartość pustą pomijamy je. Jeżeli dane podlegały wcześniejszej anonimizacji dane wrażliwe jakie zobaczymy na interfejsie użytkownika nie będą danymi odpowiadającymi tym z systemu szpitalnego.
+\item Informacje na temat obrazu, takie jak: wymiary obrazu (szerokość i wysokość), odległość między kolejnymi obrazami w badaniu, odległości między konkretnymi pixelami na obrazie.
+\item Informacje na temat objętości oraz przyciski do kalkulacji objętości według wybranego algorytmu.
+\item Obraz z rezonansu magnetycznego oraz maskę znalezioną w procesie segmentacji wraz z możliwością edycji.
+\end{description}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Patient/22.png}
+	\captionof{figure}{Widok pacjenta}
+\end{minipage}
+
+Aby obliczyć objętość na podstawie masek znajdujących się obecnie w bazie danych należy nacisnąć odpowiedni przycisk znajdujący się na górze strony. Udostępniamy trzy alternatywne metody opisane w poprzednim rozdziale. Po naciśnięciu przycisku objętość jest obliczana oraz automatycznie aktualizowana na stronie tak jak i w bazie danych.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Patient/343.png}
+	\captionof{figure}{Kalkulacja objęctości}
+\end{minipage}
+
+Aby przełączać się pomiędzy poszczególnymi warstwami należy nacisnąć przycisk po prawej lub lewej stronie obrazu.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/15.png}
+	\captionof{figure}{Przechodzenie pomiędzy kolejnymi obrazami}
+\end{minipage}
+
+\subsection{Edycja obrazu}
+
+Zapewniamy możliwość edycji masek obliczonych w procesie segmentacji. Udostępniamy opcje rysowani \textit{Pencil} oraz usuwania \textit{Rubber}. Po wybraniu narzędzia użytkownik może rysować po obrazie.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/117.png}
+	\captionof{figure}{Rysowanie maski}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/236.png}
+	\captionof{figure}{Usuwanie maski}
+\end{minipage}
+
+Po zakończeniu edycji należy nacisnąć przycisk \textit{Update mask}.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/170.png}
+	\captionof{figure}{Aktualizacja mask}
+\end{minipage}
+
+W przypadku gdy chcemy przywrócić pierwotną maskę znalezioną przez nasz algorytm segmentacji należy wybrać opcję \textit{Restore mask}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/323.png}
+	\captionof{figure}{Resetowanie maski}
+\end{minipage}
+
+Dodatkowo zapewniamy możliwość ukrycia maski w przypadku gdy lekarz chciałbym przeglądać zdjęcia bez przysłaniania go maską.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/366.png}
+	\captionof{figure}{Ukryj maskę}
+\end{minipage}
+
+//todo pacs
+
+
+% -------------------- Podsumowanie rezultatów -----------------------
+\chapter{Podsumowanie rezultatów}
+Ten rozdział jest poświęcony przedstawieniu rezultatów pracy nad omawianym systemem. Omówione zostaną testy, które zostały przeprowadzone w celu zbadania, czy stworzone rozwiązanie odpowiada założeniom, przedstawionym w rozdziale \textit{Specyfikacja}. Rozdział obejmuje także omówienie wniosków wyciągniętych podczas pracy nad tworzonym systemem. 
+
+\section{Integracja z systemem informatycznym}
+Podstawowym wymaganiem dotyczącym naszej pracy jest możliwość integracji i używania go razem z obecnymi w szpitalu systemami. Podczas naszej współpracy ze szpitalem niestety doszliśmy do wniosku, że nie jest możliwa integracja z systemem używanym na co dzień w szpitalu. System ten jest napisany przez firmę Philips i nie ma w nim możliwości instalacji wtyczek, a cały kod źródłowy jest utajniony. Przez co w naszym systemie proponujemy obejście tego problemu poprzez łączenie się z siecią szpitalna przez przeglądarkę i w ten sposób pobieranie danych. Dzięki temu eliminujemy cały proces pozyskiwania zgód na dostęp oraz potrzebę utrzymywanie bezpiecznego kanału komunikacji, a zamiast tego wykorzystujemy połączenie które komputer zjadający się w podsieci szpitalnej już ma do systemu PACS. Dzięki zastosowaniu modułu anonimizacji nasz system jest bezpieczny i gwarantujemy, że dane jakie zostają zachowane na naszym serwerze nie są wrażliwe. Oprócz bycia bezpiecznym nasze oprogramowanie ma jeszcze jedną zaletę. Lekarz może zacząć go używać bez konsultacji z działem IT szpitala. Wystarczy, że ma komputer, który nie jest w szpitalnej sieci, plik instalacyjny oraz plik z identyfikatorami.
+
+\section{Wnioski}
+Przedstawiony system może poprawić komfort pracy lekarza radiologa. Jednak w zarówno w organizacji pracy radiologów jak i w naszym rozwiązaniu pozostaje wiele miejsca do wprowadzania usprawnień. Radiologowie pracowaliby wydajniej gdyby wszystkie dane pacjentów znajdowałby się w scentralizowanej bazie danych o immersywnym środowisku graficznym. 
+\par
+Aplikacja powstała przy wykorzystaniu najnowszych dostępnych technologii stąd w środowisku produkcyjnym może to sprawiać problemy. Jednak wszystkie biblioteki jakich użyliśmy w pracy są stale rozwijane i zapewniają dobre wsparcie dla deweloperów.
+
+\section{Dalszy rozwój systemu}
+Kwestie jakie należy bla bla bla
+
+% -------------------- 6. Bibliografia -----------------------
+% Bibliografia leksykograficznie wg nazwisk autorów
+
+\begin{thebibliography}{20}%jak ktoś ma więcej książek, to niech wpisze większą liczbę
+
+% \bibitem[numerek]{referencja} Autor, \emph{Tytuł}, Wydawnictwo, rok, strony
+% cytowanie: \cite{referencja1, referencja 2,...}
+\bibitem[1] {rynekZdrowia} \emph{Strona internetowa Rynek Zdrowia}, http://www.rynekzdrowia.pl/Serwis-Onkologia/Eksperci-wzrasta-zachorowalnosc-i-umieralnosc-Polakow-na-raka-prostaty,153015,1013.html
+\bibitem[2] {konkurs} \emph{Dane konkursowe}, https://wiki.cancerimagingarchive.net/plugins/servlet/contentId=23691656/\#content/view/23691656
+\bibitem[3] {standardDICOM} \emph {Standard DCIOM}, https://www.dicomstandard.org/
+\bibitem[4] {OpenCV} \emph {Open CV} https://opencv.org/
+\bibitem[5] {imageOrg} \emph {Przetwarzanie danych w medycynie} http://www.image-net.org/
+\bibitem[6] {konkretny} \emph {Dane do uczenia sieci }https://wiki.cancerimagingarchive.net/display/Public/NCI-ISBI+2013+Challenge+-+Automated+Segmentation+of+Prostate+Structures
+%\bibitem[2] https://www.nhs.uk/conditions/prostate-cancer/diagnosis/
+%\bibitem[3] https://www.cancer.org/cancer/prostate-cancer/detection-diagnosis-staging/how-diagnosed.html
+%\bibitem[5] https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
+\end{thebibliography}
+\thispagestyle{empty}
+
+
+% --- 7. Wykaz symboli i skrótów - jeśli nie ma, zakomentować
+\chapter*{Wykaz symboli i skrótów}
+
+\begin{tabular}{cl}
+HTTP & Hypertext Transfer Protocol \\
+IDE & Integrated Development Environment \\
+np. & Na przykład \\
+tzw. & Tak zwany \\
+\end{tabular}
+\thispagestyle{empty}
+
+
+% ----- 8. Spis rysunków - jeśli nie ma, zakomentować --------
+\listoffigures
+\thispagestyle{empty}
+
+
+% ------------ 9. Spis tabel - jak wyżej ------------------
+\renewcommand{\listtablename}{Spis tabel}
+\listoftables
+\thispagestyle{empty}
+
+
+
+% 10. Spis załączników - jak nie ma załączników, to zakomentować lub usunąć
+
+\chapter*{Spis załączników}
+\begin{enumerate}[itemsep = 0pt]
+\item Załącznik 1 - Opis API
+\end{enumerate}
+\thispagestyle{empty}
+
+% --------------------- 11. Załączniki ---------------------
+% to jest po to, żeby było wiadomo, że załączniki znajdują się na końcu pracy
+
+\newpage
+\pagestyle{empty} 
+\section{Załącznik 1 - Opis API}
+\includepdf[pages=-]{API.pdf}
+
+\end{document}

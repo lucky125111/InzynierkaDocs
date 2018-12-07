@@ -1,0 +1,106 @@
+\documentclass[12pt,twoside,a4paper]{article}
+% compile this with XeLaTeX. Arial and Arial Narrow are needed
+
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec,newunicodechar}
+\defaultfontfeatures{Ligatures=TeX}
+\usepackage[small,sf,bf]{titlesec}
+
+\usepackage{indentfirst}
+\setlength{\parindent}{5mm}
+
+\usepackage{hyphenat}
+\hyphenation{in-for-ma-cyj-nych}
+
+%\usepackage[MeX]{polski}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{a4wide}
+\geometry{left=20mm,right=20mm,bindingoffset=10mm, top=25mm, bottom=25mm}
+
+
+\newfontfamily\arial{Arial}
+
+\linespread{1.5}
+
+\usepackage{xunicode}
+\usepackage{xltxtra}
+ 
+ 
+\usepackage{amsfonts}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{latexsym,xpatch}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage{textcomp}
+\usepackage{multirow}
+
+
+\def\discipline{Computer Science}
+\def\spec{Name of a specialisation}
+\def\title{Thesis title}
+\def\author{Name Surname}
+\def\supervisor{title/degree Name Surname}
+\def\album{123456}
+\def\year{2017}
+
+\begin{document}
+\sloppy
+\pagestyle{empty}
+
+
+\hspace{-20pt}\includegraphics[scale=1.]{wut}
+
+\begin{center}
+\vspace{70pt}
+
+
+\includegraphics[scale=1.]{bachelor} % or master
+
+{ \arial
+in the field of study~\discipline \\
+and specialisation~\spec
+
+\vspace{30pt}
+{\arial \large \title}
+
+\vspace{50pt}
+
+{\arial \huge \author}
+
+\vspace{5pt}
+
+student record book number \album
+
+\vspace{40pt}
+
+thesis supervisor \\
+{\arial \supervisor}
+
+\vspace{15pt}
+ 
+consulation (optional)  \\
+{\arial academic title/degree Name and Surname}
+
+ \vfill
+WARSAW \year \\
+}
+\end{center}
+
+
+\newpage
+\null
+
+\vfill
+
+\begin{center}
+\begin{tabular}[t]{ccc}
+............................................. & \hspace*{100pt} & .............................................\\
+supervisor's signature & \hspace*{100pt} & author's signature
+\end{tabular}
+\end{center}
+
+
+\end{document}
