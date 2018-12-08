@@ -294,34 +294,34 @@ Oświadczenie % Declaration - for English
 % -------------------- Wstęp -----------------------
 \chapter{Wstęp} % Intruduction
 
-Rak prostaty to drugi – zaraz po raku płuc – najczęściej diagnozowany nowotwór u mężczyzn. W ciągu ostatnich lat w Polsce wzrasta zachorowalności na raka stercza, a także – choć w mniejszym stopniu – umieralność. KRN prognozuje, że w naszym kraju w 2015 r. zostanie wykrytych 14 tys. nowych przypadków raka prostaty, a 5 tys. chorych z wcześniej wykrytą chorobą umrze, na ogół po kilku latach leczenia. W 2012 r., zaledwie trzy lata temu, z powodu tego nowotworu zachorowało 11 tys. mężczyzn, a 4,1 tys. zmarło. Odwrotną tendencję obserwuje się w zachodniej Europie i Stanach Zjednoczonych, gdzie odnotowuje się spadek zachorowalności i umieralności na ten nowotwór. Wszystko dzięki zastosowaniu najnowszych metod leczenia i wczesnej diagnostyce. \cite{rynekZdrowia}
+Rak prostaty to drugi – zaraz po raku płuc – najczęściej diagnozowany nowotwór u mężczyzn. W ciągu ostatnich lat w Polsce wzrasta zachorowalności na raka stercza, a także – choć w mniejszym stopniu – umieralność. KRN prognozuje, że w naszym kraju w 2015 r. zostanie wykrytych 14 tys. nowych przypadków raka prostaty, a 5 tys. chorych z wcześniej wykrytą chorobą umrze. W 2012 r., zaledwie trzy lata temu, z powodu tego nowotworu zachorowało 11 tys. mężczyzn, a 4,1 tys. zmarło. Odwrotną tendencję obserwuje się w zachodniej Europie i Stanach Zjednoczonych, gdzie odnotowuje się spadek zachorowalności i umieralności na ten nowotwór. Wszystko dzięki zastosowaniu najnowszych metod leczenia i wczesnej diagnostyce. \cite{rynekZdrowia}
 \par
-Dlatego też, w niniejszej pracy podjęto się zbadania możliwości automatyzacji wykrywania prostaty na zdjęciach rezonansu magnetycznego, aby wspomóc pracę lekarza i ułatwić diagnostykę. Opisane poniżej algorytmy obliczania objętości gruczołu prostaty mogą być wskazówka dla lekarza podczas stawiania diagnozy. 
+Dlatego też, w niniejszej pracy podjęto się zbadania możliwości automatyzacji wykrywania prostaty na zdjęciach rezonansu magnetycznego., poprzez automatyczną segmentację prostaty i obliczanie objętości. Opisane poniżej algorytmy obliczania wielkości gruczołu mogą być wskazówka dla lekarza podczas stawiania diagnozy. 
 \par
-System powstały jako produkt poniższej pracy dzięki zastosowaniu modularnej architektury może być dostosowany do bardziej zaawansowanych systemów szpitalnych oraz rozszerzony o bardziej zaawansowane algorytmy na przykład oparte o głębokie uczenie maszynowe.
+System powstały jako produkt poniższej pracy dzięki zastosowaniu modularnej architektury może być dostosowany do zaawansowanych systemów szpitalnych oraz rozszerzony o alternatywne algorytmy na przykład oparte o głębokie uczenie maszynowe.
 \par
 Za implementację oraz wdrożenie algorytmu segmentacji prostaty bazującej na danych konkursowych przy użyciu konwolucyjnych sieci neuronowych oraz moduł prezentacji aplikacji odpowiada Rafał Buzun.
 \par
-Za stworzenie, opisanie zbioru testowego, przeprowadzenie analizy statystycznej wyników badań rezonansu magnetycznego oraz rozpoznanie architektury szpitalnego systemu informatycznego i integrację z systemem PACS odpowiada Jakub Karolak.
+Za stworzenie, opisanie zbioru testowego, przeprowadzenie analizy biznesowej oraz statystycznej wyników badań rezonansu magnetycznego oraz rozpoznanie architektury szpitalnego systemu informatycznego i integrację z systemem PACS odpowiada Jakub Karolak.
 \par
 Za zaprojektowanie architektury oraz implementacje serwera, w tym obsługę bazy danych i przetwarzanie plików DICOM oraz implementacja wybranych metod obliczania objętości prostaty odpowiada Łukasz Berwid
 
 \section{Diagnostyka raka prostaty}
-Podstawowym objawem świadczącym o problemach z gruczołem prostaty jest ból lub pieczenie przy oddawaniu moczu lub nieregularne oddawanie moczu. Takie same objawy ma schorzenie nazywane "łagodnym rozrostem gruczołu krokowego". Mężczyźni nie zwykli bagatelizować takich problemów, więc rak prostaty w 75\% jest wykrywany w bezobjawowym stadium ograniczonym do narządu, dzięki czemu łatwo jest go wyleczyć. 
+Objawemi świadczącymi o problemach z gruczołem prostaty jest ból lub pieczenie przy oddawaniu moczu lub nieregularne oddawanie moczu. Takie same objawy ma schorzenie nazywane "łagodnym rozrostem gruczołu krokowego". Mężczyźni nie zwykli bagatelizować takich problemów, więc rak prostaty w 75\% jest wykrywany w bezobjawowym stadium ograniczonym do narządu, dzięki czemu łatwo jest go wyleczyć. 
 \par
-Pierwszym z badań, które jest wykonywane w przypadku podejrzenia występowania nowotworu jest badanie poziomu PSA we krwi. PSA jest antygenem sterczowym, który jednoznacznie może określić fakt posiadania problemów z prostatą. Jeśli pacjent ma znikomą obecność antygenu we krwi, to nie może on mieć raka. Jeśli poziom PSA jest zawyżony, następują kolejne badania.
+Pierwszym z badań, które jest wykonywane w przypadku podejrzenia występowania nowotworu jest badanie poziomu PSA we krwi. PSA jest antygenem sterczowym, który daje nam podstawowe informacje na temat problemów z gruczołem pacjenta.
 \par
-Zazwyczaj następnym badaniem jest badanie palpacyjne per rectum. W przypadku tego badania, lekarz szuka nieprawidłowości w kształcie i twardości stercza. Niestety to badanie nie przynosi idealnych efektów, ponieważ ok. 30\% nowotworów znajduje się w rejonie prostaty nieosiągalnym przez badanie palpacyjne. 
+Zazwyczaj następnym badaniem jest badanie palpacyjne per rectum. W przypadku tego badania, lekarz szuka nieprawidłowości w kształcie i twardości stercza. Badanie obarczone jest duża niedokładnością, ponieważ ok. 30\% nowotworów znajduje się w rejonie prostaty nieosiągalnym przez badanie palpacyjne. 
 \par
-W przypadku podejrzeń nowotworu zazwyczaj wykonuje się dwa kolejne badania. Jest to biopsja stercza oraz badanie USG. Biopsja o wyniku pozytywnym jednoznacznie definiuje posiadanie nowotworu. Badanie USG jest mniej dokładne, zazwyczaj jest robione w celu określenia wytycznych do badania MR, czyli rezonansu magnetycznego.
+W przypadku podejrzeń nowotworu wykonuje się dwa kolejne badania. Jest to biopsja stercza oraz badanie USG. Biopsja o wyniku pozytywnym jednoznacznie definiuje posiadanie nowotworu. Badanie USG cechuje się mniejszą dokładnością,  jest robione w celu określenia wytycznych do badania MR, czyli rezonansu magnetycznego.
 \par
-Badanie MR jest bardzo dokładne, radiolog za pomocą oprogramowania jest w stanie znaleźć nawet najmniejsze zmiany w strukturze gruczołu. Często po wynikach rezonansu zlecana jest biopsja celowana, która ma sięgnąć do już zbadanych przez rezonans rejonów prostaty. 
+Badanie MR cechuje się większą dokładnością, radiolog za pomocą oprogramowania jest w stanie znaleźć nawet najmniejsze zmiany w strukturze gruczołu. Często po wynikach rezonansu zlecana jest biopsja celowana, która ma sięgnąć do już zbadanych przez rezonans rejonów prostaty. 
 Pełny zestaw badań, tj, badanie PSA, badanie palpacyjne, USG, MR oraz biopsja jest w stanie jednoznacznie postawić diagnozę.
 \par
 W obecnej chwili, w szpitalu MSWiA w Warszawie, do opisu prawdopodobieństwa istnienia nowotworu w danym miejscu prostaty jest używana skala PI-RADS v2.
 
 \subsubsection{PIRADS} 
-Ocena PI-RADS v2 opiera się na wykorzystaniu pięciopunktowej skali opracowanej w oparciu o obserwację, że istnieje zależność pomiędzy trzema badanymi obszarami: T2W, DWI oraz DCE a prawdopodobieństwem, że uwidocznione zmiany mają charakter nowotworowy.Zaszeregowanie do określonej kategorii według PI-RADS v2 powinno opierać się na wynikach badań mpMRI i nie powinno uwzględniać innych czynników, takich jak stężenie PSA, wynik badania per rectum, dane uzyskane z wywiadu lub przebytego leczenia. Przy wynikach rzędu 4-5 w skali PIRADS występuje bardzo wysokie prawdopodobieństwo posiadania istotnej klinicznie formy nowotworu. W takich przypadkach, jeśli jeszcze nie została wystawiona diagnoza, należy bezzwłocznie wykonać biopsję.
+Ocena PI-RADS v2 opiera się na wykorzystaniu pięciopunktowej skali opracowanej w oparciu o obserwację, że istnieje zależność pomiędzy trzema badanymi obszarami: T2W, DWI oraz DCE a prawdopodobieństwem, że uwidocznione zmiany mają charakter nowotworowy.Zaszeregowanie do określonej kategorii według PI-RADS v2 powinno opierać się na wynikach badań mpMRI i nie powinno uwzględniać innych czynników, takich jak stężenie PSA, wynik badania per rectum, dane uzyskane z wywiadu lub przebytego leczenia. Przy wynikach rzędu 4-5 w skali PIRADS występuje wysokie prawdopodobieństwo posiadania istotnej klinicznie formy nowotworu. W takich przypadkach, jeśli jeszcze nie została wystawiona diagnoza, należy bezzwłocznie wykonać biopsję.
 
 \subsubsection{PSA}
 PSA czyli swoisty antygen sterczowy. Jest to związek wytwarzany w gruczole krokowym (prostacie). Obecność tego enzymu we krwi jest wykorzystywana w diagnostyce, monitorowaniu i leczeniu raka prostaty od 1986 roku. Fakt posiadania podwyższonego poziomu PSA we krwi nie jest zawsze jednoznaczny z chorobą. Badanie to daje około 25\% fałszywie dodatnich wyników. Niestety fakt nieposiadania podwyższonego PSA może być równie mylący. W 20\% przypadków to badanie daje fałszywie ujemny wynik. Standardy Europejskiego Towarzystwa Urologicznego zalecają coroczne oznaczanie PSA u mężczyzn po 50 roku życia. 
@@ -329,15 +329,15 @@ Kompletnie zdrowy mężczyzna powinien mieć PSA na poziomie <1,5 ng/ml. Przy ta
 
 \subsubsection{PSAD}
 W celu poprawienia wykrywalności raka stercza opracowano współczynnik gęstości PSA, tzw.
-PSAD, który oblicza się dzieląc stężenia PSA w ng/ml przez objętość stercza. Ta kalkulacja powinna, teoretycznie rzecz biorąc, pomóc w ustaleniu, czy mamy do czynienia z rakiem stercza, czy też łagodnym rozrostem prostaty, podczas którego także wydziela się antygen PSA.
+PSAD, który oblicza się dzieląc stężenia PSA w ng/ml przez objętość stercza. Ten współczynnik pomaga w ustaleniu, czy mamy do czynienia z rakiem stercza, czy też łagodnym rozrostem prostaty, podczas którego także wydziela się antygen PSA. Badania potwierdzają, że isnieje korelacja pomiędzy wartością współczyninka PSAD a występowaniem nowotworu.
 
 \subsubsection{Rezonans magnetyczny}
-Rezonans magnetyczny (MRI) to metoda uzyskiwania obrazów wnętrza człowieka. Nie wykorzystująca promieniowania rentgenowskiego. Zamiast tego wykorzystuje fale o częstotliwości radiowej i intensywne pole magnetyczne do wzbudzania atomów w badanym obiekcie. Rezonans może zapewniać w czasie rzeczywistym trójwymiarowe widoki narządów, mięśni lub stawów.
+Rezonans magnetyczny (MRI) to technika obrazowania medycznego stosowana w radiologii do tworzenia obrazów anatomii i procesów fizjologicznych organizmu. Skanery wykorzystują silne pola magnetyczne, gradienty pola magnetycznego i fale radiowe do generowania obrazów narządów w ciele. Rezonans nie obejmuje promieni rentgenowskich ani promieniowania jonizującego, co odróżnia go od tomografii komputerowej lub  skanów PET.
 \par
-Pełna nazwa badania brzmi "Obrazowanie metodą rezonansu magnetycznego". Warto jest zaznaczyć fakt obrazowania, ponieważ istnieje jeszcze drugie zastosowanie tego aparatu, mianowicie spektroskopia, wykorzystywana w chemii i fizyce molekularnej. 
+Pełna nazwa badania brzmi \textit{Obrazowanie metodą rezonansu magnetycznego}. Warto jest zaznaczyć fakt obrazowania, ponieważ istnieje jeszcze drugie zastosowanie tego aparatu, mianowicie spektroskopia, wykorzystywana w chemii i fizyce molekularnej. 
 
 \subsubsection{Badanie objętości gruczołu}
-W szpitalach używane są dwie konwencjonalne metody pomiaru objętości stercza. Obie opierają się na tych samych obliczeniach, różnią się sposobem pozyskiwania danych. Pierwszym z nich jest badanie MR, a drugim TRUS, czyli przezodbytnicze badanie USG. Kiedy lekarz wykona badanie może przeglądać jego wyniki w odpowiednim specjalistycznym programie. Lekarz ogląda gruczoł w różnych płaszczyznach, zaznaczając punkty skrajne. Po zaznaczeniu najbardziej skrajnych punktów wyliczane są trzy wymiary prostaty: szerokość, wysokość i długość. Aby uzyskać objętość prostaty należy zastosować wzór 
+W szpitalach używane są trzy metody pomiaru objętości stercza. Pierwszym jest subiektywne badanie per rectum w ktrórym lekarz ręcznie sprawdza objętość prostaty. Dwie pozostałe opierają się na tych samych obliczeniach, różnią się sposobem pozyskiwania danych. Pierwszym z nich jest badanie MR, a drugim TRUS, czyli przezodbytnicze badanie USG. Lekarz ogląda gruczoł w różnych płaszczyznach, zaznaczając punkty skrajne. Po zaznaczeniu najbardziej skrajnych punktów wyliczane są trzy wymiary prostaty: szerokość, wysokość i długość. Aby uzyskać objętość gruczłu krokowego należy zastosować wzór 
 
 \[V = d * h * l * 0.54\]
 gdzie
@@ -349,43 +349,45 @@ Stała 0.52 jest próbą przybliżenia kształtu prostaty figurą geometryczną.
 \[V = pi/6 * a*b*c\]
 gdzie abc, to kolejne wymiary elipsy. 
 
-W naszych danych, wśród pacjentów, którzy przeszli zarówno badanie MR jak i badanie TRUS odchylenie standardowe różnicy objętości wynosi 20 ml. Jest to bardzo dużo, zważywszy na to, że prostata zdrowego mężczyzny powinna mieć objętość poniżej 25 ml. 
-
 \section{Architektura szpitala}
 
-Architektura szpitalna składa się z wielu komponentów w poniższej pracy musieliśmy zlokalizować komponenty, które będą niezbędne do integracji z naszym systemu. Podstawowym elementem w sieci IT szpitala jest system informacji szpitalnej (HIS), który koncentruje się głównie na potrzebach administracyjnych szpitali. W wielu wdrożeniach system HIS jest kompleksowym, zintegrowanym systemem informatycznym zaprojektowanym do zarządzania wszystkimi aspektami funkcjonowania szpitala, takimi jak zarządzają danymi demograficznymi pacjentów, ubezpieczeniem informacje, planowaniem leczenia klinicznego, działaniem laboratorium oraz zarządzaniem historią pacjenta i badaniami pacjenta
-Poniżej opiszemy najważniejsze dla nas elementy.
+Architektura szpitalna składa się z wielu komponentów w poniższej pracy zlokalizowaliśmy komponenty, które będą niezbędne do integracji z opisywanym system. Podstawowym elementem w sieci IT szpitala jest system informacji szpitalnej (HIS), który koncentruje się głównie na potrzebach administracyjnych szpitali. W wielu wdrożeniach system HIS jest kompleksowym, zintegrowanym systemem informatycznym zaprojektowanym do zarządzania wszystkimi aspektami funkcjonowania szpitala, takimi jak zarządzają danymi demograficznymi pacjentów, ubezpieczeniem informacje, planowaniem leczenia klinicznego, działaniem laboratorium oraz zarządzaniem historią pacjenta i badaniami.
 
 \subsection{System archiwizacji obrazu PACS}
-PACS czyli system archiwizacji i komunikacji obrazu) to technologia obrazowania medycznego stosowana głównie w szpitalach i jednostkach medycznych do bezpiecznego przechowywania i cyfrowej transmisji obrazów elektronicznych i raportów o znaczeniu klinicznym. Korzystanie z PACS eliminuje potrzebę ręcznego przechowywania i przechowywania, wyszukiwania i wysyłania poufnych informacji, filmów i raportów. Zamiast tego dokumentacja medyczna i obrazy mogą być bezpiecznie przechowywane w zewnętrznych serwerach i bezpiecznie dostępne w zasadzie z dowolnego miejsca na świecie przy użyciu oprogramowania PACS, stacji roboczych i urządzeń mobilnych.
+PACS czyli system archiwizacji i komunikacji obrazu) to technologia obrazowania medycznego stosowana głównie w szpitalach i jednostkach medycznych do bezpiecznego przechowywania i cyfrowej transmisji obrazów elektronicznych i raportów o znaczeniu klinicznym. Korzystanie z PACS eliminuje potrzebę ręcznego przechowywania, wyszukiwania i wysyłania poufnych informacji, filmów i raportów. Daje to możliwość aby dokumentacja medyczna i obrazy były bezpiecznie przechowywane w zewnętrznych serwerach i dostępne z każdego miejsca na świecie przy użyciu oprogramowania PACS, stacji roboczych i urządzeń mobilnych. Ze względu na panujące prawo dotyczące ochrony danych osobowy i tego, że dane medyczne pacjentów są danymi wrażliwymi takie rozwiązania rzadko są stosowane w praktyce. Dane pacjentów są przechowywane na serwerach szpitalnych - tego wymaga prawo.
 \par
-PACS ma cztery główne komponenty: sprzętowe urządzenia obrazujące; bezpieczna sieć do dystrybucji i wymiany obrazów pacjentów; stacja robocza lub urządzenie mobilne do przeglądania, przetwarzania i interpretowania obrazów; i elektroniczne archiwa do przechowywania i wyszukiwania obrazów oraz powiązanej dokumentacji i raportów.
-Dostawcy PACS stosują różne składnie w DICOM, co utrudnia dane z jednego systemu do pracy w innym systemie. 
-\par
-W poniższej pracy jednym z zadań była integracja ze szpitalnym systemem PACS 
+PACS ma cztery główne komponenty: 
+\begin{enumerate}
+	\item Sprzętowe urządzenia obrazujące.
+	\item Bezpieczna sieć do dystrybucji i wymiany obrazów pacjentów.
+	\item stacja robocza lub urządzenie mobilne do przeglądania, przetwarzania i interpretowania obrazów.
+	\item Elektroniczne archiwa do przechowywania i wyszukiwania obrazów oraz powiązanej dokumentacji i raportów.
+\end{enumerate}
+Nie ma jednoznacznych standardów, którymi dostawcy się kierują wykorzystując standard DICOM, co utrudnia przenoszenie danych z jednego systemu do pracy w innym systemie. 
 
 \subsection{Radiologiczny System Informatyczny RIS}
 System informacji radiologicznej (RIS) to sieciowy system oprogramowania do zarządzania obrazami medycznymi i powiązanymi danymi. RIS jest szczególnie przydatny do śledzenia zleceń obrazowania radiologicznego i informacji rozliczeniowych i jest często używany w połączeniu z PACS do zarządzania archiwami obrazów i rejestrowaniem.
 
-RIS ma kilka podstawowych funkcji:
+RIS spełnia podstawowe funkcji:
 \begin{enumerate}
-\item Zarządzanie pacjentem - RIS może śledzić cały przebieg pracy pacjenta w dziale radiologii; Dostawcy radiologii mogą dodawać zdjęcia i raporty do EHRs, gdzie mogą być pozyskane i oglądane przez upoważniony personel radiologii.
+\item Zarządzanie pacjentem - RIS może śledzić cały przebieg pracy pacjenta w dziale radiologii. Specjaliści mogą dodawać zdjęcia i raporty do EHRs, gdzie mogą być pozyskane i oglądane przez upoważniony personel radiologii.
 \item Planowanie - RIS umożliwia personelowi umawianie się na wizyty zarówno w szpitalach, jak i ambulatoriach.
 \item Monitorowanie pacjenta - Korzystając z systemu RIS, dostawcy mogą śledzić historię całej radiologii pacjenta od przyjęcia do wypisu i koordynować historię z przeszłymi, obecnymi i przyszłymi spotkaniami.
 \item Raportowanie wyników - RIS może generować raporty statystyczne dla pojedynczego pacjenta, grupy pacjentów lub poszczególnych procedur.
-\item Śledzenie obrazu - Tradycyjnie, dostawcy radiologii używają RIS do śledzenia poszczególnych filmów i związanych z nimi danych. Ponieważ EHR stały się standardem w branży medycznej, a zdigitalizowane obrazy i PACS zostały powszechnie przyjęte, działy radiologii i ich systemy RIS-PACS zostały bardziej wciągnięte w kliniczny obieg pracy całego przedsiębiorstwa medycznego.
+\item Śledzenie obrazu - Tradycyjnie, specjaliści używają RIS do śledzenia poszczególnych filmów i związanych z nimi danych. Ponieważ EHR stały się standardem w branży medycznej, a ucyfrowienie obrazów i PACS zostały powszechnie przyjęte, działy radiologii i ich systemy RIS-PACS zostały zintegrowane w kliniczny obieg pracy całego przedsiębiorstwa medycznego.
 \end{enumerate}
 
 \subsection{Format DICOM}
 
-DICOM jest standardowym protokołem do zarządzania i przesyłania obrazów medycznych i powiązanych danych i jest stosowany w większości szpitali. DICOM to międzynarodowy standard komunikacji i zarządzania obrazami i danymi medycznymi. Główną ideą jest zapewnienie przechowywania, udostępniania, współdziałania systemów używanych do produkcji, wyświetlania, wysyłania, odpytywania, przetwarzania, pobierania i drukowania obrazów medycznych, a także do zarządzania powiązanymi przepływami pracy.
+DICOM jest standardowym protokołem do zarządzania i przesyłania obrazów medycznych i powiązanych danych i jest stosowany w większości szpitali. DICOM to międzynarodowy standard komunikacji i zarządzania obrazami i danymi medycznymi. Celem jest zapewnienie przechowywania, udostępniania, współdziałania systemów używanych do produkcji, wyświetlania, wysyłania, odpytywania, przetwarzania, pobierania i drukowania obrazów medycznych, a także do zarządzania powiązanymi przepływami pracy.
 \par
 DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania obrazów medycznych, umożliwiając integrację medycznych urządzeń obrazujących wielu producentów. Dane pacjenta i powiązane obrazy są wymieniane i przechowywane w znormalizowanym formacie.
 Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi urządzeniami do przetwarzania obrazu.
 
-\section{Metody wspomagania pracy lekarza}
-W dzisiejszym świecie praca radiologa jest ściśle powiązana z pracą z oprogramowaniem szpitalnym. Radiolog odczytuje, opisuje i analizuje wyniki badania na komputerze. Jednakże wiele badań przynoszonych jest przez pacjenta w formie papierowej. O problemie znajdowania odpowiednich danych w szpitalnej dokumentacji opowiemy w dalszej części pracy. 
+\section{Metody wspomagania pracy specjalisty}
+W dzisiejszym świecie praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Radiolog odczytuje, opisuje i analizuje wyniki badania na komputerze. Jednakże wiele badań dostarczanych jest przez pacjenta w formie papierowej. O problemie znajdowania odpowiednich danych w szpitalnej dokumentacji opowiemy w dalszej części pracy. 
 \par
+//todo kuba  Wejdźcie głębiej w temat: 1. Jakie narzędzia są teraz wykorzystywane? 2. Kto je dostarcza? 3. Jakie są metody wspomagania obecnie dostarczane? 4. Jakie są możliwości wspomagania? 5. Kto je dostarcza? To co napisaliście jest zbyt powierzchowne. NIe zawsze! Niektóre DICOM viewery mają zintegrowane narzędzia do wspomagania (np. automatyczne wykrywanie i oznaczanie zmian w płucach - one są drobne i jest ich dużo). Musicie do tego dojść
 Narzędzia wykorzystywane przez radiologów są dalekie od ideału. Są to, w większości, przeglądarki zdjęć, które radiolog musi analizować. W tych programach brakuje automatyzacji i sugestii dla lekarza. Za bardzo pomocny został uznany pomysł dokładnego liczenia objętości prostaty na podstawie zdjęć. Skraca to bardzo czas pracy lekarza oraz daje dokładniejsze wyniki. Obecnie nie istnieje na rynku narzędzie automatycznie segmentujące zdjęcia i dające lekarzowi sugestie na temat przeglądanego obrazu.
 \par
 Celem poniższej pracy jest stworzenie i opis narzędzia, które zapewni automatyzację pracy lekarza oraz zapewni łatwą integrację z systemem szpitalnym
@@ -397,7 +399,7 @@ Pojęcia których będziemy używać w poniższej pracy:
 \item Segmentacja – Proces podziału obrazu na części określane jako obszary (regiony), które są jednorodne pod względem pewnych wybranych własności.
 \item Slice - Warstwa obrazu DICOM zawierająca jeden obraz
 \item Maska - Obraz przedstawiający wysegmentowaną prostatę
-\item Komponent - Web serwis lub element jednego z serwisów spełniający jedno określone zadanie
+\item Komponent - Usługa siwciowa lub element jednego z serwisów spełniający jedno określone zadanie
 \item Endpoint - Adres pozwalający na dostęp do API aplikacji z zewnątrz
 \item API - Interfejs pozwalający na komunikowanie się aplikacji między sobą 
 \item Backend - Część serwerowa aplikacji 
@@ -410,12 +412,12 @@ Pojęcia których będziemy używać w poniższej pracy:
 \item PACS - (Picture Archiving And Communication System) System archiwizacji zdjęć medycznych
 \item Użytkownik – osoba mająca dostęp do aplikacji oraz bazy danych
 \item Baza danych – baza z badaniami pacjentów, zawiera obraz w DICOM oraz dodatkowe informacje z badania
-\item Aplikacja – aplikacja do przeglądania obrazów medycznych
 \item Anonimizacja – proces usuwający dane wrażliwe pacjenta
 \end {enumerate}
 
 % -------------------- Opis danych -----------------------
 \chapter{Dane szpitalne}
+//todo kuba
 Zaczęliśmy rozmów z doktor Sklindą jeszcze na naszej uczelni. Odbyliśmy 2 spotkania, na których doktor tłumaczyła nam problemy z jakimi się zmaga oraz pokazywała nam potencjalne problemy, które można rozwiązać łącząc je z pisaniem pracy inżynierskiej przez trzyosobowy zespół. Zgodziliśmy się na pewien zestaw wymagań, który w czasie się zmieniał. Po finalnym ustaleniu wymagań, jeden z nas udał się do szpitala MSWiA w Warszawie w celu poznania szpitalnej architektury oraz zgromadzeniu danych. 
 \par
 Niestety żadnego ze szpitalnych informatyków tego dnia nie zastaliśmy w pracy, więc pierwsza wizyta zakończyła się jedynie na gromadzeniu danych. Wkrótce potem zaczęliśmy wymieniać komunikację mailową z zespołem informatyków ze szpitala. Nasz początkowy pomysł, czyli integracja z bazą HIS upadł bardzo szybko, ponieważ okazało się, że oprogramowanie używane w szpitalu nie może być w żaden sposób modyfikowane przez ludzi nie będących pracownikami firmy dostarczającej to oprogramowanie. 
@@ -460,7 +462,6 @@ W badaniach szczególną uwagę należało zwrócić poszczególne aspekty: \\
 \par
 
 Poniższa table przedstawia wybrane kolumny jakie uzyskaliśmy z danych szpitalnych
-\\
 \begin{table}[h!]
 \caption{Dane szpitalne}
 \centering
@@ -550,17 +551,17 @@ Na wykresie poziomy PIRADS 2,3 i 4 mają stosunkowo podobne wyniki średniego PS
 % -------------------- Opis rozwiązania -----------------------
 \chapter{Specyfikacja} % Cel i założenia projektu
 
-Celem pracy dyplomowej jest stworzenie narzędzia wspomagającego diagnostykę nowotworu prostaty. Powinno ono wspierać pracę lekarza w diagnozie oraz zapewnić automatyczne znajdowania prostaty na zdjęciach rezonansu magnetycznego. Priorytetem aplikacji jest to aby posiadała modularną strukturę, która zapewni łatwą integracja ze szpitalną bazą danych oraz szybki rozwój lub zamianę istniejących komponentów. Aplikacja aby zapewnić łatwy dostęp do szpitalnych baz danych musi posiadać komponent odpowiadający za integrację z systemem PACS. Na potrzeby poniższej pracy utworzyliśmy naszą bazę danych PACS w celach deweloperskich.
+Celem pracy dyplomowej jest stworzenie narzędzia wspomagającego diagnostykę nowotworu prostaty. Powinno ono wspierać pracę lekarza w diagnozie oraz zapewnić automatyczne znajdowania prostaty na zdjęciach rezonansu magnetycznego. Priorytetem aplikacji jest to aby posiadała modularną strukturę, która zapewni łatwą integracja ze szpitalną bazą danych oraz szybki rozwój lub zamianę istniejących komponentów. Aplikacja aby zapewnić łatwy dostęp do szpitalnych baz danych musi posiadać komponent odpowiadający za integrację z systemem PACS. Na potrzeby poniższej pracy utworzyliśmy naszą instancję bazy danych w oparciu o otwarte rozwiązanie ORTHANC \cite{Orthanc} w celach deweloperskich.
 \par
-Narzędzie będzie w stanie przyjąć nowe dane pacjenta w formacie DICOM, przetworzyć zdjęcia zawarte w pliku, wykonać segmentację gruczołu prostaty oraz wyświetlić użytkownikowi przewidywaną maskę. Ponadto użytkownik jest w stanie samodzielnie modyfikować predykcję maski używając do tego opcji edycji. W takim wypadku jako segmentacja zostaje zapisana najnowsza wersja maski stworzonej przez lekarza. Kolejny moduł to moduł liczenia wysegmentowanego gruczołu. Aplikacja powinna zapewniać kilka alternatywnych algorytmów obliczania, dzięki czemu będziemy mogli porównywać otrzymane wyniki.
+Narzędzie będzie w stanie przyjąć nowe dane pacjenta w formacie DICOM, przetworzyć zdjęcia zawarte w pliku, wykonać segmentację gruczołu prostaty oraz wyświetlić użytkownikowi przewidywaną maskę. Ponadto użytkownik jest w stanie samodzielnie modyfikować predykcję maski używając do tego opcji edycji. W takim wypadku jako segmentacja zostaje zapisana najnowsza wersja maski stworzonej przez lekarza. Dzięki temu w ramach prowadzonej diagnostyki przeprowadzanej przez specjalistów powstają wysokiej jakości zbiory danych potrzebne do wprowadzenia metod wspomagania opartych o narzędzia sztucznej inteligencji. Kolejny moduł to moduł liczenia wysegmentowanego gruczołu. Aplikacja powinna zapewniać kilka alternatywnych algorytmów obliczania, dzięki czemu będziemy mogli porównywać otrzymane wyniki.
 \par
 Ponieważ chcemy dostosować aplikację pod jak największą ilość środowisk, serwer backendowy powinien być możliwy do instalacji na każdym systemie operacyjnym.
 
 \section{Opis biznesowy}
 
-Aktualnie jest dostępnych wiele przeglądarek formatu DICOM, lecz żadna z nich nie zawiera modułu pozwalającego na segmentację gruczołu prostaty. Jedną z ważniejszych informacji jakie wykorzystuje się przy diagnostyce raka gruczołu prostaty jest objętość. Na tej podstawie podejmowana jest decyzja o usunięciu gruczołu krokowego (radykalna prostatektomia laparoskopowa). Ponadto, żadne z narzędzi nie ma moduły pozwalającego na liczenie objętości gruczołu.
+Aktualnie jest dostępnych wiele przeglądarek formatu DICOM, lecz żadna z nich nie zawiera modułu pozwalającego na segmentację gruczołu prostaty. Jedną z ważniejszych informacji jakie wykorzystuje się przy diagnostyce raka gruczołu prostaty jest objętość. Na tej podstawie szacuje się parametr PSAD, który silniej niż w przypadku PSA koreluje z obecnością nowtworu w prostacie. Ponadto, żadne z narzędzi używanych obecnie w szpitalu nie posiada modułu pozwalającego na liczenie objętości gruczołu.
 \par
-Nasze rozwiązanie ułatwia pracę lekarza przedstawiając maskę nałożoną na obraz przewidując miejsce występowania gruczołu prostaty. Dodatkowo użytkownik jest w stanie samodzielnie poprawić predykcję używając opcji edycji. Dzięki takiej informacji wraz z rozwojem systemu mamy dostęp do coraz dokładniejszych danych dotyczących segmentacji pacjenta. Aplikacja ułatwi pracę lekarza oraz zgromadzi dane zawierające dokładne segmentacje utworzone przy użyciu algorytmu, które następnie podlegają kontroli lekarza. Narzędzie dostarcza również informacje na temat objętości gruczołu krokowego biorąc pod uwagę precyzję urządzenia na którym zostały wykonane zdjęcia. 
+Nasze rozwiązanie ułatwia pracę lekarza przedstawiając aproksymowaną objętość gruczołu prostaty. Dodatkowo użytkownik jest w stanie samodzielnie poprawić predykcję używając opcji edycji maski. Dzięki takiej informacji wraz z rozwojem systemu mamy dostęp do coraz dokładniejszych danych dotyczących segmentacji pacjenta. Aplikacja ułatwi pracę lekarza oraz zgromadzi dane zawierające dokładne segmentacje utworzone przy użyciu algorytmu, które następnie podlegają kontroli lekarza. Narzędzie dostarcza również informacje na temat objętości gruczołu krokowego biorąc pod uwagę precyzję urządzenia na którym zostały wykonane zdjęcia. 
 \par
 Objętość jest kluczową informacją dla lekarza przy wystawianiu diagnozy. Wizualizacja wysegmentowanego gruczołu prostaty oraz obliczona wartość objętości pomoże lekarzowi w diagnostyce, a dzięki łatwemu rozszerzaniu aplikacji rozwój i modyfikacje modułu obliczania objętości lub segmentacji można łatwo zmieniać algorytmy, za pomocą, których je wyznaczamy.
 
@@ -587,7 +588,7 @@ Funkcjonalność aplikacji WWW rozbita jest na trzy podstrony:
 
 \section{Diagram przypadków użycia}
 
-Lekarz po wejściu na stronę internetową dostaje listę pacjentów znajdujących się obecnie w bazie danych. Dodatkowo po wcześniejszym połączeniu się z systemem szpitalnym PACS ma możliwość wyświetlenia pacjentów ze szpitalnej bazy danych. Dane, którymi inicjalnie zasilona jest aplikacyjna baza danych pochodzą z konkursu. \cite{konkurs}
+Po wejściu na stronę internetową wyświetlana jest lista pacjentów znajdujących się obecnie w bazie danych. Dodatkowo po wcześniejszym połączeniu się z systemem szpitalnym PACS ma możliwość wyświetlenia pacjentów ze szpitalnej bazy danych. W ramach środowiska deweloperskiego dane, którymi inicjalnie zasilona jest aplikacyjna baza danych pochodzą z konkursu. \cite{konkurs}
 Lekarz ma możliwość dodania nowego pacjenta z pliku lub ze szpitalnej bazy danych. Aby dodać pacjenta z pliku wystarczy w przeglądarce wybrać pacjenta, obraz DICOM zostanie pobrany z bazy PACS, zanonimizowany po stronie przeglądarki, a następnie wysłany do serwera. Dodatkowo użytkownik ma możliwość dodania pacjenta z pliku DICOM poprzez przeciągnięcie zbioru zdjęć pacjenta na okno przeglądarki. W przypadku gdy wybrany pacjent nie znajduje się jeszcze w bazie danych aplikacja tworzy nowa encję opisującą tego pacjenta, w przeciwnym przypadku, jeżeli obraz nie znajduje się jeszcze w bazie danych dla pacjenta o takim identyfikatorze, aplikacja dodaje kolejne zdjęcia dla już istniejącego pacjenta.
 Następnie lekarz ma możliwość oglądania zdjęć pacjenta, oraz danych jakie o tym pacjencie aktualnie znajdują się w bazie danych. Strona wyświetla kolejne obrazy, które zostały dodane dotyczące wybranego przypadku. Dodatkowo wyświetlane są informacje z pliku DICOM dotyczące informacji o pacjencie i wyników badań jeżeli taki znajdowały się w pliku, który  został wysłany do bazy danych. Ponadto aplikacja wyświetla maskę przedstawiającą wynik procesu segmentacji prostaty. Użytkownik ma możliwość ukrycia maski oraz jej edycji za pomocą dostarczonych narzędzi. 
 Aplikacja dodatkowo liczy objętość wysegmentowanej prostaty na podstawie masek znajdujących się w bazie danych. W aplikacji dostępne jest kilka alternatywnych algorytmów liczenia objętości. Wartość nie jest przeliczana automatycznie w przypadku edycji. Lekarz po edycji wszystkich masek, naciska przycisk na stronie, który uruchamia proces liczenia objętości 
@@ -601,7 +602,7 @@ Na poniższym rysunku przedstawiono w postaci diagramu UML zbiór przypadków u�
 \end{minipage}
 \par
 
-W poniższej tabeli zebrano szczegółowe opisy przypadków użycia.
+W tabeli \ref{Przypadki użycia} zebrano szczegółowe opisy przypadków użycia.
 
 \begin{table}[h!]
 \caption{Przypadki użycia}
@@ -616,11 +617,12 @@ W poniższej tabeli zebrano szczegółowe opisy przypadków użycia.
 	Segmentuj & Oblicza segmentację dla wybranego obrazu & Maska opisująca prostatę na wybranym obrazie \\ \hline 
 	Policz objętość & Liczy objętość na podstawie listy masek na podstawie wybranego algorytmu & Wartość objętości prostaty\\ \hline 
 \end{tabular}
+\label{Przypadki użycia}
 \end{table}
 
 \section{Wymagania niefunkcjonalne}
 
-Poniższa table przedstawia wymagania niefunkcjonalne w naszym systemie.
+Tabla \ref{Wymagania niefunkcjonalne} przedstawia wymagania niefunkcjonalne w naszym systemie.
 
 \begin{table}[h!]
 \caption{Wymagania niefunkcjonalne}
@@ -634,6 +636,7 @@ komputerze z dowolnym systemem operacyjnym wyposażonym
 w odpowiednią przeglądarkę. Obliczenia zależnie od rozmiarów danych wejściowych aplikacja powinna wykonywać takim czasie aby praca użytkownika nie była przez nią spowolniona, przy tym nie blokując interfejsu użytkownika \\ \hline 
 	Utrzymanie & 4 & Aplikacja będzie miała architekturę modułową, która będzie łatwo rozszerzalna. Cały kod aplikacji zostanie udokumentowany. W ramach środowiska developerskiego powstanie obraz Docker.  \\ \hline 
 \end{tabular}
+\label{Wymagania niefunkcjonalne}
 \end{table}
 
 \section{Środowisko sprzętowe i programowe}
@@ -659,14 +662,12 @@ W aplikacji wykożystaliśmy język Python do modułu odpowiadającego za segmen
 Aby zapewnić komunikację za pomocą protokołu http między serwisem segmentacji, a pozostałymi elementami systemu potrzebowaliśmy biblioteki, która udostępnia taką funkcjonalność.Framework zapewnia elementarną implementacją serwera http, który pozwala na komunikację z pozostałymi komponentami. Ponieważ segmentacja wspiera tylko i wyłącznie jeden punk dostępowy uznaliśmy, że wybór rozwiązania bardziej rozbudowanego jest nieuzasadniony. Django czy Pyramid, to dwa bardzo popularne rozwiązania dla serwerów http zaimplementowane w języku Python jednak o wiele bardziej rozbudowanej konfiguracji nie przynosząc zarazem odczuwalnych korzyści.
 \item [Biblioteka Keras] \hfill \\
 Do implementacji algorytmu segmenacji gruczołu krokowego na zdjęciach potrzebowaliśmy biblioteki pozwalającej na tworzenie sieci neuronowych. Podczas poszukiwań najbardziej odpowiedniego rozwiązania kierowaliśmy się kilkoma kryteriami. Przede wszystkim chcieliśmy aby rozwiązanie było napisane w języku Python oraz wspierało użycie biblioteki TensorFlow. Dodatkowo chcieliśmy aby biblioteka umożliwiała szybkie prototypowanie oraz była przenośna między systemami operacyjnymi. Keras jest obecnie jednym z najpopularniejszych bibliotek do takiego zastosowania. Zapewnia wysoko poziomowy interfejs ułatwiający tworzenie rozwiązań opartych o uczenie maszynowe. Decyzja o użyciu frameworku zapadła na podstawie spełeniania wszystkich powyższych założeń oraz doświadczeniem zespołu w jego wykorzystaniu.
+\item[Tensorflow] \hfill \\
+TensorFlow jest biblioteką typu open source do obliczeń numerycznych i uczenia maszynowego. Biblioteka łączy ze sobą szereg modeli i algorytmów głębokiego uczenia. Korzysta z Pythona, aby zapewnić wygodne API do budowania aplikacji, a obliczenia wykonywane są w C ++. Biblioteki nie wykożystaliśby bezpośrdenio tylko przez naladkę Keras, która udostępnia wysokopozomowe API.
 \item [OpenCV, OpenCvSharpCore] \hfill \\
 OpenCV \cite{OpenCV} to biblioteka oprogramowania do nauki i uczenia maszynowego typu open source. Jest to chyba najpopularniejsza biblioteka do przetwarzania obrazów. Do integracji z .NETem użyliśmy wrappera działającego w środowisku .NET Core OpenCVSharpCore. Zapewnia dostęp do metod biblioteki poprzez kod C\#. W naszej pracy została wykorzystana w module liczącym objętość do znajdowania otoczki maski oraz liczenia pola powierzchni poligonów.
-\item [Biblioteka interfejsu użytkownika: React] \hfill \\
-  React okazał się idealnym rozwiązaniem, ponieważ jest jedynie biblioteką dostarczającą komponenty, która może być rozszerzalna przez kolejne biblioteki. Projekt ten powstał w Facebook'u, ma więc wielkie wsparcie społeczności oraz jest dojrzałym framework'iem.
-	Przygotowując aplikację SPA postanowiliśmy znaleźć rozwiązanie, które najbardziej dopasuje sie do naszych wymagań. Nasze kryterium oceny polegało na:
-	  - wielości społeczności framework'u,
-	  - dojrzałości projektu,
-	  - modularności
+\item [React] \hfill \\
+  React okazał się idealnym rozwiązaniem, ponieważ jest jedynie biblioteką dostarczającą komponenty, która może być rozszerzalna przez kolejne biblioteki. Projekt ten dojrzałym framework'iem stworzonym i rozwijanym przez Facebook. Przygotowując aplikację SPA postanowiliśmy znaleźć rozwiązanie, które najbardziej dopasuje sie do naszych wymagań. 
 \end{description}
 
 Ponadto wszystkie wymienione technologie zostały wybrane do realizacji pracy, ponieważ zespół, który nad nią pracował, miał doświadczenie w pracy z nimi wyniesione z poprzednich projektów realizowanych w ramach studiów i pracy zawodowej.
@@ -676,11 +677,11 @@ W momencie pisania pracy ustaliliśmy, że najpopularniejszymi aktualnie rozwią
 	  
 \begin{description}
 	\item [Java] \hfill \\
-	Jeden z najpopularniejszych obecnie języków programowania, teoretycznie spełniający wszystkie nasze wymagania. Zapewnia modularność, jest wspierany przez wszystkie języki programowania, ma wiele dostępnych bibliotek gotowych do użycia w aplikacji. Odrzuciliśmy ten wybór z powodu dużej ilości konfiguracji potrzebnej do utworzenia systemu jaki tutaj opisujemy. Dodatkowo ponieważ przetwarzamy pliku zajmujące często nawet powyżej 100MB obawialiśmy się problemów z wydajnością zwalniania pamięci w Javie.
+	Jeden z najpopularniejszych obecnie języków programowania, teoretycznie spełniający wszystkie nasze wymagania. Zapewnia modularność, jest wspierany przez wszystkie języki programowania, ma wiele dostępnych bibliotek gotowych do użycia w aplikacji. Odrzuciliśmy ten wybór z powodu dużej ilości konfiguracji potrzebnej do utworzenia systemu jaki tutaj opisujemy. Dodatkowo ponieważ przetwarzamy pliku zajmujące często nawet powyżej 100MB obawialiśmy się problemów z wydajnością zwalniania pamięci w Javie. W przypadku przetwarzania dużych wolumenów danych Java wymaga dużej ingerencji w mechanizm zwalniania pamięci.
 \item[Angular] \hfill \\
-  	Projekt Angular jest jednym z najpopularniejszych obecnie rozwiązań do tworzenia warstwy prezentacji aplikacji. Początkowo wydawał się być doskonałym wyborem dla naszego zastosowania (dojrzały projekt, wspierany przez giganta technologicznego jakim jest Google), aczkolwiek wymuszał on używanie konkretnych rozwiązań stworzonych na potrzeby tego konkretnego frameworka do wykonywania zapytań oraz miał wiele niepotrzebnych zależności. Z tego powodu zdecydowaliśmy się zrezygnować z tego projektu, ponieważ naruszał nasze kryterium dotyczące modularności.
+  	Projekt Angular jest jednym z najpopularniejszych obecnie rozwiązań do tworzenia warstwy prezentacji aplikacji. Początkowo wydawał się być doskonałym wyborem dla naszego zastosowania (dojrzały projekt, wspierany przez Google), aczkolwiek wymuszał on używanie konkretnych rozwiązań stworzonych na potrzeby tego konkretnego frameworka do wykonywania zapytań. Z tego powodu zdecydowaliśmy się zrezygnować z tego projektu, ponieważ naruszał nasze kryterium dotyczące modularności.
 \item[Vue] \hfill \\
-	Vue jest coraz bardziej popularnych frameworkiem, który wyróżnia się modularnością, przenośnością oraz niskim progiem wejścia. Nie dopasował się do naszych wymagań ze względu na nie dojrzałość projektu, przez co dostępne komponenty nie spełniały naszych oczekiwań. Wciąż jest rozwiązanie nie wspierane przez dużych klientów biznesowych.
+	Vue jest coraz bardziej popularnych frameworkiem, który wyróżnia się modularnością, przenośnością oraz niskim progiem wejścia. Nie dopasował się do naszych wymagań ze względu na niedojrzałość projektu, przez co dostępne komponenty nie spełniały naszych oczekiwań. Wciąż jest to rozwiązanie nie wspierane przez dużych klientów biznesowych.
 \end{description}
 
 % -------------------- Opis aplikacji -----------------------
@@ -697,7 +698,7 @@ System składa się z modułów realizujących ściśle określone zadania, niez
 	\captionof{figure}{Schemat architektury aplikacji}
 \end{minipage}
 
-Jak można zauważyć rzeczą, która jest widoczna na pierwszy rzut oka jest komunikacja serwera backendowego z serwerem PACS odbywa się za pośrednictwem aplikacji internetowej, z której korzysta klient. Jest to zrobione specjalnie i daje nam możliwość łatwej integracji z systemem szpitalny. W zasadzie jest to jedyna opcja jaką znaleźliśmy w trakcie naszego badania architektury szpitalnej nie wymagająca ustawiania specjalnego połączenia VPN między naszym serwisem a serwerami szpitalnymi. Dzięki temu zyskujemy niezależność. Aplikacja może działać na dowolnym środowisku przy tym zapewniając klientowi dostęp i wysyłanie danych pacjenta na nasze serwisy do przetwarzania.
+Komunikacja serwera backendowego z serwerem PACS odbywa się za pośrednictwem aplikacji internetowej, z której korzysta klient. Jest to zrobione specjalnie i daje nam możliwość łatwej integracji z systemem szpitalny. W zasadzie jest to jedyna opcja jaką znaleźliśmy w trakcie naszego badania architektury szpitalnej nie wymagająca ustawiania specjalnego połączenia VPN między naszym serwisem a serwerami szpitalnymi. Dzięki temu zyskujemy niezależność. Aplikacja może działać na dowolnym środowisku przy tym zapewniając klientowi dostęp i wysyłanie danych pacjenta na nasze serwisy do przetwarzania.
 Rozwiązanie w którym nasz serwer komunikuje się bezpośrednio z bazą danych szpitalnych ma kilka dużych wad. Przede wszystkim przesyłamy poufne dane pacjentów przez sieć. Aby to robić bezpiecznie potrzebowalibyśmy dedykowanego bezpiecznego połączenia, którego nie udało nam się uzyskać przez cały okres pisania pracy.
 \par
 Reszta architektury jest standardowa w przypadku aplikacji o architekturze mikroserwisowej. Mamy główny serwer odpowiadający za komunikację z użytkownikiem i obsługę bazy danych. Serwisy do liczenia objętości i segmentacji są niezależne i nie mają bezpośredniego dostępu do bazy danych.
@@ -741,7 +742,7 @@ Konwolucyjna sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzys
 \begin{minipage}[t]{\textwidth}
 	\centering
 	\includegraphics[width=10cm]{segmentation/fcn.png}
-	\captionof{figure}{Architektura sieci FCN}
+	\captionof{figure}{Przykładowa architektura sieci FCN}
 \end{minipage}
 
 \item[U-Net] \hfill \\ 
@@ -791,7 +792,7 @@ Najlepszym źródłem pozyskania daych dla naszych celów badawczych są strony 
 
 
 	\item [Oznaczone maski] \hfill \\
-Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Ponieważ nie zależało nam na rozróżnieniu tych obszarów znormalizowaliśmy maski do wartości z przedziału [0;1].
+Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Pnieważ nasz problemy był bardziej ogólny nie było potrzeby wprowadzenia rozróźnienia między strefami prostaty. Dlatego dane poddaliśmy procesowi normalizacji maski do wartości z przedziału [0;1].
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -825,9 +826,7 @@ Pierwszy blok składa się z następujących warstw
 	\item [max\_pooling2d\_1]2x2 Max Pooling
 \end{description}
 
-Kolejne dwa bloki zawierają identyczne warstwy. Te 3 bloki są nazywane ścieżką zstępującą. Jej zadanie to ustalenie znaczenia danych na obrazie. Następnie ten kontekst będzie przetransformowany do ścieżki wschodzącej.
-
-Następnie znajduje się bottleneck 
+Kolejne dwa bloki zawierają identyczne warstwy. Te 3 bloki są nazywane ścieżką zstępującą. Jej zadanie to ustalenie znaczenia danych na obrazie. Następnie ten kontekst będzie przetransformowany do ścieżki wschodzącej. Kolejnym krokiem jest znalezioenie bloku będącego wąskim gardłem. 
 
 \begin{description}
 	\item [conv2d\_5] 2x2 Max Pooling
@@ -858,7 +857,7 @@ Po augmentacji obrazów zaczeliśmy dobieranie parametrów sieci. Rozpoczeliśmy
 
 \subsection{Wyniki}
 
-Do ustalenia skuteczności użyliśmy najpopularniejszej miary wykorzystywanej w zadaniach segmentacji tj. współczynnika podobieństwa Sørensena. Miara ta mówi jak podobne są dwa obiekty. Jej wartość to wspólny obszar regionu segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
+Do ustalenia skuteczności użyliśmy miary wykorzystywanej w zadaniach segmentacji tj. współczynnika podobieństwa Sørensena. Miara ta mówi jak podobne są dwa obiekty. Jej wartość to wspólny obszar regionu segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
 
 Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy ~0.68 na danych testowych. Jest to wartość lekko niższa niż wartość uzyskana w rozwiązaniu zgłoszonym do konkursu. Różnica może być spowodowana różnymi danymi (zostały one lekko zmienione od czasu konkursu). 
 
@@ -910,7 +909,7 @@ Skuteczność sieci może zostać poprawiona poprzez dołożenie obrazów rozmyt
 
 \section{Moduł obliczania objętości}
 
-Jedynym z celów pracy było zaproponowanie alternatywnej metody do liczenia objętości. Obecnie w szpitalu aby policzyć objętość gruczoły stosuje się prostą aproksymację przedstawiona wzorem:
+Jedynym z celów pracy było zaproponowanie alternatywnej metody do liczenia objętości. Obecnie w szpitalu objętość gruczoły obliczana jest za pomocą aproksymacji przedstawionej wzorem:
 
 \[V = (h_{max} - h_{min}) * S_{max} * 0.54\]
 \\
@@ -923,7 +922,7 @@ gdzie
 \(S_{max}\) - pole powierzchni warstwy o największym, każdym liczonym jako:  
 
 \[S_d = (i_{d_{max}} - i_{d_{min}}) * (j_{d_{max}} - j_{d_{min}})\] 
-\\
+
 gdzie \\
 \(i_{d_{max}}\) - pozycja najdalej wysuniętego pixela prostaty poziomo \\
 \(i_{d_{min}}\) - pozycja najmniej wysuniętego pixela prostaty poziomo \\
@@ -931,11 +930,25 @@ gdzie \\
 \(j_{d_{min}}\) - pozycja najmniej wysuniętego pixela prostaty pionowo \\
 d - indeks warstwy \\
 
-Innymi słowy obecnie metoda polega na znalezieniu prostopadłościaniu w który możemy wpisać gruczoł i obliczenie jego objętości. Następnie wartość jest przemnażana przez stałą aby przybliżyć kształt elipsą.
+Metoda polega na znalezieniu prostopadłościaniu w który możemy wpisać gruczoł i obliczenie jego objętości. Następnie wartość jest przemnażana przez stałą aby przybliżyć kształt elipsą. Metoda wydaje się być niedokładna, co potwierdzają lekarze. 
+%Obecnie najdokładniejszą metodą jest zbadanie objętości po wycięciu gruczołu. Dowiedzieliśmy się, że wyniki uzyskane z aproksymacji objętości oraz wartości uzyskane po ekstrakcji są bardzo rozbieżne.
 \par
-Metoda wydaje się być bardzo niedokładna, co potwierdzają lekarze. Obecnie najdokładniejszą metodą jest zbadanie objętości po wycięciu gruczołu. Dowiedzieliśmy się, że wyniki uzyskane z aproksymacji objętości oraz wartości uzyskane po ekstrakcji są bardzo rozbieżne.
-\par
-Postanowiliśmy zaproponować alternatywne rozwiązanie. W dalszych obliczeniach oraz analizie nie uwzględniamy czynników skalujących jakimi są odległości między pixelami w osi poziomej, pionowej oraz odległość między warstwami. Każdy z nich traktujemy jako stałą równą 1. Nie wpływa to na wyniki analizy moduły. W aplikację wszystkie z tych czynników pochodzą z plików DICOM i są uwzględniane przy liczeniu pól powierzchni.
+Postanowiliśmy zaproponować alternatywne rozwiązanie. Objętość w dalszych obliczeniach będziemy obliczać jako sumę voxeli znajdujących się w każdej z warstw obrazu. 
+
+\[ V_{total} = \sum_{i=0}^{n} \sum_{d_i, j=0}^{m} V_{d_{ij}} \ gdzie\ d_{ij}\ pixelem\ maski \]
+gdzie \\
+n - liczba wartstw pilku DICOM \\
+m - liczba pixeli na warstwie \\
+
+Objętość voxela liczona jest wzorem:
+
+\[ V_{d_{ij}} = PixelSpacing_0 * PixelSpacing_1 * SliceThickness\]
+gdzie \\
+\(PixelSpacing_0\) - pierwsza wartość atrybutu PixelSpacing (0028, 0030) z pliku DICOM \\
+\(PixelSpacing_1\)  - druga wartość atrybutu PixelSpacing (0028, 0030) z pliku DICOM \\
+\(SliceThickness\) - atrybut SliceThickness (0018, 0050) z pliku DICOM \\
+
+Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku, stąd w dalszej części opisu dla uproszczenia przyjmiemy parametry pochodzące z pliku DICOM jako stałe równe 1. Przy takich założeniach wartość objętości jest równa polu powierzchni maski dla danej warstwy.
 
 \subsection{Liczenie objętości}
 
@@ -1257,6 +1270,7 @@ Kwestie jakie należy bla bla bla
 \bibitem[5] {imageOrg} \emph {Przetwarzanie danych w medycynie} http://www.image-net.org/
 \bibitem[6] {konkretny} \emph {Dane do uczenia sieci }https://wiki.cancerimagingarchive.net/display/Public/NCI-ISBI+2013+Challenge+-+Automated+Segmentation+of+Prostate+Structures
 \bibitem[7] {zgłodzenie} \emph{Zgłoszenie do konkursu}, https://github.com/mirzaevinom/prostate\_segmentation
+\bibitem[8]{Orthanc}  \emph{Serwer PACS} https://www.orthanc-server.com/
 %\bibitem[2] https://www.nhs.uk/conditions/prostate-cancer/diagnosis/
 %\bibitem[3] https://www.cancer.org/cancer/prostate-cancer/detection-diagnosis-staging/how-diagnosed.html
 %\bibitem[5] https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
