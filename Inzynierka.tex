@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt,twoside]{report}
+p\documentclass[a4paper,11pt,twoside]{report}
 
 
 % -------------- Kodowanie znaków, język polski -------------
@@ -952,7 +952,7 @@ Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku,
 
 \subsection{Liczenie objętości}
 
-Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty liczyć jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest suma objętości.
+Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty liczyć jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest suma objętości. 
 
 \[V = \sum_{i=0}^{n-1} ((S_i + S_{i+1}) * (h_{d_{i+1}} - h_{d_i})) / 2 \]
 \\
@@ -960,12 +960,13 @@ gdzie\\
 n - liczba warstw \\
 \(d_i\) - indeksy kolejnych warstw obrazu \\
 \(S_i\) - objętość kolejnych warstw obrazu \\
+\(h_{d_i}\) - lokalizacja warstwy o indeksie \(d_{i}\) \\
 
 Liczenie pola powierzchni maski została opisana w kolejnej sekcji. \\
 W przypadku naszego systemu algorytm poprawić o niedokładność segmentacji prostaty. Zdarzają się sytuacje gdzie kolejna warstwa nie jest warstwą ostatnią na której znajduje się prostata a algorytm nie znalazł na zdjęciu prostaty. W tym przypadku bierzemy kolejną następującą po niej niepustą warstwę.
 
 \subsection{Liczenie pola powierzchni}
-Proponujemy 3 alternatywne poprawy maski znalezionej w procesie segmentacji na potrzeby liczenia pola powierzchni
+Z uwagi na niedokładności masek zwracanych przez algorytm segmentacji proponujemy 3 alternatywne funkcje poprawiające obraz. Proponowe sposoby liczenia pola powierzchni:
 \begin{enumerate}
 \item Pole powierzchni prostokąta na którym można opisać maskę. Najprostszy algorytm, wzorujący się bezpośrednio na obecnym podejściu stosowanym w szpitalu. Jednak w tym przypadku każdą warstwę opisujemy innym prostokątem, przez co wyniki powinny być dokładniejsze
 \item Znalezienie otoczki wypukłej największego spójnego fragmentu maski. Alternatywnym podejściem do rozwiązania problemu jest algorytm znajdujący otoczkę wypukła dla największego spójnego elementu. Jest rozwiązaniem gdzie wyszukujemy kształt o największym polu powierzchni, a następnie liczymy tylko jego pole pomijając miejsca gdzie również została znaleziona prostata. W tym przypadku pole powierzchni jest policzone dużo dokładniej, niż w pierwszym przypadku jednak gdy maska nie jest spójna mogą być mocno zaniżone. 
@@ -973,92 +974,7 @@ Proponujemy 3 alternatywne poprawy maski znalezionej w procesie segmentacji na p
 \end{enumerate}
 
 \subsection{Analiza wyników}
-
-Przedstawimy kilka przypadków i porównamy końcowe wyniki. Pacjent którego tutaj opiszemy pochodzi z danych konkursowych \cite{konkurs}, posiada identyfikator \textit{Prostate3T-03-0004}. Do testów przeprowadziliśmy segmentację i porównaliśmy wyniki obliczonej objętości dla 4 algorytmów 
-\begin{enumerate}
-\item Algorytm stosowany obecnie w szpitalu
-\item Algorytm wpisujacy prostatę w prostokąt
-\item Algorytm znajdujący otoczkę wypukłą dla największego spójnego elementu maski
-\item Algorytm znajdujący otoczkę wypukłą dla wszystkich elementów maski
-\end{enumerate}
-
-Przykłady różnych wyników pola powierzchni dla masek:
-
-Przykład pierwszy, w którym Wysegmentowana maska jest jednym spójnym elementem. \\ \\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/maska.png}
-	\captionof{figure}{Maska przykład 1}
-\end{minipage}
-\\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/square.png}
-	\captionof{figure}{Maska przykład 1 Wpisana w prostokąt}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/hull.png}
-	\captionof{figure}{Maska przykład 1 Otoczka wokół największego elementu}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/hull.png}
-	\captionof{figure}{Maska przykład 1 Otoczka wypukła}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/hosp.png}
-	\captionof{figure}{Maska przykład 1 Algorytm szpitalny}
-\end{minipage}
-
-Porównując wyniki pierwsza rzecz jaka rzuca się w oczy to fakt, że dla maski znalezionej algorytmem szpitalnym daje zdecydowanie większy wynik niż we wszystkich pozostałych zdjęciach. Jest to spowodowane faktem, że największy wysegmentowany element ma właśnie takie pole. Kolejnym spostrzeżeniem jest fakt, że algorytmy liczenia otoczek wypukłych dają ten sam rezultat. Jest to oczekiwane zachowanie.
-
-Przykład drugi, w którym Wysegmentowana maska nie jest spójna. \\ \\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/mask.png}
-	\captionof{figure}{Maska przykład 2}
-\end{minipage}
-\\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/square.png}
-	\captionof{figure}{Maska przykład 2 Wpisana w prostokąt}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/biggest.png}
-	\captionof{figure}{Maska przykład 2 Otoczka wokół największego elementu}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/hull.png}
-	\captionof{figure}{Maska przykład 2 Otoczka wypukła}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/hosp.png}
-	\captionof{figure}{Maska przykład 2 Algorytm szpitalny}
-\end{minipage}
-\\ \\
-Jak widać algorytm szpitalny i nasz opisujący prostatę na prostokącie daje ten sam rezultat, ponieważ jest to też największa maska z całego zbioru testowego. W tym przypadku widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ prostat jest znaleziona częściowo w kilku elementach obrazu, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla największego spójnego fragmentu. Przykład również obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
-
-Dane policzone objętości prostaty przedstawiono w tabli poniżej \\
-\begin{table}[h!]
-\caption{Wartości objętości}
-\centering
-\begin{tabular}{|p{5cm}|l|} \hline  
-Algorytm & Uzyskana objętość  \\ \hline 
-Algorytm szpitalny & 189255 * 0,54 = 102198  \\ \hline 
-Wpisanie gruczołu w prostokąt & 71910  \\ \hline 
-Otoczka wypukła dla największego elementu & 34419  \\ \hline 
-Otoczka wypukła wokół całej maski & 46958  \\ \hline          
-\end{tabular}
-\end{table}
-
-Jak widać algorytm stosowany obecnie w szpitalu daje rezultaty nawet do 3 razy większych względem proponowanych przez nas metod. Warto zauważyć, że w naszym algorytmie liczącym objętość poprawiającego obraza za pomocą wpisywania maski w prostokąt nie używamy czynnika skalującego a mimo to uzyskujemy mniejszy wynik. To pokazuje jak bardzo niedokładny jest algorytm szpitalny. Algorytmy stosujące otoczkę wypukłą dają wyniki najbardziej zbliżone do rzeczywistości.
-
+//todo przerobic
 \subsection{Alternatywne podejścia}
 Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również
 \begin{description}
@@ -1066,7 +982,6 @@ Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywn
 \item Wybór elementów wokół których szukamy otoczki wypukłej na podstawie pewnej funkcji. Jest to zagadnienie skomplikowane, ponieważ możliwych funkcji jest bardzo dużo. Na przykład moglibyśmy szukać otoczki wokół wszystkich elementów maski znajdujących się w określonej odległości od środka największego elementu maski.
 \item Przy poprawianiu maski uwzględniamy wszystkie warstwy. Czyli w przypadku gdy aktualna maska jest niespójna z poprzedzającą oraz następującą po sobie, wówczas zamiast niej bierzemy maskę będącą średnią dwóch wymienionych.
 \end{description}
-Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na stopień skomplikowania nie podjęliśmy się badaniu ich w pracy inżynierskiej.
 
 \section{Moduł backedowy}
 
@@ -1117,8 +1032,6 @@ Aplikacja jest stworzona w architekturze SPA (Single Page Application). Wykorzys
 Naszą aplikację stworzyliśmy przy pomocy biblioteki React. Ułatwia ona myślenie o logice biznesowej aplikacji dzieląc stronę na komponenty. Każdy komponent składa się z co najmniej jednego HTML tagu i jest odpowiedzialny za inną część widoczną na stronie. Granulacja komponentów sprzyja pisaniu złożonych aplikacji poprzez separację stanów każdego z komponentów.
 Naszą aplikację stworzyliśmy przy pomocy biblioteki React. Ułatwia ona myślenie o logice biznesowej aplikacji dzieląc stronę na komponenty. Każdy komponent składa się z co najmniej jednego HTML tagu i jest odpowiedzialny za inną część widoczną na stronie. Granulacja komponentów sprzyja pisaniu złożonych aplikacji poprzez separację stanów każdego z komponentów.
 
-Opiszemy w skrócie dostępne akcje użytkownika oraz sposób w jaki zostały zaimplementowane.
-
 \subsection{Widok startowy}
 Pierwszy ekran jaki jest wyświetlany w naszej spełnia trzy podstawowe funkcjonalności.
 \begin{enumerate}
@@ -1135,8 +1048,7 @@ Pierwszy ekran jaki jest wyświetlany w naszej spełnia trzy podstawowe funkcjon
 
 Aby dodać nowego pacjenta, należy nacisnąć przycisk \textit{Add New Patient}.Pojawi się nowe okno w którym użytkownik powinien wybrać wszystkie pliki z danymi pacjenta, następnie nacisnąc \textit{Upload}. Po udanym procesie należy zamknąć okienko.
 \par
-Dodawanie pacjenta w zależności od ilości obrazów może potrwać dłużej. Jest to spowodowane wysyłaniem dużej ilości danych przez sieć.
-
+Typowym scenariuszem jest dodawanie pacjenta wraz ze wszystkimi obrazami jakie mamy na jego temat. Pliki średnio ważą około 10 MB, w zależności od ilości wartstw obrazu oraz szybkości połączenia internetowego czasy dodawania mogą być wydłużone.
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/15.png}
@@ -1230,7 +1142,7 @@ W przypadku gdy chcemy przywrócić pierwotną maskę znalezioną przez nasz alg
 	\captionof{figure}{Resetowanie maski}
 \end{minipage}
 
-Dodatkowo zapewniamy możliwość ukrycia maski w przypadku gdy lekarz chciałbym przeglądać zdjęcia bez przysłaniania go maską.
+Dodatkowo zapewniamy możliwość ukrycia maski w przypadku aby lekarz mógł przeglądać oryginał zdjęcia bez przysłaniania go maską.
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -1246,15 +1158,20 @@ Dodatkowo zapewniamy możliwość ukrycia maski w przypadku gdy lekarz chciałby
 Ten rozdział jest poświęcony przedstawieniu rezultatów pracy nad omawianym systemem. Omówione zostaną testy, które zostały przeprowadzone w celu zbadania, czy stworzone rozwiązanie odpowiada założeniom, przedstawionym w rozdziale \textit{Specyfikacja}. Rozdział obejmuje także omówienie wniosków wyciągniętych podczas pracy nad tworzonym systemem. 
 
 \section{Integracja z systemem informatycznym}
-Podstawowym wymaganiem dotyczącym naszej pracy jest możliwość integracji i używania go razem z obecnymi w szpitalu systemami. Podczas naszej współpracy ze szpitalem niestety doszliśmy do wniosku, że nie jest możliwa integracja z systemem używanym na co dzień w szpitalu. System ten jest napisany przez firmę Philips i nie ma w nim możliwości instalacji wtyczek, a cały kod źródłowy jest utajniony. Przez co w naszym systemie proponujemy obejście tego problemu poprzez łączenie się z siecią szpitalna przez przeglądarkę i w ten sposób pobieranie danych. Dzięki temu eliminujemy cały proces pozyskiwania zgód na dostęp oraz potrzebę utrzymywanie bezpiecznego kanału komunikacji, a zamiast tego wykorzystujemy połączenie które komputer zjadający się w podsieci szpitalnej już ma do systemu PACS. Dzięki zastosowaniu modułu anonimizacji nasz system jest bezpieczny i gwarantujemy, że dane jakie zostają zachowane na naszym serwerze nie są wrażliwe. Oprócz bycia bezpiecznym nasze oprogramowanie ma jeszcze jedną zaletę. Lekarz może zacząć go używać bez konsultacji z działem IT szpitala. Wystarczy, że ma komputer, który nie jest w szpitalnej sieci, plik instalacyjny oraz plik z identyfikatorami.
+Podstawowym wymaganiem dotyczącym naszej pracy jest możliwość integracji i używania go razem z obecnymi w szpitalu systemami. Podczas naszej współpracy ze szpitalem niestety doszliśmy do wniosku, że nie jest możliwa integracja z systemem używanym na co dzień w szpitalu. System ten jest napisany przez firmę Philips i nie ma w nim możliwości instalacji wtyczek, a cały kod źródłowy jest utajniony. Przez co w naszym systemie proponujemy obejście tego problemu poprzez łączenie się z siecią szpitalna przez przeglądarkę i w ten sposób pobieranie danych. Rozwiązanie umożliwiające łatwą integrację z infrastrukturą szpitalną bez rozszerzania funkcjonalnosci przegladarek DICOM. Alternatywnie można podłaczyc serwer do szpitalnego systemu PACS przy użyciu sieci VPN. 
+Rozwiązanie przy użyciu klienta po stronie przeglądarki ma kilka zalet, takich jak na przykłąd redukcje kosztów po stronie obsługi IT i umożliwia wprowadzanie zmian po stronie klienta bez konieczności manualnej instalacji oprogramowania. Co ma istotne znaczenie w używanych systemach szpitalnych.
+
+\section{Trudności}
+W trakcie realizacji projektu napotkaliśmy kilka trudności. Podstawowymi było:
+\begin{enumerate}
+\item Problemy z integracją z siecią szpitalną. Wniosek jaki powstał po etapie analizy biznesowej, to, że uzyskanie odpowiednich uprawnień oraz dostępów do celu realizacji projektu jest niemożliwe. Stąd w naszej pracy integrację wykonaliśmy z lokalną instancją bazy PACS. Może to wprowadzać problemy przy realnej próbie integracji z systemem szpitalnym, gdyby okazało się, że systemy różnią się między sobą metodami dostępu w szczególności metodami udostępnianymi przez REST API.
+\item Dane testowe jaki użyliśmy do uczenia sieci pochodzą z konkursu i zbiór testowy jest bardzo ograniczony. Może to powodować problemy z działaniem na realnych danych szpitalnych. 
+\item Nie byliśmyw stanie sprawdzić dokładności algorytmu segmentacji z danymi realnych pacjentów szpitala, z uwagi na brak dostępu do danych. W analizie wyników brakowało nam najdokładniejszej informacji jaką jest objętość prostaty po zabiegu prostatektomii. Stąd nie jesteśmy w stanie zweryfikować wyników względem faktycznych wartości.
+\end{enumerate}
+Trudności spowodowały rozwiązanie problemów w alternatywne sposoby niż początkowo zakładaliśmy. Jednak  aby dopuścić rowiązanie do użytku produkcyjnego powinny być rozwiązane. 
 
 \section{Wnioski}
-Przedstawiony system może poprawić komfort pracy lekarza radiologa. Jednak w zarówno w organizacji pracy radiologów jak i w naszym rozwiązaniu pozostaje wiele miejsca do wprowadzania usprawnień. Radiologowie pracowaliby wydajniej gdyby wszystkie dane pacjentów znajdowałby się w scentralizowanej bazie danych o immersywnym środowisku graficznym. 
-\par
-Aplikacja powstała przy wykorzystaniu najnowszych dostępnych technologii stąd w środowisku produkcyjnym może to sprawiać problemy. Jednak wszystkie biblioteki jakich użyliśmy w pracy są stale rozwijane i zapewniają dobre wsparcie dla deweloperów.
-
-\section{Dalszy rozwój systemu}
-Kwestie jakie należy bla bla bla
+Przedstawiony system może poprawić komfort pracy lekarza radiologa. Jednak w zarówno w organizacji pracy radiologów jak i w naszym rozwiązaniu pozostaje wiele miejsca do wprowadzania usprawnień. Aplikacja powstała przy wykorzystaniu najnowszych dostępnych technologii stąd w środowisku produkcyjnym może to sprawiać problemy. Jednak wszystkie biblioteki jakich użyliśmy w pracy są stale rozwijane i zapewniają dobre wsparcie dla deweloperów.
 
 % -------------------- 6. Bibliografia -----------------------
 % Bibliografia leksykograficznie wg nazwisk autorów
