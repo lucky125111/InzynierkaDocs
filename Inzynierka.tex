@@ -935,7 +935,7 @@ gdzie \\
 \(j_{d_{min}}\) - pozycja najmniej wysuniętego pixela prostaty pionowo \\
 d - indeks warstwy \\
 
-Metoda polega na znalezieniu prostopadłościaniu w który możemy wpisać gruczoł i obliczenie jego objętości. Następnie wartość jest przemnażana przez stałą aby przybliżyć kształt elipsą. Metoda wydaje się być niedokładna, co potwierdzają lekarze. 
+Metoda polega na znalezieniu prostopadłościanu w który możemy wpisać gruczoł i obliczenie jego objętości. Następnie wartość jest przemnażana przez stałą aby przybliżyć kształt elipsą. Metoda wydaje się być niedokładna, co potwierdzają lekarze. 
 %Obecnie najdokładniejszą metodą jest zbadanie objętości po wycięciu gruczołu. Dowiedzieliśmy się, że wyniki uzyskane z aproksymacji objętości oraz wartości uzyskane po ekstrakcji są bardzo rozbieżne.
 \par
 Postanowiliśmy zaproponować alternatywne rozwiązanie. Objętość w dalszych obliczeniach będziemy obliczać jako sumę voxeli znajdujących się w każdej z warstw obrazu. 
@@ -953,11 +953,11 @@ gdzie \\
 \(PixelSpacing_1\)  - druga wartość atrybutu PixelSpacing (0028, 0030) z pliku DICOM \\
 \(SliceThickness\) - atrybut SliceThickness (0018, 0050) z pliku DICOM \\
 
-Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku, stąd w dalszej części opisu dla uproszczenia przyjmiemy parametry pochodzące z pliku DICOM jako stałe równe 1. Przy takich założeniach wartość objętości jest równa polu powierzchni maski dla danej warstwy.
+Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku, stąd w dalszej części opisu dla uproszczenia przyjmiemy parametry pochodzące z pliku DICOM jako stałe równe 1. Przy współczynnikach jednostkowych wartość objętości warstwy jest równa polu powierzchni maski dla danej warstwy. Stąd w dalszej części będziemy posługiwać się polem powierzchni jako czynnikiem determinującym objętość.
 
 \subsection{Liczenie objętości}
 
-Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty liczyć jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest suma objętości. 
+Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty jest liczona metodą przekrojów jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest suma objętości. 
 
 \[V = \sum_{i=0}^{n-1} ((S_i + S_{i+1}) * (h_{d_{i+1}} - h_{d_i})) / 2 \]
 \\
@@ -968,18 +968,87 @@ n - liczba warstw \\
 \(h_{d_i}\) - lokalizacja warstwy o indeksie \(d_{i}\) \\
 
 Liczenie pola powierzchni maski została opisana w kolejnej sekcji. \\
-W przypadku naszego systemu algorytm poprawić o niedokładność segmentacji prostaty. Zdarzają się sytuacje gdzie kolejna warstwa nie jest warstwą ostatnią na której znajduje się prostata a algorytm nie znalazł na zdjęciu prostaty. W tym przypadku bierzemy kolejną następującą po niej niepustą warstwę.
+W przypadku naszego systemu algorytm należy poprawić o niedokładność segmentacji prostaty. Zdarzają się sytuacje gdzie kolejna warstwa nie jest warstwą ostatnią na której znajduje się prostata a algorytm nie znalazł na zdjęciu prostaty. W tym przypadku bierzemy kolejną następującą po niej niepustą warstwę.
 
 \subsection{Liczenie pola powierzchni}
-Z uwagi na niedokładności masek zwracanych przez algorytm segmentacji proponujemy 3 alternatywne funkcje poprawiające obraz. Proponowe sposoby liczenia pola powierzchni:
+Z uwagi na niedokładności masek zwracanych przez algorytm segmentacji proponujemy 3 alternatywne funkcje poprawiające obraz:
 \begin{enumerate}
 \item Pole powierzchni prostokąta na którym można opisać maskę. Najprostszy algorytm, wzorujący się bezpośrednio na obecnym podejściu stosowanym w szpitalu. Jednak w tym przypadku każdą warstwę opisujemy innym prostokątem, przez co wyniki powinny być dokładniejsze
 \item Znalezienie otoczki wypukłej największego spójnego fragmentu maski. Alternatywnym podejściem do rozwiązania problemu jest algorytm znajdujący otoczkę wypukła dla największego spójnego elementu. Jest rozwiązaniem gdzie wyszukujemy kształt o największym polu powierzchni, a następnie liczymy tylko jego pole pomijając miejsca gdzie również została znaleziona prostata. W tym przypadku pole powierzchni jest policzone dużo dokładniej, niż w pierwszym przypadku jednak gdy maska nie jest spójna mogą być mocno zaniżone. 
 \item Znalezienie otoczki wypukłej dla wszystkich elementów maski. Jest to modyfikacja poprzedniego algorytmu , w której szukamy otoczki wypukłej dla wszystkich pixeli maski.
 \end{enumerate}
 
+Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. 
+
 \subsection{Analiza wyników}
-//todo przerobic
+Dane policzone objętości prostaty przedstawiono w tabli \ref{Objętości} \\
+\begin{table}[h!]
+\caption{Wartości objętości}
+\centering
+\begin{tabular}{|p{5cm}|l|} \hline  
+Algorytm & Uzyskana objętość  \\ \hline 
+Algorytm szpitalny & 189255 * 0,54 = 102198  \\ \hline 
+Wpisanie gruczołu w prostokąt & 71910  \\ \hline 
+Otoczka wypukła dla największego elementu & 34419  \\ \hline 
+Otoczka wypukła wokół całej maski & 46958  \\ \hline          
+\end{tabular}
+\label{Objętości}
+\end{table}
+
+
+Przykłady różnych wyników pola powierzchni dla masek:
+
+Przykład pierwszy, w którym Wysegmentowana maska jest jednym spójnym elementem. \\ \\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/maska.png}
+	\captionof{figure}{Maska przykład 1}
+\end{minipage}
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/square.png}
+	\captionof{figure}{Maska przykład 1 Wpisana w prostokąt}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/hull.png}
+	\captionof{figure}{Maska przykład 1 Otoczka wokół największego elementu}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/1/hull.png}
+	\captionof{figure}{Maska przykład 1 Otoczka wypukła}
+\end{minipage}
+
+Algorytmy liczenia otoczek wypukłych dają ten sam rezultat w przypadku gdy maska jest spójna. Przykład obrazuje naddatek jaki pojawia się przy aproksymowaniu maski prostokątem. Prostata jest kształtem, który nie odpowiada, żadnemu kształtowi geometrycznemu, stąd przybliżanie go czworokątem jest nieefektywne.
+
+Przykład drugi, w którym wysegmentowana maska nie jest spójna. \\ \\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/mask.png}
+	\captionof{figure}{Maska przykład 2}
+\end{minipage}
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/square.png}
+	\captionof{figure}{Maska przykład 2 Wpisana w prostokąt}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/biggest.png}
+	\captionof{figure}{Maska przykład 2 Otoczka wokół największego elementu}
+\end{minipage}
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{Mask/2/hull.png}
+	\captionof{figure}{Maska przykład 2 Otoczka wypukła}
+\end{minipage}
+\\
+Widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ prostata jest znaleziona częściowo w kilku elementach obrazu, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla największego spójnego fragmentu. Przykład obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
+
+
 \subsection{Alternatywne podejścia}
 Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również
 \begin{description}
