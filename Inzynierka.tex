@@ -738,14 +738,14 @@ Konwolucyjna sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzys
 	
 	Strzałki na rysunku oznaczają połączenia pomiędzy warstwami odpowiedzialnymi za kontekst a warstwami odpowiedzialnymi za informacje przestrzenne. Na tej podstawie sieć decyduje czy konkretny lokalny region jest obszarem  do segmentacji.
 	
-\begin{minipage}{\linewidth}
+\begin{minipage}[t]{\textwidth}
 	\centering
 	\includegraphics[width=10cm]{segmentation/fcn.png}
 	\captionof{figure}{Architektura sieci FCN}
 \end{minipage}
 
 \item[U-Net] \hfill \\ 
-Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezulataty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech podczas scieżki i lepszym przepływem informacji o kontekście i lokalizacji na obrazie.
+Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezulataty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w scieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -805,13 +805,9 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 \subsection{Opis naszego rozwiązania}
 
 Eksplorację danych rozpoczeliśmy od przeglądania obrazów DICOM. To co zauważyliśmy na początku to jakie kłopoty mamy, aby samodzielnie wysegmentować prostate. Trudno jest wyznaczyć granicę pomiędzy narządami w obrazach o tak niskiej rozdzielczości. Przejrzeliśmy również dołączone maski wyznaczone przez lekarzy i stwierdziliśmy, że automatyczne zadanie segmentacji będzie wyzwaniem.
-
 \par
-
-Na początku poszukaliśmy najpopularniejszych algorytmów używanych do segmentacji obrazów. Po zapoznaniu się z kilkoma rozwiązaniami uświadomiliśmy sobie, że segemntacja obazów medycznych jest specyficzna. Największym problemem jest mała ilość danych treningowych, dlatego zaczeliśmy szukać sieci, która dobrze radzi sobie z danymi sztucznie wygenerowanymi. Najodpowiedniejszym rozwiązaniem, które udało nam się znaleźć okzało się zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Niestety nie miało najlepszych wyników na danych testowych dlatego postanowiliśmy je zmodyfikować według opisu poniżej.
-
+Na początku poszukaliśmy najpopularniejszych algorytmów używanych do segmentacji obrazów. Po zapoznaniu się z kilkoma rozwiązaniami uświadomiliśmy sobie, że segemntacja obazów medycznych jest specyficzna. Zdjęcia są w niskiej jakości, posiadają słaby kontrast oraz problemem jest mała ilość danych treningowych, dlatego zaczeliśmy szukać sieci, która dobrze radzi sobie z dodaktkowo przetworzonymi obrazami. Najodpowiedniejszym rozwiązaniem, które udało nam się znaleźć okzało się zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Niestety  na danych testowych rozwiązanie to osiagało współczynnik podobieństwa rowny 0.70 dlatego postanowiliśmy je zmodyfikować według opisu poniżej.
 \par
-
 Podczas pierwszej iteracji trenowania okazało się, że czas uczenia sieci zajmuje bardzo dużo czasu na naszych kartach graficznych. Spowodowało to zeskalowanie obrazów do rozdzielczości 96 pixseli na 96 pikseli w celu szybszego prototypowania.
 
 \begin{minipage}{\linewidth}
@@ -862,13 +858,13 @@ Po augmentacji obrazów zaczeliśmy dobieranie parametrów sieci. Rozpoczeliśmy
 
 \subsection{Wyniki}
 
-Do ustalenia skuteczności użwyaliśmy najpopularniejszej miary wykorzystywanej w zadaniach segmentacji tj współczynnik podobieństwa Sørensena. Jest to miara jak podobne są dwa obiekty. Jest to obszar wspólny obszaru segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
+Do ustalenia skuteczności użyliśmy najpopularniejszej miary wykorzystywanej w zadaniach segmentacji tj. współczynnika podobieństwa Sørensena. Miara ta mówi jak podobne są dwa obiekty. Jej wartość to wspólny obszar regionu segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
 
-Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa Sørensena równy ~0.68 na danych testowych. Jest to wartość lekko niższa niż wartość uzyskana w rozwiązaniu zgłoszonym do konkursu. Różnica może być spowodowana różnymi danymi (zostały one lekko zmienione od czasu konkursu). 
+Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy ~0.68 na danych testowych. Jest to wartość lekko niższa niż wartość uzyskana w rozwiązaniu zgłoszonym do konkursu. Różnica może być spowodowana różnymi danymi (zostały one lekko zmienione od czasu konkursu). 
 
 \par
 
-Przykłady poprawnej segmentacji 
+Analizując wyniki segmentacji zauważyliśmy, że nasza sieć radzi sobie bardzo dobrze w momentach, gdzie granica pomiędzy organami jest mocno zarysowna.
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -888,7 +884,7 @@ Przykłady poprawnej segmentacji
 	\captionof{figure}{Poprawna predykcja}
 \end{minipage}
 
-Przykład problematycznej segmentacji
+Problemy sieci pojawiają się natomiast w momencie, gdy obraz jest rozmyty i nie można jasno wyznaczyć granic pomiędzy ścianami narządów. 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -896,17 +892,21 @@ Przykład problematycznej segmentacji
 	\captionof{figure}{Zdjęcie z badania MRI}
 \end{minipage}
 
+
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.4\textwidth]{segmentation/segmentation_mask_2.png}
+	\includegraphics[width=0.4\textwidth]{segmentation/pred_mask_2.png}
 	\captionof{figure}{Maska wyznaczona przez lekarzy}
 \end{minipage}
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.4\textwidth]{segmentation/pred_mask_2.png}
+	\includegraphics[width=0.4\textwidth]{segmentation/segmentation_mask_2.png}
 	\captionof{figure}{Poprawna predykcja}
 \end{minipage}
+
+
+Skuteczność sieci może zostać poprawiona poprzez dołożenie obrazów rozmytych. Tworzać obrazy treningowe z szumem sieć nauczy się odnajdować szukany region pomimo rozmytych krawędzi.
 
 \section{Moduł obliczania objętości}
 
@@ -1256,6 +1256,7 @@ Kwestie jakie należy bla bla bla
 \bibitem[4] {OpenCV} \emph {Open CV} https://opencv.org/
 \bibitem[5] {imageOrg} \emph {Przetwarzanie danych w medycynie} http://www.image-net.org/
 \bibitem[6] {konkretny} \emph {Dane do uczenia sieci }https://wiki.cancerimagingarchive.net/display/Public/NCI-ISBI+2013+Challenge+-+Automated+Segmentation+of+Prostate+Structures
+\bibitem[7] {zgłodzenie} \emph{Zgłoszenie do konkursu}, https://github.com/mirzaevinom/prostate\_segmentation
 %\bibitem[2] https://www.nhs.uk/conditions/prostate-cancer/diagnosis/
 %\bibitem[3] https://www.cancer.org/cancer/prostate-cancer/detection-diagnosis-staging/how-diagnosed.html
 %\bibitem[5] https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
