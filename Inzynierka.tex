@@ -745,30 +745,11 @@ Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu 
 
 \subsection{Sieci neuronowe}
 
-Głęboka sieć neuronowa (DNN) to sztuczna sieć neuronowa z wieloma warstwami między warstwami wejściową i wyjściową. DNN znajduje poprawną matematyczną manipulację, aby przekształcić dane wejściowe na dane wyjściowe, niezależnie od tego, czy jest to relacja liniowa czy nieliniowa. Sieć przechodzi przez warstwy obliczające prawdopodobieństwo każdego wyjścia. Każda manipulacja matematyczna jako taka jest uważana za warstwę, a złożone DNN mają wiele warstw, stąd nazwa "głębokie" sieci. Celem jest, aby ostatecznie sieć została nauczona w zakresie rozkładania obrazu na funkcje, identyfikowania trendów istniejących we wszystkich próbkach i klasyfikowania nowych obrazów według ich podobieństw bez konieczności wprowadzania danych przez człowieka.
+Głęboka sieć neuronowa (DNN) to sztuczna sieć neuronowa z wieloma warstwami między warstwami wejściową i wyjściową. DNN znajduje matematyczne przekształcenie, aby zmienić dane wejściowe na dane wyjściowe, niezależnie od tego, czy jest to relacja liniowa czy nieliniowa. Sieć przechodzi przez warstwy obliczające prawdopodobieństwo każdego wyjścia. Każda manipulacja matematyczna uważana za warstwę. Złożone głębokie sieci neuronowe mają wiele warstw. Celem jest, aby ostatecznie sieć została nauczona w zakresie rozkładania obrazu na funkcje, identyfikowania trendów istniejących we wszystkich próbkach i klasyfikowania nowych obrazów według ich podobieństw bez konieczności wprowadzania danych przez człowieka.
 \par
-Konwolucyjna  sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania obrazów. W przeciwieństwie do sieci użytej do głębokiego uczenia maszynowego, każda ukryta warstwa aktywacyjna
-jest obliczany jako iloczyn kartezjański wyników kolejnych wartstw. Jednak w sieciach konwolucyjnych każda ukryta aktywacja jest obliczana przez pomnożenie małego lokalnego sygnału wejściowego względem ciężarów. Ciężary są następnie dzielone na całej przestrzeni wejściowej. Po obliczeniu ukrytych jednostek, maksimum
-warstwa pomaga usunąć zmienność ukrytych jednostek. W szczególności każda jednostka gromadząca maksimum otrzymuje aktywacje ze znalezionej ilości splotowych pasm, i wyprowadza maksimum aktywacje z tych splotów. Większość CNN działa w rozpoznawaniu obrazu ma niższe warstwy sieciowe, które są splotowe, a wyższe warstwy sieciowe są w pełni połączone. W tej sekcji omówimy ile potrzeba warstw splotowo-w pełni połączonych, co to optymalna liczba ukrytych jednostek na warstwę, co jest najlepsze strategia łączenia i najlepszy typ wejścia dla CNN. tradycyjnych sieciach neuronowych. \\
+Konwolucyjna  sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania obrazów. W przeciwieństwie do sieci użytej do głębokiego uczenia maszynowego, każda ukryta warstwa aktywacyjna jest obliczany jako iloczyn kartezjański wyników kolejnych warstw. Jednak w sieciach konwolucyjnych każda ukryta aktywacja jest obliczana przez pomnożenie małego lokalnego sygnału wejściowego względem wag. Wagi są następnie dzielone na całej przestrzeni wejściowej. Po obliczeniu ukrytych jednostek, maksimum warstwa pomaga usunąć zmienność ukrytych jednostek. W szczególności każda jednostka gromadząca maksimum otrzymuje aktywacje ze znalezionej ilości splotowych pasm, i wyprowadza maksimum aktywacje z tych splotów. Większość CNN uzytych do rozpoznawania obrazu ma niższe warstwy sieciowe, które są splotowe, a wyższe warstwy sieciowe są w pełni połączone.
 
 \begin{description}
-\iffalse
-\item[Pełna sieć konwolucyjna (ang. FCN )]  \hfill \\
-	Nazwa pełnych sieci konwolucyjnych pochodzi od warstw wykorzystanych w modelu. Sieć ta składa się w pełni z warstw konwolucyjnych co oznacza, że składa się z samych filtrów. Ponieważ nie posiada żadnych gęstych warstw, przyjmuje obrazy wejściowe w każdej rozdzielczości.
-
-\begin{description}
-	\item [Ścieżka zchodząca] Zbiera informacje na temat kontekstu i znaczenia regionu (Interpretuje co znajduje się w regionie )
-	\item [Ścieżka wchodzaca] Odzyskuje informacje przestrzenne (Odtwarza dokładną lokalizację obszaru)
-\end{description}
-	
-	Strzałki na rysunku oznaczają połączenia pomiędzy warstwami odpowiedzialnymi za kontekst a warstwami odpowiedzialnymi za informacje przestrzenne. Na tej podstawie sieć decyduje czy konkretny lokalny region jest obszarem  do segmentacji.
-	
-\begin{minipage}[t]{\textwidth}
-	\centering
-	\includegraphics[width=10cm]{segmentation/fcn.png}
-	\captionof{figure}{Przykładowa architektura sieci FCN}
-\end{minipage}
-\fi
 
 \item[U-Net] \hfill \\ 
 Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezulataty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w scieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
@@ -781,11 +762,11 @@ Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjn
 
 \end{description}
 
-W procesie uczenia sieci neuronowych najbardziej czasochłonnym elementem jest proces trenowania. Uczenie sieci neuronowych odbywa się na kartach graficznych ze względu na ich lepsze przystosowanie do przetwarznia wielkiej ilości operacji w sposób zrównolelony.CPU jest przeznaczony do przełączania zadań. Nie jest przeznaczony do wysokiej przepustowości. Musi przełączać się między wieloma zadaniami i przechowywać konteksty podczas przełączania i dbać o pamięć współdzieloną. Jest przeznaczony do zadań o niskiej przepustowości i wysokiej latencji. Z drugiej strony procesor graficzny został zaprojektowany z myślą o dużym obciążeniu pracą i przepustowości. Jest przeznaczony do zadań o niskim opóźnieniu i wysokiej przepustowości.
+W procesie uczenia sieci neuronowych najbardziej czasochłonnym elementem jest proces trenowania. Uczenie sieci neuronowych odbywa się na kartach graficznych ze względu na ich lepsze przystosowanie do przetwarzania dużej ilości operacji w sposób równoległy. Procesor ma za zadanie przełączanie kontekstów, ale nie zapewnia wysokiej przepustowości. Musi przełączać się między wieloma zadaniami i przechowywać konteksty podczas przełączania i dbać o pamięć współdzieloną. Procesor może być wykorzystywany do zadań o niskiej przepustowości i wysokiej latencji. Z drugiej strony procesor graficzny został zaprojektowany z myślą o dużym obciążeniu pracą i wysokiej przepustowości.
 
 \subsection{Opis danych}
 
-Najlepszym źródłem pozyskania daych dla naszych celów badawczych są strony konkursowe ponieważ zawierają obrazy z już odnalezioną prostatą na zdjęciu. Organizowanych jest wiele konkursów \cite{konkurs} w celu opracowania stabilnego algorytmu wyznacznia gruczołu prostaty, jednak my po analizie zdecydowaliśmy się na dane z konkursu - \textit{Automated Segmentation of Prostate Structures Challange} \cite{konkretny} który dostarczył danych użytych do trenowania naszej sieci.
+Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony konkursowe ponieważ zawierają obrazy z już odnalezioną prostatą na zdjęciu. Organizowanych jest wiele konkursów \cite{konkurs} w celu opracowania stabilnego algorytmu wyznaczania gruczołu prostaty, jednak my po analizie zdecydowaliśmy się na dane z konkursu \textit{Automated Segmentation of Prostate Structures Challange} \cite{konkretny}.
 
 \begin{description}
 	\item [Dane] \hfill \\
@@ -805,7 +786,7 @@ Najlepszym źródłem pozyskania daych dla naszych celów badawczych są strony 
 
 
 	\item [Obrazy wejściowe] \hfill \\
-	Dane zostały przetransformowane z formatu DICOM w taki sposób, aby wyeksportować tag pixelData i przetransformować go do postaci tablicy zawierającą intensywność pixeli.
+	Dane zostały przetransformowane z formatu DICOM w taki sposób, aby wyeksportować tag pixelData i przekonwertować do postaci tablicy zawierającą tylko intensywność pixeli.
 	
 	\begin{minipage}{\linewidth}
 		\centering
@@ -815,7 +796,7 @@ Najlepszym źródłem pozyskania daych dla naszych celów badawczych są strony 
 
 
 	\item [Oznaczone maski] \hfill \\
-Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Pnieważ nasz problemy był bardziej ogólny nie było potrzeby wprowadzenia rozróźnienia między strefami prostaty. Dlatego dane poddaliśmy procesowi normalizacji maski do wartości z przedziału [0;1].
+Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Ponieważ nasz problemy był bardziej ogólny nie było potrzeby wprowadzenia rozróżnienia między strefami prostaty. Dlatego dane poddaliśmy procesowi normalizacji maski do wartości z przedziału [0;1].
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -828,8 +809,8 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 
 \subsection{Opis rozwiązania}
 
-W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Postanowiliśmy do tego celu wykożystać dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczeliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie dostaliśmy są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
-Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny spoób zwiększyliśmy zbiór testowy. Rowiązanie jest standarowym procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnienu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, sotsowanie filtru Gaussowskiego lub progowania.
+W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Postanowiliśmy do tego celu wykorzystać dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczęliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie dostaliśmy są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
+Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny sposób zwiększyliśmy zbiór testowy. Rozwiązanie jest  procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnieniu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, stosowanie filtru Gaussowskiego lub progowania.
 \par
 Pracę nad naszym algorytmem rozpoczęliśmy od analizy aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu. Rozwiązanie nauczyliśmy ponownie na przygotowanych przez nas danych. Architekturę sieci przedstawia poniższy diagram. 
 
@@ -847,7 +828,7 @@ Pierwszy blok składa się z następujących warstw
 	\item [max\_pooling2d\_1]2x2 Max Pooling
 \end{description}
 
-Kolejne dwa bloki zawierają identyczne warstwy. Te 3 bloki są nazywane ścieżką zstępującą. Jej zadanie to ustalenie znaczenia danych na obrazie. Następnie ten kontekst będzie przetransformowany do ścieżki wschodzącej. Kolejnym krokiem jest znalezioenie bloku będącego wąskim gardłem. 
+Kolejne dwa bloki zawierają identyczne warstwy. Te 3 bloki są nazywane ścieżką zstępującą. Jej zadanie to ustalenie znaczenia danych na obrazie. Następnie ten kontekst będzie przetransformowany do ścieżki wschodzącej. Kolejnym krokiem jest znalezienie bloku wąskiego gardła. 
 
 \begin{description}
 	\item [conv2d\_5] 2x2 Max Pooling
@@ -864,7 +845,7 @@ Następny blok składa się z następujących warstw
 
 \end{description}
 
-Tę część sieci nazywamy ścieżką wstępująca odpowiedzalną za ustalenie dokładnej lokalizacji segmentacji.
+Tę część sieci nazywamy ścieżką wstępująca odpowiedzialną za ustalenie dokładnej lokalizacji segmentacji.
 
 \par 
 
@@ -873,9 +854,9 @@ Szybko dotarło do nas, że sieć zaczyna uzyskiwać dobre wyniki, lecz była zb
 Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie wartości pixeli. Pomysł ten pojawił się obserwując jak lekarz diagnozuje obrazy z badania MRI oraz na co zwraca uwagę. W celu poradzenia sobie ze słabym kontrastem Pani doktor odwracała kolory pixeli.
 
 
-Po augmentacji obrazów zaczeliśmy dobieranie parametrów sieci. Rozpoczeliśmy sprawdziań krzyżowy parametrów sieci. Na tej podstawie ustaliliśmy, że odpowiednia liczba epok wynosi 30 natomiast batch\_size=32.
+Po augmentacji obrazów dobrane zostały parametry sieci. Parametry zostały poddane \textit{cross walidacji}.Rezultatem było określenie liczby epok równą 30 natomiast rozmiar \textit{batch\_size} równy 32.
 \subsection{Alternatywne podejścia}
-
+//todo
 Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na stopień skomplikowania nie podjęliśmy się badaniu ich w pracy inżynierskiej.
 
 
