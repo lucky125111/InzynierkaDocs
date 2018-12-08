@@ -234,7 +234,7 @@
 \tytul
 \end{center}
 
-Celem pracy dyplomowej jest stworzenie narzędzia wspomagającego diagnostykę nowotworu prostaty oraz jego integracja ze szpitalną bazą danych. Proponowane narzędzie będzie umożliwiało obliczanie objętości prostaty bazując na wysegmentowanym fragmencie obrazu pochodzącego z obrazowania metodą multiparametrycznego Rezonansu Magnetycznego. Dodatkowo stworzona zostanie testowa baza badań zawierająca informacje o referencyjnych wartościach objętości gruczołu krokowego pochodzących z estymacji bazującej na obrazowaniu Ultrasonografem. Narzędzie zostanie przygotowane do wdrożenia w szpitalnym systemie informatycznym.
+Celem pracy dyplomowej jest stworzenie narzędzia wspomagającego diagnostykę nowotworu prostaty oraz jego integracja ze szpitalną bazą danych. Proponowane narzędzie będzie umożliwiało obliczanie objętości prostaty bazując na wysegmentowanym fragmencie obrazu pochodzącego z obrazowania metodą multiparametrycznego Rezonansu Magnetycznego. Dodatkowo stworzona zostanie baza badań zawierająca informacje o referencyjnych wartościach objętości gruczołu krokowego pochodzących z estymacji bazującej na obrazowaniu Ultrasonografem. Narzędzie zostanie przygotowane do wdrożenia w szpitalnym systemie informatycznym.
 
 \noindent \textbf{Słowa kluczowe:} przetwarzanie obrazu, analiza danych, bioinformatyka
 \end{abstract}
@@ -737,13 +737,20 @@ Moduł odpowiada za znajdowanie na obrazie wejściowym prostaty. Algorytm dział
 
 \subsection{Segmentacja obrazu}
 
+Segmentacja obrazu jest procesem dzielenia obrazu cyfrowego na wiele segmentów). Celem segmentacji jest uproszczenie i / lub zmiana reprezentacji obrazu na obszary, które są bardziej znaczące i łatwiejsze do analizy. Segmentacja obrazu jest używana do lokalizowania obiektów i granic (linii, krzywych itp.) w obrazach. Jest to proces przypisywania etykiety do każdego piksela na obrazie, tak że piksele z tą samą etykietą mają pewne cechy
+
 Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  pewnych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każdej z wyżej wymienionych metod wynik nie zmienia się dla kolejnego uruchomienia algorytmu z tymi samymi danymi wejściowymi. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. W naszej pracy postanowiliśmy zastosować sieci neuronowe jako bardziej nowoczesne podejście. Mając nadzieję, że da ono lepsze rezultaty. 
 
 \subsection{Sieci neuronowe}
 
-Konwolucyjna sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania danych obrazów. Sieć neuronowa to system  wzorowany na działaniu neuronów w ludzkim mózgu. Tradycyjne sieci neuronowe nie są idealne do przetwarzania obrazu i muszą być dostarczane w obrazach o zmniejszonej rozdzielczości. CNN ma swoje "neurony" ułożone bardziej jak te z płata czołowego, obszar odpowiedzialny za przetwarzanie bodźców wzrokowych u ludzi i innych zwierząt. Warstwy neuronów są ułożone w taki sposób, aby pokryć całe pole widzenia, unikając fragmentarycznego problemu przetwarzania obrazu w tradycyjnych sieciach neuronowych. \\
+Głęboka sieć neuronowa (DNN) to sztuczna sieć neuronowa z wieloma warstwami między warstwami wejściową i wyjściową. DNN znajduje poprawną matematyczną manipulację, aby przekształcić dane wejściowe na dane wyjściowe, niezależnie od tego, czy jest to relacja liniowa czy nieliniowa. Sieć przechodzi przez warstwy obliczające prawdopodobieństwo każdego wyjścia. Każda manipulacja matematyczna jako taka jest uważana za warstwę, a złożone DNN mają wiele warstw, stąd nazwa "głębokie" sieci. Celem jest, aby ostatecznie sieć została nauczona w zakresie rozkładania obrazu na funkcje, identyfikowania trendów istniejących we wszystkich próbkach i klasyfikowania nowych obrazów według ich podobieństw bez konieczności wprowadzania danych przez człowieka.
+\par
+Konwolucyjna  sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania obrazów. W przeciwieństwie do sieci użytej do głębokiego uczenia maszynowego, każda ukryta warstwa aktywacyjna
+jest obliczany jako iloczyn kartezjański wyników kolejnych wartstw. Jednak w sieciach konwolucyjnych każda ukryta aktywacja jest obliczana przez pomnożenie małego lokalnego sygnału wejściowego względem ciężarów. Ciężary są następnie dzielone na całej przestrzeni wejściowej. Po obliczeniu ukrytych jednostek, maksimum
+warstwa pomaga usunąć zmienność ukrytych jednostek. W szczególności każda jednostka gromadząca maksimum otrzymuje aktywacje ze znalezionej ilości splotowych pasm, i wyprowadza maksimum aktywacje z tych splotów. Większość CNN działa w rozpoznawaniu obrazu ma niższe warstwy sieciowe, które są splotowe, a wyższe warstwy sieciowe są w pełni połączone. W tej sekcji omówimy ile potrzeba warstw splotowo-w pełni połączonych, co to optymalna liczba ukrytych jednostek na warstwę, co jest najlepsze strategia łączenia i najlepszy typ wejścia dla CNN. tradycyjnych sieciach neuronowych. \\
 
 \begin{description}
+\iffalse
 \item[Pełna sieć konwolucyjna (ang. FCN )]  \hfill \\
 	Nazwa pełnych sieci konwolucyjnych pochodzi od warstw wykorzystanych w modelu. Sieć ta składa się w pełni z warstw konwolucyjnych co oznacza, że składa się z samych filtrów. Ponieważ nie posiada żadnych gęstych warstw, przyjmuje obrazy wejściowe w każdej rozdzielczości.
 
@@ -759,6 +766,7 @@ Konwolucyjna sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzys
 	\includegraphics[width=10cm]{segmentation/fcn.png}
 	\captionof{figure}{Architektura sieci FCN}
 \end{minipage}
+\fi
 
 \item[U-Net] \hfill \\ 
 Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezulataty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w scieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
@@ -771,9 +779,7 @@ Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjn
 
 \end{description}
 
-\iffalse
-Dodaj tutaj normalny opisik co sie tam dzieje
-\fi
+W procesie uczenia sieci neuronowych najbardziej czasochłonnym elementem jest proces trenowania. Uczenie sieci neuronowych odbywa się na kartach graficznych ze względu na ich lepsze przystosowanie do przetwarznia wielkiej ilości operacji w sposób zrównolelony.CPU jest przeznaczony do przełączania zadań. Nie jest przeznaczony do wysokiej przepustowości. Musi przełączać się między wieloma zadaniami i przechowywać konteksty podczas przełączania i dbać o pamięć współdzieloną. Jest przeznaczony do zadań o niskiej przepustowości i wysokiej latencji. Z drugiej strony procesor graficzny został zaprojektowany z myślą o dużym obciążeniu pracą i przepustowości. Jest przeznaczony do zadań o niskim opóźnieniu i wysokiej przepustowości.
 
 \subsection{Opis danych}
 
@@ -818,20 +824,18 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 
 \end{description}
 
-\subsection{Opis naszego rozwiązania}
+\subsection{Opis rozwiązania}
 
-Eksplorację danych rozpoczeliśmy od przeglądania obrazów DICOM. To co zauważyliśmy na początku to jakie kłopoty mamy, aby samodzielnie wysegmentować prostate. Trudno jest wyznaczyć granicę pomiędzy narządami w obrazach o tak niskiej rozdzielczości. Przejrzeliśmy również dołączone maski wyznaczone przez lekarzy i stwierdziliśmy, że automatyczne zadanie segmentacji będzie wyzwaniem.
+W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Postanowiliśmy do tego celu wykożystać dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczeliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie dostaliśmy są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
+Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny spoób zwiększyliśmy zbiór testowy. Rowiązanie jest standarowym procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnienu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, sotsowanie filtru Gaussowskiego lub progowania.
 \par
-Na początku poszukaliśmy najpopularniejszych algorytmów używanych do segmentacji obrazów. Po zapoznaniu się z kilkoma rozwiązaniami uświadomiliśmy sobie, że segemntacja obazów medycznych jest specyficzna. Zdjęcia są w niskiej jakości, posiadają słaby kontrast oraz problemem jest mała ilość danych treningowych, dlatego zaczeliśmy szukać sieci, która dobrze radzi sobie z dodaktkowo przetworzonymi obrazami. Najodpowiedniejszym rozwiązaniem, które udało nam się znaleźć okzało się zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Niestety  na danych testowych rozwiązanie to osiagało współczynnik podobieństwa rowny 0.70 dlatego postanowiliśmy je zmodyfikować według opisu poniżej.
-\par
-Podczas pierwszej iteracji trenowania okazało się, że czas uczenia sieci zajmuje bardzo dużo czasu na naszych kartach graficznych. Spowodowało to zeskalowanie obrazów do rozdzielczości 96 pixseli na 96 pikseli w celu szybszego prototypowania.
+Pracę nad naszym algorytmem rozpoczęliśmy od analizy aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu. Rozwiązanie nauczyliśmy ponownie na przygotowanych przez nas danych. Architekturę sieci przedstawia poniższy diagram. 
 
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=0.65\textwidth]{segmentation/our_architecture.png}
-	\captionof{figure}{Architektura naszej sieci}
+	\captionof{figure}{Architektura sieci}
 \end{minipage}
-
 
 Pierwszy blok składa się z następujących warstw
 
@@ -870,6 +874,9 @@ Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie
 
 
 Po augmentacji obrazów zaczeliśmy dobieranie parametrów sieci. Rozpoczeliśmy sprawdziań krzyżowy parametrów sieci. Na tej podstawie ustaliliśmy, że odpowiednia liczba epok wynosi 30 natomiast batch\_size=32.
+\subsection{Alternatywne podejścia}
+
+Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na stopień skomplikowania nie podjęliśmy się badaniu ich w pracy inżynierskiej.
 
 
 \subsection{Wyniki}
