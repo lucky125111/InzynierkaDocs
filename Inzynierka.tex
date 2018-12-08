@@ -713,7 +713,7 @@ Każdy z naszych serwisów udostępnia REST API. Najwięcej metod ma moduł do k
 
 \chapter{Opis modułów}
 
-W poniższym rozdziale opiszemy poszczególne moduły. Wytłumaczymy drogę dojścia do rozwiązania oraz ewentualne modyfikacje jakie można zastosować przy dalszym rozwoju. 
+W poniższym rozdziale opiszemy poszczególne moduły. Wytłumaczymy drogę dojścia do rozwiązania oraz ewentualne modyfikacje jakie można zastosować przy dalszym rozwoju. Skupiliśmy się na unikaniu zależności pomiędzy modułami. Wszystkie moduły zaprojektowaliśmy w sposób modularny, tak aby dowolnie móc je wymieniać. 
 
 \section{Moduł segmentacji}
 
@@ -726,13 +726,17 @@ Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu 
 \subsection{Sieci neuronowe}
 
 Konwolucyjna sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania danych obrazów. Sieć neuronowa to system  wzorowany na działaniu neuronów w ludzkim mózgu. Tradycyjne sieci neuronowe nie są idealne do przetwarzania obrazu i muszą być dostarczane w obrazach o zmniejszonej rozdzielczości. CNN ma swoje "neurony" ułożone bardziej jak te z płata czołowego, obszar odpowiedzialny za przetwarzanie bodźców wzrokowych u ludzi i innych zwierząt. Warstwy neuronów są ułożone w taki sposób, aby pokryć całe pole widzenia, unikając fragmentarycznego problemu przetwarzania obrazu w tradycyjnych sieciach neuronowych. \\
+
 \begin{description}
 \item[Pełna sieć konwolucyjna (ang. FCN )]  \hfill \\
-	Nazwa pełnych sieci konwolucyjnych pochodzi od warstw wykorzystanych w modelu. Sieć zbudowana jest tylko i wyłącznie z warstw lokalnie połączonych takich jak warstwy konwolucyjne, warstwy pooling oraz warstwy upsampling. W tej architekturze nie występują warstwy dense co wpływa na liczbę parametrów oraz skraca czas uczenia. Ponadto architektura działa niezależnie od rozmiaru wejściowego obrazu, ponieważ nie posiada warstwy dense w żadnym miejscu. Pełne sieci przeważnie składają się z dwóch części.
+	Nazwa pełnych sieci konwolucyjnych pochodzi od warstw wykorzystanych w modelu. Sieć ta składa się w pełni z warstw konwolucyjnych co oznacza, że składa się z samych filtrów. Ponieważ nie posiada żadnych gęstych warstw, przyjmuje obrazy wejściowe w każdej rozdzielczości.
+
 \begin{description}
 	\item [Ścieżka zchodząca] Zbiera informacje na temat kontekstu i znaczenia regionu (Interpretuje co znajduje się w regionie )
 	\item [Ścieżka wchodzaca] Odzyskuje informacje przestrzenne (Odtwarza dokładną lokalizację obszaru)
 \end{description}
+	
+	Strzałki na rysunku oznaczają połączenia pomiędzy warstwami odpowiedzialnymi za kontekst a warstwami odpowiedzialnymi za informacje przestrzenne. Na tej podstawie sieć decyduje czy konkretny lokalny region jest obszarem  do segmentacji.
 	
 \begin{minipage}{\linewidth}
 	\centering
@@ -741,7 +745,7 @@ Konwolucyjna sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzys
 \end{minipage}
 
 \item[U-Net] \hfill \\ 
-Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezulataty segmentacji na obrazach medycznych. Pełne sieci konwolucyjne zawdzięczają swoją nazwę warstwom z których sieć jest zbudowana tzn. jest zbudowana tylko z warstw połączonych lokalnie takich jak warstwa konwolucyjna, warstwa pooling, warstwa upsampling. Ponieważ architektura ta nie zawiera żadnych warstw dense, czas obliczeń jest zmniejszony oraz architektura przyjmie obraz wejściowy w każdej rozdzielczości.Sieć U-Net wprowadza dodatkowo dwa założenia, sieć powinna być symetryczna (stąd nazwa U, która symbolizuje dwie ścieżki sieci, kurczącą oraz rozciągającą).
+Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezulataty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech podczas scieżki i lepszym przepływem informacji o kontekście i lokalizacji na obrazie.
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -751,7 +755,9 @@ Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjn
 
 \end{description}
 
-W naszej pracy posłużyliśmy się uproszczoną wersją sieci U-Net. Wybór potraktowany jest małą ilością danych treningowych oraz precyzyjnością architektury w segmentacji obrazów medycznych.
+\iffalse
+Dodaj tutaj normalny opisik co sie tam dzieje
+\fi
 
 \subsection{Opis danych}
 
@@ -774,7 +780,6 @@ Najlepszym źródłem pozyskania daych dla naszych celów badawczych są strony 
 	\end{description}
 
 
-\begin{description}
 	\item [Obrazy wejściowe] \hfill \\
 	Dane zostały przetransformowane z formatu DICOM w taki sposób, aby wyeksportować tag pixelData i przetransformować go do postaci tablicy zawierającą intensywność pixeli.
 	
@@ -783,7 +788,7 @@ Najlepszym źródłem pozyskania daych dla naszych celów badawczych są strony 
 		\includegraphics[width=0.5\textwidth]{segmentation/example_MRI_image.png}
 		\captionof{figure}{Przykładowy obraz z badania MRI}
 	\end{minipage}
-\end{description}
+
 
 	\item [Oznaczone maski] \hfill \\
 Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Ponieważ nie zależało nam na rozróżnieniu tych obszarów znormalizowaliśmy maski do wartości z przedziału [0;1].
@@ -797,30 +802,111 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 
 \end{description}
 
-\subsection{Opis naszej sieci konwolucyjnych}
+\subsection{Opis naszego rozwiązania}
 
-Po zapoznaniu się z dostępnymi danymi z konkursu uświadomiliśmy sobie, że największym problemem jest wielkość zbioru testowego. Z tego powodu postanowiliśmy rozszerzyć zbiór dostępnych obrazów.
+Eksplorację danych rozpoczeliśmy od przeglądania obrazów DICOM. To co zauważyliśmy na początku to jakie kłopoty mamy, aby samodzielnie wysegmentować prostate. Trudno jest wyznaczyć granicę pomiędzy narządami w obrazach o tak niskiej rozdzielczości. Przejrzeliśmy również dołączone maski wyznaczone przez lekarzy i stwierdziliśmy, że automatyczne zadanie segmentacji będzie wyzwaniem.
+
+\par
+
+Na początku poszukaliśmy najpopularniejszych algorytmów używanych do segmentacji obrazów. Po zapoznaniu się z kilkoma rozwiązaniami uświadomiliśmy sobie, że segemntacja obazów medycznych jest specyficzna. Największym problemem jest mała ilość danych treningowych, dlatego zaczeliśmy szukać sieci, która dobrze radzi sobie z danymi sztucznie wygenerowanymi. Najodpowiedniejszym rozwiązaniem, które udało nam się znaleźć okzało się zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Niestety nie miało najlepszych wyników na danych testowych dlatego postanowiliśmy je zmodyfikować według opisu poniżej.
+
+\par
+
+Podczas pierwszej iteracji trenowania okazało się, że czas uczenia sieci zajmuje bardzo dużo czasu na naszych kartach graficznych. Spowodowało to zeskalowanie obrazów do rozdzielczości 96 pixseli na 96 pikseli w celu szybszego prototypowania.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.65\textwidth]{segmentation/our_architecture.png}
+	\captionof{figure}{Architektura naszej sieci}
+\end{minipage}
+
+
+Pierwszy blok składa się z następujących warstw
+
+\begin{description}
+	\item [conv2d\_1] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+	\item [conv2d\_2] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+	\item [max\_pooling2d\_1]2x2 Max Pooling
+\end{description}
+
+Kolejne dwa bloki zawierają identyczne warstwy. Te 3 bloki są nazywane ścieżką zstępującą. Jej zadanie to ustalenie znaczenia danych na obrazie. Następnie ten kontekst będzie przetransformowany do ścieżki wschodzącej.
+
+Następnie znajduje się bottleneck 
+
+\begin{description}
+	\item [conv2d\_5] 2x2 Max Pooling
+	\item [conv2d\_6] 2x2 Max Pooling
+\end{description}
+
+Następny blok składa się z następujących warstw
+
+\begin{description}
+	\item [up\_sampling2d\_1] up sampling 2x2 
+	\item [con2d\_7] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+	\item [max\_pooling2d\_1] Połączenie z kontekstem danych
+	\item [conv2d\_7] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+
+\end{description}
+
+Tę część sieci nazywamy ścieżką wstępująca odpowiedzalną za ustalenie dokładnej lokalizacji segmentacji.
+
+\par 
+
+Szybko dotarło do nas, że sieć zaczyna uzyskiwać dobre wyniki, lecz była zbyt wrażliwa na dane. Dlatego dołączyliśmy dodatkowe wariancje obrazów wewnętrznych.
+
 Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie wartości pixeli. Pomysł ten pojawił się obserwując jak lekarz diagnozuje obrazy z badania MRI oraz na co zwraca uwagę. W celu poradzenia sobie ze słabym kontrastem Pani doktor odwracała kolory pixeli.
+
+
+Po augmentacji obrazów zaczeliśmy dobieranie parametrów sieci. Rozpoczeliśmy sprawdziań krzyżowy parametrów sieci. Na tej podstawie ustaliliśmy, że odpowiednia liczba epok wynosi 30 natomiast batch\_size=32.
 
 
 \subsection{Wyniki}
 
-Rozwiązanie na którym się wzorowaliśmy 
+Do ustalenia skuteczności użwyaliśmy najpopularniejszej miary wykorzystywanej w zadaniach segmentacji tj współczynnik podobieństwa Sørensena. Jest to miara jak podobne są dwa obiekty. Jest to obszar wspólny obszaru segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
+
+Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa Sørensena równy ~0.68 na danych testowych. Jest to wartość lekko niższa niż wartość uzyskana w rozwiązaniu zgłoszonym do konkursu. Różnica może być spowodowana różnymi danymi (zostały one lekko zmienione od czasu konkursu). 
+
+\par
+
+Przykłady poprawnej segmentacji 
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.5\textwidth]{segmentation/best_predictions.png}
-	\captionof{figure}{Zaznaczone regiony prostaty na zdjęciu z badania MR}
+	\includegraphics[width=0.4\textwidth]{segmentation/segmentation_train_1.png}
+	\captionof{figure}{Zdjęcie z badania MRI}
 \end{minipage}
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.5\textwidth]{segmentation/worst_predictions.png}
-	\captionof{figure}{Zaznaczone regiony prostaty na zdjęciu z badania MR}
+	\includegraphics[width=0.4\textwidth]{segmentation/segmentaion_mask_1.png}
+	\captionof{figure}{Maska wyznaczona przez lekarzy}
 \end{minipage}
 
-Nasza sieć osiągnęła współczynnik podobieństwa Sørensena równy ~0.68.
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\textwidth]{segmentation/pred_mask_1.png}
+	\captionof{figure}{Poprawna predykcja}
+\end{minipage}
 
+Przykład problematycznej segmentacji
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\textwidth]{segmentation/segmentation_train_2.png}
+	\captionof{figure}{Zdjęcie z badania MRI}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\textwidth]{segmentation/segmentation_mask_2.png}
+	\captionof{figure}{Maska wyznaczona przez lekarzy}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\textwidth]{segmentation/pred_mask_2.png}
+	\captionof{figure}{Poprawna predykcja}
+\end{minipage}
 
 \section{Moduł obliczania objętości}
 
