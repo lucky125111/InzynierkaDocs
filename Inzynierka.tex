@@ -315,7 +315,7 @@ Zazwyczaj następnym badaniem jest badanie palpacyjne per rectum. W przypadku te
 \par
 W przypadku podejrzeń nowotworu wykonuje się dwa kolejne badania. Jest to biopsja stercza oraz badanie USG. Biopsja o wyniku pozytywnym jednoznacznie definiuje posiadanie nowotworu. Badanie USG cechuje się mniejszą dokładnością,  jest robione w celu określenia wytycznych do badania MR, czyli rezonansu magnetycznego.
 \par
-Badanie MR cechuje się większą dokładnością, radiolog za pomocą oprogramowania jest w stanie znaleźć nawet najmniejsze zmiany w strukturze gruczołu. Często po wynikach rezonansu zlecana jest biopsja celowana, która ma sięgnąć do już zbadanych przez rezonans rejonów prostaty. 
+Badanie MR cechuje się większą dokładnością, radiolog za pomocą oprogramowania jest w stanie znaleźć nawet najmniejsze zmiany w strukturze gruczołu. Często po wynikach rezonansu zlecana jest biopsja celowana, która ma sięgnąć do już zbadanych przez rezonans rejonów prostaty. 
 Pełny zestaw badań, tj, badanie PSA, badanie palpacyjne, USG, MR oraz biopsja jest w stanie jednoznacznie postawić diagnozę.
 \par
 W obecnej chwili, w szpitalu MSWiA w Warszawie, do opisu prawdopodobieństwa istnienia nowotworu w danym miejscu prostaty jest używana skala PI-RADS v2.
@@ -387,10 +387,10 @@ Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi u
 \section{Metody wspomagania pracy specjalisty}
 W dzisiejszym świecie praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Radiolog odczytuje, opisuje i analizuje wyniki badania na komputerze. Jednakże wiele badań dostarczanych jest przez pacjenta w formie papierowej. O problemie znajdowania odpowiednich danych w szpitalnej dokumentacji opowiemy w dalszej części pracy. 
 \par
-//todo kuba  Wejdźcie głębiej w temat: 1. Jakie narzędzia są teraz wykorzystywane? 2. Kto je dostarcza? 3. Jakie są metody wspomagania obecnie dostarczane? 4. Jakie są możliwości wspomagania? 5. Kto je dostarcza? To co napisaliście jest zbyt powierzchowne. NIe zawsze! Niektóre DICOM viewery mają zintegrowane narzędzia do wspomagania (np. automatyczne wykrywanie i oznaczanie zmian w płucach - one są drobne i jest ich dużo). Musicie do tego dojść
 Narzędzia wykorzystywane przez radiologów są dalekie od ideału. Są to, w większości, przeglądarki zdjęć, które radiolog musi analizować. W tych programach brakuje automatyzacji i sugestii dla lekarza. Za bardzo pomocny został uznany pomysł dokładnego liczenia objętości prostaty na podstawie zdjęć. Skraca to bardzo czas pracy lekarza oraz daje dokładniejsze wyniki. Obecnie nie istnieje na rynku narzędzie automatycznie segmentujące zdjęcia i dające lekarzowi sugestie na temat przeglądanego obrazu.
 \par
-Celem poniższej pracy jest stworzenie i opis narzędzia, które zapewni automatyzację pracy lekarza oraz zapewni łatwą integrację z systemem szpitalnym
+Celem poniższej pracy jest stworzenie i opis narzędzia, które zapewni automatyzację pracy lekarza oraz zapewni łatwą integrację z systemem szpitalnym.
+
 
 \section{Słownik pojęć}
 Pojęcia których będziemy używać w poniższej pracy:
@@ -417,36 +417,151 @@ Pojęcia których będziemy używać w poniższej pracy:
 
 % -------------------- Opis danych -----------------------
 \chapter{Dane szpitalne}
-//todo kuba
-Zaczęliśmy rozmów z doktor Sklindą jeszcze na naszej uczelni. Odbyliśmy 2 spotkania, na których doktor tłumaczyła nam problemy z jakimi się zmaga oraz pokazywała nam potencjalne problemy, które można rozwiązać łącząc je z pisaniem pracy inżynierskiej przez trzyosobowy zespół. Zgodziliśmy się na pewien zestaw wymagań, który w czasie się zmieniał. Po finalnym ustaleniu wymagań, jeden z nas udał się do szpitala MSWiA w Warszawie w celu poznania szpitalnej architektury oraz zgromadzeniu danych. 
+Analiza problemu została rozpoczęta przez spotkanie z doświadczonym radiologiem (> 12 lat doświadczenia). Radiolog przedstawił problemy z którymi zmaga się w codziennej pracy i które uważa, że mogłbyby zostać rozwiązane za pomocą dodatkowego oprogramowania. Ze względu na prowadzone prace analityczne w trakcie wytwarzania oprogramowania przyjęta została zwinna metoda wytwarzania oprogramowania. Po finalnym ustaleniu wymagań, jeden z nas udał się do szpitala MSWiA w Warszawie w celu poznania szpitalnej architektury oraz zgromadzeniu danych. 
 \par
-Niestety żadnego ze szpitalnych informatyków tego dnia nie zastaliśmy w pracy, więc pierwsza wizyta zakończyła się jedynie na gromadzeniu danych. Wkrótce potem zaczęliśmy wymieniać komunikację mailową z zespołem informatyków ze szpitala. Nasz początkowy pomysł, czyli integracja z bazą HIS upadł bardzo szybko, ponieważ okazało się, że oprogramowanie używane w szpitalu nie może być w żaden sposób modyfikowane przez ludzi nie będących pracownikami firmy dostarczającej to oprogramowanie. 
+Praca w szpitalu zaczęła się od gromadzenia danych pacjentów. Następnie poczynione zostały kroki w kierunku integracji docelowego programu wspomagającego pracę radiologa ze szpitalną bazą danych HIS. Ta koncepcja została skazana na porażkę z powodu umowy zawartej między szpitalem a dostawcą oprogramowania. W zawarty jest zapis, iż wszelkie zmiany w kodzie klienta bazy danych mogą być wprowadzane jedynie przez pracowników firmy dostarczającej oprogramowanie.
 \par
-Następnie, gdy znaleźliśmy przeglądarkę zdjęć DICOM, napisaliśmy maila do zespołu szpitalnych informatyków z pytaniem o możliwość instalacji tej przeglądarki na komputerach szpitalnych. Dostaliśmy przeczącą odpowiedź, argumentowaną niepewnością dotyczącą bezpieczeństwa oprogramowania, które chcieliśmy zainstalować. Po wspólnej naradzie uznaliśmy, że najlepszym rozwiązaniem będzie kopiowanie danych na dysk twardy i przenoszenie ich na komputer, który nie jest podłączony do sieci szpitalnej. Doktor Sklinda zgodziła się pracować w ten sposób, uznając, że i tak jest to dla niej pomoc, pomimo niewygody związanej z fizycznym transferem danych.
+Kolejnym kierunkiem jaki został przez nas obrany było wyszukiwanie przeglądarki zdjęć DICOM. Jako główne kryterium wyboru zastosowane zostało kryterium języka programowania, jakim jest Python, oraz łatwa rozszeżalność rozwiązania. Po znalezieniu odpowiedniej przeglądarki nastąpiła próba instalacji tej przeglądarki na szpitlanych komputerach. Próba zakończyła się porażką z powodu prawnych regulacji dotyczących bezpieczeństwa danych pacjentów znajdujących się na szpitalnych serwerach.
+\par
+Następnym rozwiązaniem, które zostało przez nas opracowane było kopiowanie zanonimizowanych danych pacjentów na dysk twardy i przenoszenie ich na komputer, który nie jest podłączony do sieci szpitalnej. 
 
 \section{Proces pozyskania danych}
-
+Kompleksowe dane pacjentów w szpitalu MSWiA są przechowywane w formie papierowej. Każdy pacjent ma indywidualną dokumentację, w której znajdują się wyniki wszystkich badań wykonanych poza szpitalem MSWiA, wywiady z wizyt u lekarzy specjalistów oraz wyniki badań krwi zrobionych w szpitalu. W szpitalnej bazie danych przechowywane są wywiady środowiskowe, wyniki oraz opisy badań MR. 
 \par
-Kompleksowe dane pacjentów w szpitalu MSWiA są przechowywane w formie papierowej. Każdy pacjent ma oddzielną koszulkę w segregatorze, w której znajdują się wyniki wszystkich badań wykonanych poza szpitalem MSWiA, wywiady z wizyt u lekarzy specjalistów oraz wyniki badań krwi zrobionych w szpitalu. W szpitalnej bazie danych przechowywane są wywiady środowiskowe, wyniki oraz opisy badań MR. 
-\par
-Nie dostaliśmy pozwolenia na instalację zewnętrznego oprogramowania na komputerach podłączonych do sieci szpitalnej. Według nas jest to zrozumiały ruch ze strony szpitalnych informatyków. Oprogramowanie otwartego przez nas wykorzystywane mogłoby być łatwym punktem ataku hakerskiego. Gdy wszystkie dotychczasowe plany poniosły porażkę, zdecydowaliśmy na jedyne rozwiązanie, które zadowoliłoby obie strony. Używamy dysku twardego, ponieważ kompleksowy plik zawierający badanie jednego pacjenta zajmuje średnio ponad Gigabajt danych. 
+Nie została wyrazona zgoda na instalację zewnętrznego oprogramowania na komputerach podłączonych do sieci szpitalnej. Jest to ruch wynikający z regulacji prawnych dotyczącyh ochrony wrażliwych danych pacjentów. Otwarte oprogramowanie używane przez nas mogłoby naruszyć regulacje bezpieczeństwa szpitala. Po podjęciu decyzji o przenoszeniu danych nośnikiem fizycznym należało się skupić na module anonimizującym. Szpitalna baza danych ma taki moduł, więc dane pacjentów kopiowane na dysk twardy są już anonimowe. Został użyty dysk twardy, ponieważ kompleksowy plik zawierający badanie jednego pacjenta zajmuje średnio ponad Gigabajt danych. 
 \par
 Na komputerze niepodłączonym do sieci szpitalnej doktor może dokonać analizy i predykcji za pomocą naszego oprogramowania. Następnie musi sprawdzić identyfikator pacjenta w arkuszu kalkulacyjnym i odnieść się z wynikami wygenerowanymi przez nas do prawdziwego przypadku.
 \par
-Uzyskane rozwiązanie jest dalekie od optymalnego. Nie jest ono ani wygodne ani szybkie. Jest natomiast bezpieczne, ponieważ eliminuje większość potencjalnych punktów ataków hakerskich. Przy pracy z bardzo delikatnymi danymi kryterium bezpieczeństwa musi być priorytetem. 
+Uzyskane rozwiązanie jest dalekie od optymalnego. Nie jest ono ani wygodne ani szybkie. Jest natomiast bezpieczne. Przy pracy z bardzo delikatnymi danymi kryterium bezpieczeństwa musi być priorytetem. 
 \par
 Procedura pozyskiwania danych polegała na otworzeniu karty pacjenta leczonego przez współpracującego z nami lekarza (dr n. med. Katarzyna Sklinda), znalezieniu jego wywiadu środowiskowego oraz opisu badania w bazie danych RIS. Następnie należało ręcznie wypełnić wszystkie pola w arkuszu kalkulacyjnym, które dotyczyły badanego pacjenta. Dane z wywiadu środowiskowego zostały zakodowane, w celu przyspieszenia wypełniania arkusza oraz zachowania ogólnej estetyki. Legendę opisu tych danych przedstawimy w dalszej części pracy. 
 \par
-Karty pacjentów były diametralnie różne. Wahały się od jednej strony do całego pliku kartek. Naszym zadaniem było wypełnienie jak największej ilości kolumn na podstawie otrzymanych danych. 
+dokumentacja medyczna pacjentów zajmowała od 1 do 30 stron w postaci wyników opisowych.  Zadaniem było wyznaczenie wartości wszystkich klinicznych deskryptorów wspólnych dla informacji znajdujących się w dokumentacji medycznej. 
 \par
-Największym kłopot podczas wykonywania tej pracy sprawił nam fakt, iż każdy szpital używa innego formatowania swoich dokumentów, więc nierzadko mieliśmy trudności z odczytaniem istotnych dla nas informacji. 
+Największym kłopotem związanym z wykonywaniem tego rodzaju pracy był fakt, iż każdy szpital używa innego formatowania dokumentów, więc nierzadko występowały trudności z odczytaniem istotnych w naszym badaniu informacji. 
 \par
 Po uzupełnieniu arkusza kalkulacyjnego należało jeszcze wykonać niezbędne obliczenia objętości oraz PSAD. 
 \par
-Jedną z dróg, którą zamierzaliśmy obrać na początku tego wyzwania było użycie systemu OCR na zeskanowanych kartach pacjentów. System OCR ( z ang. Optical Character Recognition) to oprogramowanie pozwalające na znajdowanie i rozpoznawanie fragmentów tekstu w plikach graficznych. Niestety musieliśmy porzucić tę drogę z powodu niejasności kart pacjentów i niejednoznacznych wyników oraz korekt niejednokrotnie nanoszonych długopisem przez lekarza. 
+Jedną z dróg, które były rozwarzane w początowych fazach projektu było użycie systemu OCR na zeskanowanych kartach pacjentów. System OCR (z ang. Optical Character Recognition) to oprogramowanie pozwalające na znajdowanie i rozpoznawanie fragmentów tekstu w plikach graficznych. Należało porzucić tę drogę z powodu niejasności kart pacjentów i niejednoznacznych wyników oraz korekt niejednokrotnie nanoszonych długopisem przez lekarza. 
 \par
-Taka procedura pozyskiwania danych jest wyjątkowo nieoptymalna oraz podatna na błędy. Przy obecnej infrastrukturze szpitalnej ręczne przepisywanie danych jest jedynym sposobem na digitalizację zasobów pacjentów. Komfort pracy lekarzy znacząco by się podniósł gdyby zostały wyeliminowane wszystkie papierowe karty pacjentów. Na wypełnienie kompletnych danych jednego pacjenta potrzebowaliśmy ok. 15 minut. Lekarz radiolog dziennie wykonuje około 4 badań MR (w szpitalu MSWiA), więc można założyć, że marnuje około godziny dziennie na niepotrzebne przeglądanie papierowej dokumentacji. Wraz ze współpracującym z nami doktorem postanowiliśmy stworzyć program, który pozwoli na oszczędzanie tego czasu. Wszyscy lekarze, z którymi się konsultowaliśmy, przyznali, że w codziennych obowiązkach pomógłby im program wyliczający objętość prostaty na podstawie plików DICOM. Jest to jedna z płaszczyzn, na których informatyka jest w stanie pomóc oszczędzać czas lekarzy, co przekłada się na komfort oraz zdrowie pacjentów. Uznaliśmy ten problem za bardzo poważny, dlatego właśnie zdecydowaliśmy się na realizację obranego tematu. 
+Taka procedura pozyskiwania danych jest wyjątkowo nieoptymalna oraz podatna na błędy. Przy obecnej infrastrukturze szpitalnej ręczne przepisywanie danych jest jedynym sposobem na digitalizację zasobów pacjentów. Komfort pracy lekarzy znacząco by się podniósł gdyby zostały wyeliminowane wszystkie papierowe karty pacjentów. Wypełnienie danych jednego pacjenta w tym badaniu było procesem trwającym 15 minut. Lekarz radiolog dziennie wykonuje około 4 badań MR (w szpitalu MSWiA), więc można założyć, że marnuje około godziny dziennie na niepotrzebne przeglądanie papierowej dokumentacji. Po konsultacjach z doktorem podjęta została decyzja aby stworzyć program, który pozwoli na oszczędzanie tego czasu. Wszyscy lekarze którzy dostarczyli swojej ekspertyzy przyznali, że w codziennych obowiązkach pomógłby im program wyliczający objętość prostaty na podstawie plików DICOM. Jest to jedna z płaszczyzn, na których informatyka jest w stanie pomóc oszczędzać czas lekarzy, co przekłada się na komfort oraz zdrowie pacjentów. Problem za bardzo poważny, dlatego właśnie obrana została realizacja tego tematu. 
 \par
+
+\section{Dane szpitalne}
+W badaniach szczególną uwagę należało zwrócić poszczególne aspekty: \\
+\begin{description}
+\item wiek pacjenta - mężczyźni od 50 do 75 roku życia znajdują się w grupie ryzyka
+\item wywiad środowiskowy - ważnym aspektem podczas wywiadu jest obciążenie rodzinne, czyli fakt występowania raka prostaty w najbliższej rodzinie pacjenta. Warto oczywiście zwrócić uwagę w jakim momencie diagnozy znajduje się pacjent. Czy ma stwierdzony nowotwór prostaty? Kolejną ważną informacją jest historia choroby pacjenta. Warto odnotować, iż niektórzy pacjenci byli badani po zakończeniu leczenia radioterapią bądź chemioterapią. Wtedy lekarz sprawdza czy udało się wyeliminować nowotwór, czy może pacjent jest w fazie nawrotu choroby.
+\item biopsja - jeśli była przeprowadzona to jaki był jej wynik? Kiedy była przeprowadzona? W której części prostaty znaleziono zmiany nowotworowe?
+\item wynik Gleasona - w przypadku pacjenta ze stwierdzonym nowotworem bardzo dużą rolę odgrywa skala Gleasona. Jest to skala opracowana z myślą o klasyfikacji nowotworów prostaty. Składa się ona z dwóch części, opisujących różne charakterystyki nowotworu. Po określeniu części składowych sumuje się je, aby otrzymać całościowy wynik Gleasona. Im wyższa punktacja tym bardziej niebezpieczny jest nowotwór.
+\item PSA - kolejnym dla nas istotnym wynikiem jest wynik ostatniego badania PSA we krwi. Specyfika antygeny PSA była przytoczona we wcześniejszej części tej pracy. 
+\item Objętość prostaty - wyliczona na podstawie wymiarów określonych w opisie badania USG oraz MR. Objętość prostaty potrzebna jest to wyliczenia współczynnika PSAD, oraz do ogólnej diagnozy. 
+\item PIRADS - najbardziej znaczące jest ognisko o najwyższej ocenie PIRADS. Gdy pacjent ma ocenę 5, co zdarzało się w 25\% zbadanych przypadków, to istnieje bardzo wysokie prawdopodobieństwo posiadania nowotworu prostaty w obserwowanym przez radiologa miejscu. 
+\end{description}
+\par
+Tablica 2.1 przedstawia wybrane kolumny uzyskane z danych szpitalnych
+\\
+\begin{table}[h!]
+\caption{Dane szpitalne}
+\centering
+\begin{tabular}{|l|p{10cm}|} \hline 
+PW & unikalne ID nadawane pacjentowi w naszym badaniu                                                             \\ \hline 
+Data & Data badania MR                                                                                              \\ \hline 
+Dane kliniczne & opisane poniżej, w legendzie                                                                       \\ \hline 
+Hist-pat & dane z badania histopatologicznego, czyli biopsji prostaty, także opisane w legendzie poniżej            \\ \hline 
+Data hist-pat & Data wykonania biopsji                                                                              \\ \hline 
+Gleason & klasyfikacja patomorfologiczna raka gruczołu krokowego                                                    \\ \hline 
+Płat & płat prostaty, w którym znajduje się zmiana nowotworowa                                                      \\ \hline 
+Liczba biopsji                                                                                                       \\ \hline 
+PSA & swoisty antygen sterczowy w ng/ml, opisane niżej                                                              \\ \hline 
+Liczba PSA & liczba wykonanych badań PSA                                                                            \\ \hline 
+X, Y, Z & wymiary stercza wyznaczone z badania USG                                                                  \\ \hline 
+Objętość z usg & liczona równaniem X*Y*Z*0,52                                                                       \\ \hline 
+PSAD USG & zależność między objętością prostaty, a PSA                                                              \\ \hline 
+X, Y, Z & wymiary stercza wyznaczone z badania MR                                                                   \\ \hline 
+Objętość z MR & liczona równaniem X*Y*Z*0,52                                                                         \\ \hline 
+PSAD MR & zależność między objętością prostaty, a PSA                                                               \\ \hline 
+PI-RADS V2 & radiologiczna skala wykorzystywana do wyznaczania prawdopodobieństwa wystąpienia zmian nowotworowych   \\ \hline 
+Płat & oznaczenie płatu prostaty z największym oznaczeniem PI-RADS V2                                               \\ \hline 
+Oznaczenie strefy & dokładna część prostaty, w której znajduje się zmiana                                           \\ \hline 
+\end{tabular}
+\end{table}
+
+
+\section{Wstępna analiza}
+Z łatwością można zauważyć, iż u wszystkich pacjentów z nowotworem poziom PSA jest zdecydowanie podwyższony (norma to ok 1 ng/ml), jednakże bywa on podwyższony u pacjentów, u których nie stwierdzono zmian nowotworowych. Skala PI-RADS V2 jest bardziej miarodajna, aczkolwiek, z założenia, nie może nigdy określić stuprocentowej pewności. Jedynym badaniem determinującym istnienie raka stercza jest bezpośrednia biopsja przezodbytnicza. 
+\par 
+Kolejną kwestią rzucają się w oczy jest rozbieżność między objętościami wyliczonymi z badania USG oraz MR. Lekarz tak naprawdę nie zna dokładnych wymiarów prostaty, dlatego właśnie zostaliśmy poproszeni o ich obliczenie. 
+\par 
+Najniższe wyniki PSA mają pacjenci, którzy przeszli resekcję prostaty, co potwierdza tezę, że pacjenci z wyciętą prostatą nie chorują już na raka prostaty. Najwyższe wyniki, natomiast, mają pacjenci ze stwierdzoną, przez biopsję, zmianą nowotworową.
+
+\section{Statystyki}
+
+Tabela z podstawowymi statystykami zebranymi z utworzonego zbioru danych
+\begin{table}[h!]
+	\caption{Podstawowe statystyki}
+	\centering
+	\begin{tabular}{|p{5cm}|l|} \hline  
+		Liczba pacjentów & 222  \\ \hline 
+		Średni wiek pacjenta & 67 lat  \\ \hline 
+		Liczba pacjentów u których zdiagnozowano raka & 69  \\ \hline 
+		Średnia objętość z USG & 52,02  \\ \hline 
+		Odchylenie standardowe objętości z USG & 30,43  \\ \hline       
+		Średnia objętość z MR & 50,28  \\ \hline       
+		Odchylenie standardowe objętośći z MR & 32,63  \\ \hline       
+		Średnie PSA & 12,05  \\ \hline   
+		Odchylenie standardowe PSA & 36,46  \\ \hline         
+	\end{tabular}
+\end{table}
+
+Pierwsza statystyka jaka została umieszczona na wykresie to rozkład PSA względem wieku. Chcieliśmy uzyskać informację jak wiek pacjentów przekłada się na potencjalna zachorowalność na raka prostaty.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Wykresy/AgePSA.png}
+	\captionof{figure}{PSA względem wieku}
+\end{minipage}
+\\
+Wiek pacjentów został pogrupowany. Widać, że największe średnie PSA mają mężczyźni między 50 a 60 rokiem życia. Jest to obserwacja, którą dało się przewidzieć, ponieważ mężczyźni często dopiero zaczynają się badać po 50. roku życia. 
+\\ \\
+Następnie chcieliśmy sprawdzić czy istnieje korelacja pomiędzy poziomem PSA i wynikiem uzyskanym w skali Gleasona.
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Wykresy/PSAGleason.png}
+	\captionof{figure}{PSA względem Gleasona}
+\end{minipage}
+\\
+U dwóch badanych pacjentów zdiagnozowano raka z oceną Gleasona na poziomie 9. Średnie PSA tych pacjentów wynosiło ponad 50 ng/ml co jest pięćdziesięciokrotnym przekroczeniem normy.
+\\ \\
+Kolejnym badaniem jakie przeprowadziliśmy było sprawdzenie powiązania czy PSAD rośnie wraz z punktacją Gleasona
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Wykresy/PSADGleason.png}
+	\captionof{figure}{PSAD względem Gleasona}
+\end{minipage}
+\\
+Na tym wykresie można zobaczyć Jak skala Gleasona wpływa na PSAD, czyli połączenie PSA oraz objętości prostaty. 
+\\ \\
+Ostatnim testem było sprawdzenie czy istnieje zależność pomiędzy PSA oraz PIRADS.
+\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Wykresy/PIRADSPSA.png}
+	\captionof{figure}{PSA względem PIRADS}
+\end{minipage}
+\\
+Na wykresie poziomy PIRADS 2,3 i 4 mają stosunkowo podobne wyniki średniego PSA, natomiast poziom PIRADS 5 ma zdecydowanie zawyżony poziom PSA. 
+
+
+\section{Ciekawe przypadki}
+\par
+\begin{description}
+\item  PW86 -- PSA na poziomie 483,3 ng/ml, najwyższe dotychczas spotkane. Podwyższone PSA, oczywiście jest następstwem raka znalezionego w obu płatach prostaty.
+\item  PW35 -- ognisko PI-RADS V2 o mocy 5 znalezione w prawym płacie prostaty, natomiast po biopsji stwierdzono raka w lewym płacie.
+\item  PW143 -- 65 wykonanych badań PSA. Na każdym z nich wynik jest podwyższony, natomiast ani badanie rektalne, ani MR ani biopsja nie wykazały obecności raka
+\end{description}
 
 
 % -------------------- Opis rozwiązania -----------------------
@@ -615,7 +730,7 @@ Każdy z naszych serwisów udostępnia REST API. Najwięcej metod ma moduł do k
 
 \chapter{Opis modułów}
 
-W poniższym rozdziale opiszemy poszczególne moduły. Wytłumaczymy drogę dojścia do rozwiązania oraz ewentualne modyfikacje jakie można zastosować przy dalszym rozwoju. Skupiliśmy się na unikaniu zależności pomiędzy modułami. Wszystkie moduły zaprojektowaliśmy w sposób modularny, tak aby dowolnie móc je wymieniać. 
+W poniższym rozdziale opiszemy poszczególne moduły. Wytłumaczymy drogę dojścia do rozwiązania oraz ewentualne modyfikacje jakie można zastosować przy dalszym rozwoju. Skupiliśmy się na unikaniu zależności pomiędzy modułami. Wszystkie moduły zaprojektowaliśmy w sposób modularny, tak aby dowolnie móc je wymieniać. 
 
 \section{Moduł segmentacji}
 
@@ -638,7 +753,7 @@ warstwa pomaga usunąć zmienność ukrytych jednostek. W szczególności każda
 \begin{description}
 \iffalse
 \item[Pełna sieć konwolucyjna (ang. FCN )]  \hfill \\
-	Nazwa pełnych sieci konwolucyjnych pochodzi od warstw wykorzystanych w modelu. Sieć ta składa się w pełni z warstw konwolucyjnych co oznacza, że składa się z samych filtrów. Ponieważ nie posiada żadnych gęstych warstw, przyjmuje obrazy wejściowe w każdej rozdzielczości.
+	Nazwa pełnych sieci konwolucyjnych pochodzi od warstw wykorzystanych w modelu. Sieć ta składa się w pełni z warstw konwolucyjnych co oznacza, że składa się z samych filtrów. Ponieważ nie posiada żadnych gęstych warstw, przyjmuje obrazy wejściowe w każdej rozdzielczości.
 
 \begin{description}
 	\item [Ścieżka zchodząca] Zbiera informacje na temat kontekstu i znaczenia regionu (Interpretuje co znajduje się w regionie )
@@ -715,7 +830,7 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Postanowiliśmy do tego celu wykożystać dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczeliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie dostaliśmy są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
 Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny spoób zwiększyliśmy zbiór testowy. Rowiązanie jest standarowym procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnienu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, sotsowanie filtru Gaussowskiego lub progowania.
 \par
-Pracę nad naszym algorytmem rozpoczęliśmy od analizy aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu. Rozwiązanie nauczyliśmy ponownie na przygotowanych przez nas danych. Architekturę sieci przedstawia poniższy diagram. 
+Pracę nad naszym algorytmem rozpoczęliśmy od analizy aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu. Rozwiązanie nauczyliśmy ponownie na przygotowanych przez nas danych. Architekturę sieci przedstawia poniższy diagram. 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -748,7 +863,7 @@ Następny blok składa się z następujących warstw
 
 \end{description}
 
-Tę część sieci nazywamy ścieżką wstępująca odpowiedzalną za ustalenie dokładnej lokalizacji segmentacji.
+Tę część sieci nazywamy ścieżką wstępująca odpowiedzalną za ustalenie dokładnej lokalizacji segmentacji.
 
 \par 
 
@@ -767,7 +882,7 @@ Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na st
 
 Do ustalenia skuteczności użyliśmy miary wykorzystywanej w zadaniach segmentacji tj. współczynnika podobieństwa Sørensena. Miara ta mówi jak podobne są dwa obiekty. Jej wartość to wspólny obszar regionu segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
 
-Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy ~0.68 na danych testowych. Jest to wartość lekko niższa niż wartość uzyskana w rozwiązaniu zgłoszonym do konkursu. Różnica może być spowodowana różnymi danymi (zostały one lekko zmienione od czasu konkursu). 
+Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy ~0.68 na danych testowych. Jest to wartość lekko niższa niż wartość uzyskana w rozwiązaniu zgłoszonym do konkursu. Różnica może być spowodowana różnymi danymi (zostały one lekko zmienione od czasu konkursu). 
 
 \par
 
@@ -791,7 +906,7 @@ Analizując wyniki segmentacji zauważyliśmy, że nasza sieć radzi sobie bardz
 	\captionof{figure}{Poprawna predykcja}
 \end{minipage}
 
-Problemy sieci pojawiają się natomiast w momencie, gdy obraz jest rozmyty i nie można jasno wyznaczyć granic pomiędzy ścianami narządów. 
+Problemy sieci pojawiają się natomiast w momencie, gdy obraz jest rozmyty i nie można jasno wyznaczyć granic pomiędzy ścianami narządów. 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -813,7 +928,7 @@ Problemy sieci pojawiają się natomiast w momencie, gdy obraz jest rozmyty i n
 \end{minipage}
 
 
-Skuteczność sieci może zostać poprawiona poprzez dołożenie obrazów rozmytych. Tworzać obrazy treningowe z szumem sieć nauczy się odnajdować szukany region pomimo rozmytych krawędzi.
+Skuteczność sieci może zostać poprawiona poprzez dołożenie obrazów rozmytych. Tworzać obrazy treningowe z szumem sieć nauczy się odnajdować szukany region pomimo rozmytych krawędzi.
 
 \section{Moduł obliczania objętości}
 
