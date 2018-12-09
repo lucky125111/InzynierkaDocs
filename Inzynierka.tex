@@ -333,12 +333,12 @@ W celu poprawienia wykrywalności raka stercza opracowano współczynnik gęsto�
 PSAD, który oblicza się dzieląc stężenia PSA w ng/ml przez objętość stercza. Ten współczynnik pomaga w ustaleniu, czy mamy do czynienia z rakiem stercza, czy też łagodnym rozrostem prostaty, podczas którego także wydziela się antygen PSA. Badania potwierdzają, że isnieje korelacja pomiędzy wartością współczyninka PSAD a występowaniem nowotworu.
 
 \subsubsection{Rezonans magnetyczny}
-Rezonans magnetyczny (MRI) to technika obrazowania medycznego stosowana w radiologii do tworzenia obrazów anatomii i procesów fizjologicznych organizmu. Skanery wykorzystują silne pola magnetyczne, gradienty pola magnetycznego i fale radiowe do generowania obrazów narządów w ciele. Rezonans nie obejmuje promieni rentgenowskich ani promieniowania jonizującego, co odróżnia go od tomografii komputerowej lub  skanów PET.
+Rezonans magnetyczny to technika obrazowania medycznego stosowana w radiologii do tworzenia obrazów anatomii i procesów fizjologicznych organizmu. Skanery wykorzystują silne pola magnetyczne, gradienty pola magnetycznego i fale radiowe do generowania obrazów narządów w ciele. Rezonans nie obejmuje promieni rentgenowskich ani promieniowania jonizującego, co odróżnia go od tomografii komputerowej lub  skanów PET.
 \par
 Pełna nazwa badania brzmi \textit{Obrazowanie metodą rezonansu magnetycznego}. Warto jest zaznaczyć fakt obrazowania, ponieważ istnieje jeszcze drugie zastosowanie tego aparatu, mianowicie spektroskopia, wykorzystywana w chemii i fizyce molekularnej. 
 
 \subsubsection{Badanie objętości gruczołu}
-W szpitalach używane są trzy metody pomiaru objętości stercza. Pierwszym jest subiektywne badanie per rectum w ktrórym lekarz ręcznie sprawdza objętość prostaty. Dwie pozostałe opierają się na tych samych obliczeniach, różnią się sposobem pozyskiwania danych. Pierwszym z nich jest badanie MR, a drugim TRUS, czyli przezodbytnicze badanie USG. Lekarz ogląda gruczoł w różnych płaszczyznach, zaznaczając punkty skrajne. Po zaznaczeniu najbardziej skrajnych punktów wyliczane są trzy wymiary prostaty: szerokość, wysokość i długość. Aby uzyskać objętość gruczłu krokowego należy zastosować wzór 
+W szpitalach używane są trzy metody pomiaru objętości stercza. Pierwszym jest subiektywne badanie per rectum w którym lekarz ręcznie sprawdza objętość prostaty. Dwie pozostałe opierają się na tych samych obliczeniach, różnią się jedynie sposobem pozyskiwania danych. Pierwszym z nich jest badanie rezonansu magnetycznego, a drugim USG, czyli przezodbytnicze badanie USG. Lekarz ogląda gruczoł w różnych płaszczyznach, zaznaczając punkty skrajne. Po zaznaczeniu najbardziej skrajnych punktów wyliczane są trzy wymiary prostaty: szerokość, wysokość i długość. Aby uzyskać objętość gruczołu krokowego należy zastosować wzór 
 
 \[V = h*w* l * 0.54\]
 gdzie
@@ -354,7 +354,7 @@ gdzie h,w,l, to kolejne wymiary elipsy.
 
 Architektura szpitalna składa się z wielu komponentów w poniższej pracy zlokalizowaliśmy komponenty, które będą niezbędne do integracji z opisywanym system. Podstawowym elementem w sieci IT szpitala jest system informacji szpitalnej (HIS), który koncentruje się głównie na potrzebach administracyjnych szpitali. W wielu wdrożeniach system HIS jest kompleksowym, zintegrowanym systemem informatycznym zaprojektowanym do zarządzania wszystkimi aspektami funkcjonowania szpitala, takimi jak zarządzają danymi demograficznymi pacjentów, ubezpieczeniem informacje, planowaniem leczenia klinicznego, działaniem laboratorium oraz zarządzaniem historią pacjenta i badaniami.
 
-\subsubsection{System archiwizacji obrazu PACS}
+\subsubsection{System archiwizacji obrazu}
 PACS czyli system archiwizacji i komunikacji obrazu) to technologia obrazowania medycznego stosowana głównie w szpitalach i jednostkach medycznych do bezpiecznego przechowywania i cyfrowej transmisji obrazów elektronicznych i raportów o znaczeniu klinicznym. Korzystanie z PACS eliminuje potrzebę ręcznego przechowywania, wyszukiwania i wysyłania poufnych informacji, filmów i raportów. Daje to możliwość aby dokumentacja medyczna i obrazy były bezpiecznie przechowywane w zewnętrznych serwerach i dostępne z każdego miejsca na świecie przy użyciu oprogramowania PACS, stacji roboczych i urządzeń mobilnych. Ze względu na panujące prawo dotyczące ochrony danych osobowy i tego, że dane medyczne pacjentów są danymi wrażliwymi takie rozwiązania rzadko są stosowane w praktyce. Dane pacjentów są przechowywane na serwerach szpitalnych - tego wymaga prawo.
 \par
 PACS ma cztery główne komponenty: 
@@ -365,16 +365,16 @@ PACS ma cztery główne komponenty:
 	\item Elektroniczne archiwa do przechowywania i wyszukiwania obrazów oraz powiązanej dokumentacji i raportów.
 \end{enumerate}
 
-\subsubsection{Radiologiczny System Informatyczny RIS}
+\subsubsection{Radiologiczny System Informatyczny}
 System informacji radiologicznej (RIS) to sieciowy system oprogramowania do zarządzania obrazami medycznymi i powiązanymi danymi. RIS jest szczególnie przydatny do śledzenia zleceń obrazowania radiologicznego i informacji rozliczeniowych i jest często używany w połączeniu z PACS do zarządzania archiwami obrazów i rejestrowaniem.
 
 RIS spełnia podstawowe funkcji:
 \begin{enumerate}
-\item Zarządzanie pacjentem - RIS może śledzić cały przebieg pracy pacjenta w dziale radiologii. Specjaliści mogą dodawać zdjęcia i raporty do EHRs, gdzie mogą być pozyskane i oglądane przez upoważniony personel radiologii.
+\item Zarządzanie pacjentem - RIS może śledzić cały przebieg pracy pacjenta w dziale radiologii. Specjaliści mogą dodawać zdjęcia i raporty do systemów elektronicznego rejestru zdrowia, gdzie mogą być pozyskane i oglądane przez upoważniony personel radiologii.
 \item Planowanie - RIS umożliwia personelowi umawianie się na wizyty zarówno w szpitalach, jak i ambulatoriach.
 \item Monitorowanie pacjenta - Korzystając z systemu RIS, dostawcy mogą śledzić historię całej radiologii pacjenta od przyjęcia do wypisu i koordynować historię z przeszłymi, obecnymi i przyszłymi spotkaniami.
 \item Raportowanie wyników - RIS może generować raporty statystyczne dla pojedynczego pacjenta, grupy pacjentów lub poszczególnych procedur.
-\item Śledzenie obrazu - Tradycyjnie, specjaliści używają RIS do śledzenia poszczególnych filmów i związanych z nimi danych. Ponieważ EHR stały się standardem w branży medycznej, a ucyfrowienie obrazów i PACS zostały powszechnie przyjęte, działy radiologii i ich systemy RIS-PACS zostały zintegrowane w kliniczny obieg pracy całego przedsiębiorstwa medycznego.
+\item Śledzenie obrazu - Tradycyjnie, specjaliści używają RIS do śledzenia poszczególnych filmów i związanych z nimi danych. Ponieważ systemy elektronicznego rejestru zdrowia stały się standardem w branży medycznej, a ucyfrowienie obrazów i systemy PACS zostały powszechnie przyjęte, działają w radiologii i  systemy RIS-PACS zostały zintegrowane w obieg pracy klinicznej całej placówki medycznej.
 \end{enumerate}
 
 \subsubsection{Format DICOM}
