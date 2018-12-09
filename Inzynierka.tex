@@ -938,9 +938,6 @@ gdzie \\
 \(SliceThickness\) - atrybut SliceThickness (0018, 0050) z pliku DICOM \\
 
 Metoda polega na znalezieniu prostopadłościanu w który możemy wpisać gruczoł i obliczenie jego objętości. Następnie wartość jest przemnażana przez stałą aby przybliżyć kształt elipsoidą. Metoda jest niedokładna, co potwierdzają lekarze. Obecnie najdokładniejszą metodą jest zbadanie objętości po wycięciu gruczołu. Dowiedzieliśmy się, że wyniki uzyskane z aproksymacji objętości oraz wartości uzyskane po ekstrakcji są bardzo rozbieżne. 
-
-Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku, stąd w dalszej części opisu dla uproszczenia przyjmiemy parametry pochodzące z pliku DICOM jako stałe równe 1. Przy współczynnikach jednostkowych wartość objętości warstwy jest równa polu powierzchni maski dla danej warstwy. Stąd w dalszej części będziemy posługiwać się polem powierzchni jako czynnikiem determinującym objętość.
-
 \par
 Postanowiliśmy zaproponować alternatywne rozwiązanie. Objętość w dalszych obliczeniach będziemy obliczać jako sumę voxeli znajdujących się w każdej z warstw obrazu. 
 
@@ -948,6 +945,8 @@ Postanowiliśmy zaproponować alternatywne rozwiązanie. Objętość w dalszych 
 gdzie \\
 n - liczba warstw pliku DICOM \\
 m - liczba pixeli na warstwie \\
+
+Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku, stąd w dalszej części opisu dla uproszczenia przyjmiemy parametry pochodzące z pliku DICOM jako stałe równe 1. Przy współczynnikach jednostkowych wartość objętości warstwy jest równa polu powierzchni maski dla danej warstwy. Stąd w dalszej części będziemy posługiwać się polem powierzchni jako czynnikiem determinującym objętość.
 
 Aby zobrazować niedokładność aproksymacji elipsoidą postanowiliśmy porównać objętości za pomocą algorytmu aproksymującego oraz sumy objętości objętości kolejnych warstw voxeli na bazie masek określonych przez lekarzy. 
 
