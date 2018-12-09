@@ -793,7 +793,7 @@ Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony
 	
 	\begin{minipage}{\linewidth}
 		\centering
-		\includegraphics[width=0.5\textwidth,angle=90,origin=c]{segmentation/example_MRI_image.png}
+		\includegraphics[width=0.5\textwidth,angle=90]{segmentation/example_MRI_image.png}
 		\captionof{figure}{Przykładowy obraz z badania MRI}
 	\end{minipage}
 
@@ -803,7 +803,7 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.5\textwidth,angle=90,origin=c]{segmentation/example_mask.png}
+	\includegraphics[width=0.5\textwidth,angle=90]{segmentation/example_mask.png}
 	\captionof{figure}{Przykładowy obraz z badania MRI}
 \end{minipage}
 
@@ -815,7 +815,7 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Zostały do tego celu wykorzystane dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczęliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie otrzymano są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
 Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny sposób został zwiększony zbiór testowy. Rozwiązanie jest  procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnieniu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, stosowanie filtru Gaussowskiego lub progowania.
 \par
-Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-Net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawia poniższy diagram. 
+Przed wyborem rozwiązania przeprowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-Net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawia poniższy diagram. 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -878,34 +878,34 @@ Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobr
 \begin{figure}[htb]
 	\centering % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_train_1.png}
+		\includegraphics[width=\linewidth,angle=90]{segmentation/segmentation_train_1.png}
 		\caption{Obraz wejściowy}
 		\label{fig:1}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentaion_mask_1.png}
+		\includegraphics[width=\linewidth,angle=90]{segmentation/segmentaion_mask_1.png}
 		\caption{Poprawna maska}
 		\label{fig:2}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/pred_mask_1.png}
+		\includegraphics[width=\linewidth,angle=90]{segmentation/pred_mask_1.png}
 		\caption{Predykcja maski}
 		\label{fig:3}
 	\end{subfigure}
 	
 	\medskip
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_train_2.png}
+		\includegraphics[width=\linewidth,angle=90]{segmentation/segmentation_train_2.png}
 		\caption{Obraz wejściowy}
 		\label{fig:4}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/pred_mask_2.png}
+		\includegraphics[width=\linewidth,angle=90]{segmentation/pred_mask_2.png}
 		\caption{Poprawna maska}
 		\label{fig:5}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_mask_2.png}
+		\includegraphics[width=\linewidth,angle=90]{segmentation/segmentation_mask_2.png}
 		\caption{Predykcja maski}
 		\label{fig:6}
 	\end{subfigure}
@@ -1007,24 +1007,24 @@ Przykład pierwszy, w którym wysegmentowana maska jest jednym spójnym elemente
 \begin{figure}[htb]
 	\centering % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/maska.png}
+		\includegraphics[width=\linewidth,angle=90]{Mask/1/maska.png}
 		\caption{Maska przykład 1}
 		\label{fig:1}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/square.png}
+		\includegraphics[width=\linewidth,angle=90]{Mask/1/square.png}
 		\caption{Maska przykład 1 Wpisana w prostokąt}
 		\label{fig:2}
 	\end{subfigure}\hfil % <-- added
 	
 	\medskip
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/hull.png}
+		\includegraphics[width=\linewidth,angle=90]{Mask/1/hull.png}
 		\caption{Maska przykład 1 Otoczka wokół największego elementu}
 		\label{fig:3}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/hull.png}
+		\includegraphics[width=\linewidth,angle=90]{Mask/1/hull.png}
 		\caption{Maska przykład 1 Otoczka wypukła}
 		\label{fig:4}
 	\end{subfigure}\hfil % <-- added
@@ -1041,24 +1041,24 @@ Przykład drugi, w którym wysegmentowana maska nie jest spójna. \\ \\
 \begin{figure}[htb]
 	\centering % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/mask.png}
+		\includegraphics[width=\linewidth,angle=90]{Mask/2/mask.png}
 		\caption{Maska przykład 2}
 		\label{fig:1}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/square.png}
+		\includegraphics[width=\linewidth,angle=90]{Mask/2/square.png}
 		\caption{Maska przykład 2 Wpisana w prostokąt}
 		\label{fig:2}
 	\end{subfigure}\hfil % <-- added
 	
 	\medskip
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/biggest.png}
+		\includegraphics[width=\linewidth,angle=90]{Mask/2/biggest.png}
 		\caption{Maska przykład 2 Otoczka wokół największego elementu}
 		\label{fig:3}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/hull.png}
+		\includegraphics[width=\linewidth,angle=90]{Mask/2/hull.png}
 		\caption{Maska przykład 2 Otoczka wypukła}
 		\label{fig:4}
 	\end{subfigure}\hfil % <-- added
