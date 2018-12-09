@@ -741,9 +741,7 @@ Moduł odpowiada za znajdowanie na obrazie wejściowym prostaty. Algorytm dział
 
 \subsection{Segmentacja obrazu}
 
-Segmentacja obrazu jest procesem dzielenia obrazu cyfrowego na wiele segmentów). Celem segmentacji jest uproszczenie i / lub zmiana reprezentacji obrazu na obszary, które są bardziej znaczące i łatwiejsze do analizy. Segmentacja obrazu jest używana do lokalizowania obiektów i granic (linii, krzywych itp.) w obrazach. Jest to proces przypisywania etykiety do każdego piksela na obrazie, tak że piksele z tą samą etykietą mają pewne cechy.
-
-Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  poszukiwanych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każda z wyżej wymienionych metod jest zestawem reguł które są przygotowane przez człowieka podczas tworzenia algorytmu. Algorytmy te nie zależą w żaden sposób od danych na których będą wykonywać obliczenia. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. Sieci na podstawie dużej ilości danych dobierają zestaw filtrów, który dajne najlepsze wyniki segmentacji dla danych treningowych. W naszej pracy postanowiliśmy zastosować sieci neuronowe, ponieważ rozwiązania oparte o głębokie uczenie od lat wygrywają konkursy na najlepsze wyniki  klasyfikacji oraz segmentacji. 
+Segmentacja obrazu jest procesem dzielenia obrazu cyfrowego na wiele segmentów). Celem segmentacji jest uproszczenie i / lub zmiana reprezentacji obrazu na obszary, które są bardziej znaczące i łatwiejsze do analizy. Segmentacja obrazu jest używana do lokalizowania obiektów i granic (linii, krzywych itp.) w obrazach. Jest to proces przypisywania etykiety do każdego piksela na obrazie, tak że piksele z tą samą etykietą mają pewne cechy. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  poszukiwanych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każda z wyżej wymienionych metod jest zestawem reguł które są przygotowane przez człowieka podczas tworzenia algorytmu. Algorytmy te nie zależą w żaden sposób od danych na których będą wykonywać obliczenia. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. Sieci na podstawie dużej ilości danych dobierają zestaw filtrów, który dajne najlepsze wyniki segmentacji dla danych treningowych. W naszej pracy postanowiliśmy zastosować sieci neuronowe, ponieważ rozwiązania oparte o głębokie uczenie od lat wygrywają konkursy na najlepsze wyniki  klasyfikacji oraz segmentacji. 
 
 \subsection{Sieci neuronowe}
 
@@ -861,7 +859,10 @@ Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie
 Po augmentacji obrazów wykonaliśmy \textit{cross walidację} parametrów uczenia podając liczbę epok równą 30 oraz \textit{batch\_size} wynoszący 32.
 
 \subsection{Alternatywne podejścia}
-//todo
+\begin{enumerate}
+\item Rozszerzecznie zbioru treningowego poprzez augmentację danych zawierających obrazy przetworzone filtrem Gaussowskim powinno poprawić przypadki w których zdjęcie jest rozmyte.
+\item Zwiększenie rozdzielczości obrazów wejściowych również powinno polepszyć wyniki segmentacji.
+\begin{end}
 Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na stopień skomplikowania nie podjęliśmy się badaniu ich w pracy inżynierskiej.
 
 
@@ -875,11 +876,11 @@ PRED\_SEG - Binarny obraz zawierjący predykcję maski segemntacji \\
 Jej wartość to wspólny obszar regionu segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
 
 
-Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy ~0.70 na danych testowych. Wartość ta pokrywa się z wartością uzyskaną w zgłoszeniu do konkursu.
+Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy około 0.70 na danych testowych. Wartość ta pokrywa się z wartością uzyskaną w zgłoszeniu do konkursu. Jest to wynik zadawalający, który pozwala nam na liczenie objętości gruczołu alternatywmi metodami.
 
 \par
 
-Analizując wyniki segmentacji zauważyliśmy, że nasza sieć radzi sobie bardzo dobrze w momentach, gdzie granica pomiędzy organami jest mocno zarysowna.
+Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobrze w momentach, gdy granica pomiędzy organami jest mocno zarysowna. Problematyczne są zdjęcia rozmazane, na których gruczoł zlewa się z otaczająco go tkanką.
 
 \begin{figure}[htb]
 	\centering % <-- added
@@ -1069,18 +1070,7 @@ Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostani
 \par 
 Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0009} uzyskujemy wyniki istotnie mniejsze dzięki zwiększeniu dokładności algorytmu liczenia objętości.
 
-\begin{table}[h!]
-\caption{Analiza statystyczna algorytmów}
-\centering
-\begin{tabular}{|l|c|c|c|c|} \hline  
-Algorytm & Różnice średniej (\%) & Różnice odchylenie (\%) & Najmniejsza wartość & Największa wartość \\ \hline 
-Algorytm szpitalny	    & 0%	& 0% & 42282,00	& 221421,60 \\ \hline
-Otoczka całość	        & 37%	& 31% & 9917,75	& 145749,00 \\ \hline
-Otoczka największa	    & -37%	& -167% & 24806,50	& 638992,00 \\ \hline
-Opisane na kwadracie	& 11%	& -15% & 18679,75	& 248745,50 \\ \hline
-\end{tabular}
-\label{Analiza statystyczna algorytmów}
-\end{table}
+Tabela \ref{Analiza statystyczna algorytmów} przedstawia statystyki porównujące opisywane algorytmy. 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -1088,8 +1078,20 @@ Opisane na kwadracie	& 11%	& -15% & 18679,75	& 248745,50 \\ \hline
 	\captionof{figure}{Porównanie metod liczenia}
 \end{minipage}
 
+\begin{table}[h!]
+\caption{Analiza statystyczna algorytmów}
+\centering
+\begin{tabular}{|l|c|c|c|c|} \hline  
+Algorytm & Różnice średniej (\%) & Różnice odchylenie (\%) & Najmniejsza wartość & Największa wartość \\ \hline 
+Przybliżenie elipsoida    & 0\%	& 0\% & 42282,00	& 221421,60 \\ \hline
+Otoczka całość	        & -37\%	& -31\% & 9917,75	& 145749,00 \\ \hline
+Otoczka największa	    & 37\%	& 167\% & 24806,50	& 638992,00 \\ \hline
+Opisane na kwadracie	& -11\%	& 15\% & 18679,75	& 248745,50 \\ \hline
+\end{tabular}
+\label{Analiza statystyczna algorytmów}
+\end{table}
 
-Tabela \ref{Analiza statystyczna algorytmów} przedstawia statystyki porównujące opisywane algorytmy. 
+Porównując proponowane metody liczenia względem algorytmu szpitalnego obserwowalna jest różnica między proponowanymi przez nas algorytmami. Algorytmy obliczające otoczkę wokół wsz
 
 \subsection{Alternatywne podejścia}
 Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również
