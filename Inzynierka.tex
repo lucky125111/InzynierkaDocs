@@ -842,7 +842,7 @@ Architektura ta dzieli się na trzy części:
 	
 	\item [Warstwa wchodząca] Składa się z warstw powiększających dane przestrzenne regionu oraz jest łączona z symetrycznie odbitymi blokami ścieżki zstępującej co pozwala ustalić obszar oraz jego kontekst. Wszystkie bloki w tej ścieżce składają się z następujących warstw:
 	\begin{description}
-		\item [UpSampling2D] 2x2 Warstwa powiększająca która jest ztransponowaną warstwą konwolucyjną
+		\item [UpSampling2D] 2x2 Warstwa powiększająca która jest ztransponowaną warstwą konwolucyjną
 		\item [Conv2D] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
 		\item [Concatenate] Połączenie informacji o lokalizacji przestrzennej z informacje o konteksie obszaru
 		\item [Conv2d] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
@@ -948,7 +948,7 @@ gdzie \\
 n - liczba warstw pliku DICOM \\
 m - liczba pixeli na warstwie \\
 
-Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku, stąd w dalszej części opisu dla uproszczenia przyjmiemy parametry pochodzące z pliku DICOM jako stałe równe 1. Przy współczynnikach jednostkowych wartość objętości warstwy jest równa polu powierzchni maski dla danej warstwy. Stąd w dalszej części będziemy posługiwać się polem powierzchni jako czynnikiem determinującym objętość.
+Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku. Przy współczynnikach jednostkowych wartość objętości warstwy jest równa polu powierzchni maski dla danej warstwy. Stąd w dalszej części będziemy posługiwać się polem powierzchni jako czynnikiem determinującym objętość.
 
 Aby zobrazować niedokładność aproksymacji elipsoidą postanowiliśmy porównać objętości za pomocą algorytmu aproksymującego oraz sumy objętości objętości kolejnych warstw voxeli na bazie masek określonych przez lekarzy. 
 
@@ -958,7 +958,7 @@ Aby zobrazować niedokładność aproksymacji elipsoidą postanowiliśmy porówn
 	\captionof{figure}{Średnia objętość uzyskana przy obliczaniu objętości przybliżając elipsoidą oraz przy sumowaniu voxeli}
 \end{minipage}
 
-Średnio różnica pomiędzy objętością obliczoną poprzez aproksymację elipsoidą daje wynik większy o 14 $cm^3$ (około 15 punktowy wynik w skali procentowej względem sumy objętości voxeli), ochylenie standardowe różne o około 3$cm^3$, dla tych samych masek. Ponieważ nie wykorzystujemy masek wyznaczonych przez lekarza tylko bazujemy na algorytmie segmentacji wymaga to dostosowania algorytmu do potrzeb tej pracy. W dalszej części przyjmiemy objętość wyznaczoną sumą jako wartość źródłową i będziemy oznaczać jako \textit{źródło}.
+Średnio różnica pomiędzy objętością obliczoną poprzez aproksymację elipsoidą daje wynik większy o 32$cm^3$ względem sumy objętości voxeli, odchylenie standardowe różne o około 15$cm^3$, dla tych samych masek. Ponieważ nie wykorzystujemy masek wyznaczonych przez lekarza tylko bazujemy na algorytmie segmentacji wymaga to dostosowania algorytmu do potrzeb tej pracy. W dalszej części przyjmiemy objętość wyznaczoną sumą jako wartość źródłową i będziemy oznaczać jako \textit{źródło}.
 
 \subsection{Liczenie objętości}
 
@@ -1054,36 +1054,40 @@ Przykład drugi, w którym wysegmentowana maska nie jest spójna. \\ \\
 Widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ prostata jest znaleziona częściowo w kilku elementach obrazu, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla największego spójnego fragmentu. Przykład obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
 
 \subsection{Analiza wyników}
-Aby przeanalizować wyniki osiągnięte przez proponowany przez nas algorytm segmentacji oraz liczenia objętości postanowiliśmy porównać wyniki liczenia objętości algorytmem szpitalnym na danych konkursowych (segmentacja prostaty została wykonana przez lekarza) oraz proponowane przez nas metody liczenia objętości na maskach uzyskanych w przez aplikacyjny system segmentacji wraz z metodami poprawy obrazu. Zbiór testowy składał się z 13 pacjentów pochodzących z danych konkursowych. Wartości uzyskane dla każdego z nich, oraz różnice pomiędzy wynikiem oraz wartością źródłową przedstawia tabela \ref{Objętości pacjenci}.
+Aby przeanalizować wyniki osiągnięte przez proponowany przez nas algorytm segmentacji oraz liczenia objętości postanowiliśmy porównać wyniki liczenia objętości algorytmem szpitalnym na danych konkursowych (segmentacja prostaty została wykonana przez lekarza) oraz proponowane przez nas metody liczenia objętości na maskach uzyskanych w przez aplikacyjny system segmentacji wraz z metodami poprawy obrazu. Zbiór testowy składał się z 13 pacjentów pochodzących z danych konkursowych. Po wykonaniu algorytmu uzyskaliśmy następujące wyniki.
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{Pacjenci.png}
+	\captionof{figure}{Wartości obliczone wszystkimi algorytmami}
+\end{minipage}
+
+Rozbieżność pomiędzy wynikami przeprowadzonymi na maskach uzyskanych poprzez segmentację przez lekarza i przez algorytm różnią się znacząco. 
+\par
+Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostanie wykryta przez algorytm na warstwie, która znajduje się dużo przed faktycznym początkiem prostaty. Najbardziej jest to widoczne na przykładzie pacjenta \textit{ProstateDx-03-0003}, dla którego wyniki uzyskany przez nasz algorytm są nawet dwukrotnie większe. Prostata znajduje się między 9 a 18 warstwą, jednak algorytm segmentacji wykrył obecność prostaty już na warstwie 4. 
+\par 
+Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0007} uzyskujemy wyniki zbliżone do wartości źródłowej. Błąd tutaj wynika z niedokładności algorytmu segmentacji.
+
+Z uwagi na duże rozbieżności w wynikach postanowiliśmy usunąć ze zbioru pacjentów dla których wyniki są znacząco wysokie. Tabela \ref{Objętości pacjenci} przedstawia dane pacjentów po usunięciu wartości brzegowych.
 
 \begin{table}[h!]
 \caption{Wartości objętości ($cm^3$)}
 \centering
 \begin{tabular}{|l|c|c|c|c|c|} \hline  
 Pacjent & Źródło &  Otoczka element	(1) & Wpisanie w prostokąt (2)	& Otoczka cała (3)\\ \hline
-Prostate3T-01-0001	& 47	& 21(26)	& 28(19)	& 23(24)    \\ \hline
-Prostate3T-01-0006	& 58	& 49(9)	    & 68(-10)	& 55(3)     \\ \hline
-Prostate3T-01-0007	& 24	& 9(14)	    & 24(-1)	& 18(6)     \\ \hline
-Prostate3T-01-0008	& 48	& 27(20)	& 44(3)	    & 34(14)    \\ \hline
-Prostate3T-01-0009	& 129	& 81(48)	& 107(21)	& 86(42)    \\ \hline
-ProstateDx-02-0002	& 141	& 89(52)	& 638(-498)	& 248(-108) \\ \hline
-ProstateDx-02-0003	& 185	& 145(39)	& 221(-37)	& 168(17)   \\ \hline
-ProstateDx-02-0004	& 176	& 91(84)	& 162(14)	& 116(60)   \\ \hline
-ProstateDx-02-0005	& 117	& 50(67)	& 75(42)	& 59(58)    \\ \hline
-ProstateDx-03-0002	& 67	& 98(-31)	& 137(-70)	& 111(-44)  \\ \hline
-ProstateDx-03-0003	& 133	& 66(67)	& 147(-14)	& 109(24)   \\ \hline
-ProstateDx-03-0004	& 81	& 124(-44)	& 265(-184)	& 192(-111) \\ \hline
-ProstateDx-03-0005	& 125	& 113(12)	& 172(-47)	& 137(-13)  \\ \hline
+Prostate3T-01-0001	&13	&7	&36	&30  \\ \hline
+Prostate3T-01-0006	&16	&16	&104	&77  \\ \hline
+Prostate3T-01-0007	&5	&4	&23	&13  \\ \hline
+Prostate3T-01-0009	&35	&24	&123	&98  \\ \hline
+ProstateDx-02-0002	&16	&39	&325	&126 \\ \hline
+ProstateDx-02-0004	&22	&26	&149	&99  \\ \hline
+ProstateDx-02-0005	&13	&17	&132	&73  \\ \hline
+ProstateDx-03-0002	&19	&24	&146	&105 \\ \hline
+ProstateDx-03-0004	&21	&36	&281	&131 \\ \hline
+ProstateDx-03-0005	&31	&31	&173	&134 \\ \hline
 \end{tabular}
 \label{Objętości pacjenci}
 \end{table}
-
-Rozbieżność pomiędzy wynikami przeprowadzonymi na maskach uzyskanych poprzez segmentację przez lekarza i przez algorytm różnią się znacząco. 
-\par
-Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostanie wykryta przez algorytm na warstwie, która znajduje się dużo przed faktycznym początkiem prostaty. Najbardziej jest to widoczne na przykładzie pacjenta \textit{ProstateDx-02-0002}, dla którego wyniki uzyskany przez nasz algorytm są nawet dwukrotnie większe. Prostata znajduje się między 9 a 18 warstwą, jednak algorytm segmentacji wykrył obecność prostaty już na warstwie 4. 
-\par 
-Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0007} uzyskujemy wyniki zbliżone do wartości źródłowej. Błąd tutaj wynika z niedokładności algorytmu segmentacji.
- 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -1096,16 +1100,17 @@ Tabela \ref{Analiza statystyczna algorytmów} przedstawia statystyki porównują
 \begin{table}[h!]
 \caption{Analiza statystyczna algorytmów ($cm^3$)}
 \centering
-\begin{tabular}{|l|c|c|c|c|} \hline  
-Algorytm & Różnice średniej (\%) & Różnice odchylenie (\%) & Min & Max \\ \hline 
-Otoczka element (1) & 28\% & 19\% & 9 & 145 \\ \hline
-Wpisanie w prostokąt (2) & -56\% & -213\% & 24 &   638 \\ \hline
-Otoczka cała (3) & -2\%	 & -34\% & 18 &   248 \\ \hline
+\begin{tabular}{|l|c|c|c|c|c|} \hline  
+Algorytm	            & średnia  (\%)	& mediana (\%)	& odchylenie (\%)	& min ($cm^3$)	& max ($cm^3$)  \\ \hline
+Otoczka największa	    & 364\%	        & 463\%	        & 79\%	            & 13	        & 134           \\ \hline
+Opisane na prostokącie	& 681\%	        & 694\%	        & 974\%	            & 23	        & 325           \\ \hline
+Otoczka	                & 17\%	        & 37\%	        & 24\%	            & 4	            & 39            \\ \hline
+
 \end{tabular}
 \label{Analiza statystyczna algorytmów}
 \end{table}
 
-Z zaproponowanych algorytmów jedynym który osiągnął większa dokładność niż algorytm aproksymujący elipsoidą jest algorytm znajdujący otoczkę wypukłą dla całej maski. Pierwszy miał około 15 procentowe przeszacowania, natomiast drugi około 2\% niedoszacowanie względem danych źródłowych. Pokazuje to, że istnieją lepsze algorytmy niż obecnie najczęściej stosowany.
+Z zaproponowanych algorytmów jedynym który osiągnął większa dokładność niż algorytm aproksymujący elipsoidą jest algorytm znajdujący otoczkę wypukłą dla całej maski. Osiągneliśmy poziom około 3 $cm^3$  różnicy średnich względem sumy voxeli (17\%). Pokazuje to, że istnieją lepsze algorytmy niż obecnie najczęściej stosowany.
 
 \subsection{Alternatywne podejścia}
 Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również
