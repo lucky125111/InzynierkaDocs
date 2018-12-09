@@ -363,7 +363,6 @@ PACS ma cztery główne komponenty:
 	\item stacja robocza lub urządzenie mobilne do przeglądania, przetwarzania i interpretowania obrazów.
 	\item Elektroniczne archiwa do przechowywania i wyszukiwania obrazów oraz powiązanej dokumentacji i raportów.
 \end{enumerate}
-Nie ma jednoznacznych standardów, którymi dostawcy się kierują wykorzystując standard DICOM, co utrudnia przenoszenie danych z jednego systemu do pracy w innym systemie. 
 
 \subsection{Radiologiczny System Informatyczny RIS}
 System informacji radiologicznej (RIS) to sieciowy system oprogramowania do zarządzania obrazami medycznymi i powiązanymi danymi. RIS jest szczególnie przydatny do śledzenia zleceń obrazowania radiologicznego i informacji rozliczeniowych i jest często używany w połączeniu z PACS do zarządzania archiwami obrazów i rejestrowaniem.
@@ -385,12 +384,13 @@ DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania
 Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi urządzeniami do przetwarzania obrazu.
 
 \section{Metody wspomagania pracy specjalisty}
-W dzisiejszym świecie praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Radiolog odczytuje, opisuje i analizuje wyniki badania na komputerze. Jednakże wiele badań dostarczanych jest przez pacjenta w formie papierowej. O problemie znajdowania odpowiednich danych w szpitalnej dokumentacji opowiemy w dalszej części pracy. 
+W chwili obecnej praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Na rynku istnieje wiele różnych narzędzi, które mogą wspomóc pracę lekarza jak na przykład oprogramowanie Future Processing \cite{FP}, które zapewnia możliwość automatycznej segmentacji obrazów dla mózgu oraz płuc, jednak obecnie nie jest dostępny moduł wykonujący to dla gruczołu prostaty. Z uwagi na zasady formalne istniejące w szpitalach w Polsce sprzęt wykorzystywany w szpitalach nie zapewnia takiej funkcjonalności.
 \par
-
-Narzędzia wykorzystywane przez radiologów są dalekie od ideału. Są to, w większości, przeglądarki zdjęć, które radiolog musi analizować. W tych programach brakuje automatyzacji i sugestii dla lekarza. Za bardzo pomocny został uznany pomysł dokładnego liczenia objętości prostaty na podstawie zdjęć. Skraca to bardzo czas pracy lekarza oraz daje dokładniejsze wyniki. Obecnie nie istnieje na rynku narzędzie automatycznie segmentujące zdjęcia i dające lekarzowi sugestie na temat przeglądanego obrazu.
+W szpitalu MSWiA z którym współpracowaliśmy w trakcie pisania tej pracy podstawowym narzędziem było oprogramowanie dostarczane przez firmę Philips \cite{Philips}. Radiolog odczytuje, opisuje i analizuje wyniki badania na komputerze. Jednakże wiele badań dostarczanych jest przez pacjenta w formie papierowej. Problemy wynikające z używania dokumentacji papierowej oraz elektronicznej jednocześnie są opisane w dalszej części pracy.
 \par
-Celem poniższej pracy jest stworzenie i opis narzędzia, które zapewni automatyzację pracy lekarza oraz zapewni łatwą integrację z systemem szpitalnym.
+Pomimo tego, że na rynku istnieją rozwiązania pozwalające na automatyzację pracy lekarza poprzez na przykład automatyczne wykrywanie i oznaczanie zmian w organach. Narzędziach do przeglądania obrazów DICOM wykorzystywanych obecnie w szpitalach przez radiologów brakuje modułów automatyzujących pracę. Są to, w większości, przeglądarki zdjęć, które radiolog musi później sam ręcznie analizować. 
+\par
+Proponujemy stworzenie systemu zapewniającego automatyczną segmentację oraz liczenie objętości prostaty na podstawie zdjęć. Dzięki temu będziemy mogli znacząco skrócić czas jaki lekarza poświęca na analizę obrazów oraz zapewnić szybką informację mającą wpływ na diagnozę.
 
 
 \section{Słownik pojęć}
@@ -1229,23 +1229,28 @@ Dodatkowo zapewniamy możliwość ukrycia maski w przypadku aby lekarz mógł pr
 
 % -------------------- Podsumowanie rezultatów -----------------------
 \chapter{Podsumowanie rezultatów}
-Ten rozdział jest poświęcony przedstawieniu rezultatów pracy nad omawianym systemem. Omówione zostaną testy, które zostały przeprowadzone w celu zbadania, czy stworzone rozwiązanie odpowiada założeniom, przedstawionym w rozdziale \textit{Specyfikacja}. Rozdział obejmuje także omówienie wniosków wyciągniętych podczas pracy nad tworzonym systemem. 
+Rozdział jest poświęcony przedstawieniu rezultatów pracy nad omawianym systemem. Omówione zostaną testy, które zostały przeprowadzone w celu zbadania, czy stworzone rozwiązanie odpowiada założeniom, przedstawionym w rozdziale \textit{Specyfikacja}. 
+\par
+Głównym założeniem stworzenia aplikacji było wspieranie pracy lekarza poprzez zapewnienie systemu, który zapewniałby informację o predycji objętości prostaty z obrazów DICOM. Informacja o wielkości gruczołu ma dać lekarzowi szybką informację o potencjalnym wystąpieniu nowotworu prostaty. Cele został osiągnięty poprzez zaprojektowanie aplikacji, która daje możliwość przeglądania, segmentacji oraz liczenia objętości prostaty z różnych źródeł jakimi są pliki płaskie oraz szpitalny system PACS. Dodatkowo zapewniliśmy możliwość poprawy wyliczenia objętości poprzez ręczną możliwość edycji segmentacji. 
 
 \section{Integracja z systemem informatycznym}
-Podstawowym wymaganiem dotyczącym naszej pracy jest możliwość integracji i używania go razem z obecnymi w szpitalu systemami. Podczas naszej współpracy ze szpitalem niestety doszliśmy do wniosku, że nie jest możliwa integracja z systemem używanym na co dzień w szpitalu. System ten jest napisany przez firmę Philips i nie ma w nim możliwości instalacji wtyczek, a cały kod źródłowy jest utajniony. Przez co w naszym systemie proponujemy obejście tego problemu poprzez łączenie się z siecią szpitalna przez przeglądarkę i w ten sposób pobieranie danych. Rozwiązanie umożliwiające łatwą integrację z infrastrukturą szpitalną bez rozszerzania funkcjonalnosci przegladarek DICOM. Alternatywnie można podłaczyc serwer do szpitalnego systemu PACS przy użyciu sieci VPN. 
-Rozwiązanie przy użyciu klienta po stronie przeglądarki ma kilka zalet, takich jak na przykłąd redukcje kosztów po stronie obsługi IT i umożliwia wprowadzanie zmian po stronie klienta bez konieczności manualnej instalacji oprogramowania. Co ma istotne znaczenie w używanych systemach szpitalnych.
-
+Podstawowym wymaganiem dotyczącym naszej pracy jest możliwość integracji i używania go razem z obecnymi w szpitalu systemami. Podczas naszej współpracy ze szpitalem niestety doszliśmy do wniosku, że nie jest możliwa integracja z systemem używanym na co dzień w szpitalu. System ten jest napisany przez firmę Philips i nie ma w nim możliwości instalacji wtyczek, a cały kod źródłowy jest utajniony. Przez co w naszym systemie proponujemy obejście tego problemu poprzez łączenie się z siecią szpitalna przez przeglądarkę i w ten sposób pobieranie danych. Rozwiązanie umożliwiające łatwą integrację z infrastrukturą szpitalną bez rozszerzania funkcjonalności przeglądarek DICOM. Alternatywnie można podłączyć serwer do szpitalnego systemu PACS przy użyciu sieci VPN. 
+Rozwiązanie przy użyciu klienta po stronie przeglądarki ma kilka zalet, takich jak na przykład redukcje kosztów po stronie obsługi IT i umożliwia wprowadzanie zmian po stronie klienta bez konieczności manualnej instalacji oprogramowania. Co ma istotne znaczenie w używanych systemach szpitalnych.
+\par
+Aplikacja powstała przy wykorzystaniu najnowszych dostępnych technologii stąd w środowisku produkcyjnym (w szczególności w systemie szpitalnym) mogą pojawiać się problemy, wynikające z różnic pomiędzy naszym środowiskiem deweloperskim a szpitalną infrastrukturą IT. Wszystkie biblioteki jakich użyliśmy w pracy są stale rozwijane i zapewniają dobre wsparcie dla deweloperów. 
+ 
 \section{Trudności}
-W trakcie realizacji projektu napotkaliśmy kilka trudności. Podstawowymi było:
+W trakcie realizacji projektu napotkaliśmy kilka trudności. Największymi z nich były:
 \begin{enumerate}
 \item Problemy z integracją z siecią szpitalną. Wniosek jaki powstał po etapie analizy biznesowej, to, że uzyskanie odpowiednich uprawnień oraz dostępów do celu realizacji projektu jest niemożliwe. Stąd w naszej pracy integrację wykonaliśmy z lokalną instancją bazy PACS. Może to wprowadzać problemy przy realnej próbie integracji z systemem szpitalnym, gdyby okazało się, że systemy różnią się między sobą metodami dostępu w szczególności metodami udostępnianymi przez REST API.
+\item  Największym problemem związanym z Pozyskanie danych szpitalnych był fakt, iż każdy system używa innego formatowania dokumentów, więc często występowały trudności z odczytaniem istotnych w naszym badaniu informacji.
 \item Dane testowe jaki użyliśmy do uczenia sieci pochodzą z konkursu i zbiór testowy jest bardzo ograniczony. Może to powodować problemy z działaniem na realnych danych szpitalnych. 
-\item Nie byliśmyw stanie sprawdzić dokładności algorytmu segmentacji z danymi realnych pacjentów szpitala, z uwagi na brak dostępu do danych. W analizie wyników brakowało nam najdokładniejszej informacji jaką jest objętość prostaty po zabiegu prostatektomii. Stąd nie jesteśmy w stanie zweryfikować wyników względem faktycznych wartości.
+\item Nie byliśmy w stanie sprawdzić dokładności algorytmu segmentacji z danymi realnych pacjentów szpitala, z uwagi na brak dostępu do danych. W analizie wyników brakowało nam najdokładniejszej informacji jaką jest objętość prostaty po zabiegu prostatektomii. Stąd nie jesteśmy w stanie zweryfikować wyników względem faktycznych wartości.
 \end{enumerate}
-Trudności spowodowały rozwiązanie problemów w alternatywne sposoby niż początkowo zakładaliśmy. Jednak  aby dopuścić rowiązanie do użytku produkcyjnego powinny być rozwiązane. 
+Trudności spowodowały rozwiązanie problemów w alternatywne sposoby niż początkowo zakładaliśmy. Jednak  aby dopuścić rozwiązanie do użytku produkcyjnego powinny być rozwiązane. 
 
 \section{Wnioski}
-Przedstawiony system może poprawić komfort pracy lekarza radiologa. Jednak w zarówno w organizacji pracy radiologów jak i w naszym rozwiązaniu pozostaje wiele miejsca do wprowadzania usprawnień. Aplikacja powstała przy wykorzystaniu najnowszych dostępnych technologii stąd w środowisku produkcyjnym może to sprawiać problemy. Jednak wszystkie biblioteki jakich użyliśmy w pracy są stale rozwijane i zapewniają dobre wsparcie dla deweloperów.
+W trakcie realizacji pracy pojawiły się problemy, które zmusiły nas do zmiany początkowego podejścia. Finalna wersja spełnia wszystkie założenia przyjęte na początku projektu. Przedstawiony system może poprawić komfort pracy lekarza radiologa oraz zapewnić istotne informacje przy wystawianiu diagnozy pacjenta poprzez informację o przybliżonej wartości objętości gruczołu prostaty. Z uwagi na dużą złożoność systemu jest wiele możliwości wprowadzania usprawnień.
 
 % -------------------- 6. Bibliografia -----------------------
 % Bibliografia leksykograficznie wg nazwisk autorów
@@ -1261,7 +1266,9 @@ Przedstawiony system może poprawić komfort pracy lekarza radiologa. Jednak w z
 \bibitem[5] {imageOrg} \emph {Przetwarzanie danych w medycynie} http://www.image-net.org/
 \bibitem[6] {konkretny} \emph {Dane do uczenia sieci }https://wiki.cancerimagingarchive.net/display/Public/NCI-ISBI+2013+Challenge+-+Automated+Segmentation+of+Prostate+Structures
 \bibitem[7] {zgłodzenie} \emph{Zgłoszenie do konkursu}, https://github.com/mirzaevinom/prostate\_segmentation
-\bibitem[8]{Orthanc}  \emph{Serwer PACS} https://www.orthanc-server.com/
+\bibitem[8]{Orthanc} \emph{Serwer PACS} https://www.orthanc-server.com/
+\bibitem[9]{Philips} \emph{Aplikacje dostarczane przez firmę Philips} https://www.philips.com.eg/healthcare/resources/support-documentation/dicom-clinical-applications
+\bibitem[10]{FP} \emph{Future Processing} https://www.future-processing.com/software-solutions/healthcare/
 %\bibitem[2] https://www.nhs.uk/conditions/prostate-cancer/diagnosis/
 %\bibitem[3] https://www.cancer.org/cancer/prostate-cancer/detection-diagnosis-staging/how-diagnosed.html
 %\bibitem[5] https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
