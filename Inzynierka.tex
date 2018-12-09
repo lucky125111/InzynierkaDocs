@@ -386,7 +386,7 @@ DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania
 Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi urządzeniami do przetwarzania obrazu.
 
 \section{Metody wspomagania pracy specjalisty}
-W chwili obecnej praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Na rynku istnieje wiele różnych narzędzi, które mogą wspomóc pracę lekarza jak na przykład oprogramowanie Future Processing \cite{FP}num które zapewnia możliwość automatycznej segmentacji obrazów narządów takich jak mózg oraz płuca, jednak obecnie nie jest dostępny moduł wykonujący to dla gruczołu prostaty. Sprzęt dostarczany przez dostawców oprogramowania w Polsce nie zapewnia takiej funkcjonalności.
+W chwili obecnej praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Na rynku istnieje wiele różnych narzędzi, które mogą wspomóc pracę lekarza jak na przykład oprogramowanie Future Processing \cite{FP} które zapewnia możliwość automatycznej segmentacji obrazów narządów takich jak mózg oraz płuca, jednak obecnie nie jest dostępny moduł wykonujący to dla gruczołu prostaty. Sprzęt dostarczany przez dostawców oprogramowania w Polsce nie zapewnia takiej funkcjonalności.
 \par
 W szpitalu MSWiA z którym współpracowaliśmy w trakcie pisania tej pracy podstawowym narzędziem było oprogramowanie dostarczane przez firmę Philips \cite{Philips}. Radiolog odczytuje, opisuje i analizuje obrazy na stacji wyposażonej w monitor diagnostyczny, następnie przepisuje je na komputer osobisty. Jednakże wiele badań dostarczanych jest przez pacjenta w formie papierowej. Problemy wynikające z używania jednocześnie dokumentacji papierowej oraz elektronicznej jednocześnie są opisane w dalszej części pracy.
 \par
@@ -756,7 +756,7 @@ Głęboka sieć neuronowa (DNN) to sztuczna sieć neuronowa z wieloma warstwami 
 Konwolucyjna  sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania obrazów. W przeciwieństwie do sieci użytej do głębokiego uczenia maszynowego, każda ukryta warstwa aktywacyjna jest obliczana jako iloczyn kartezjański wyników kolejnych warstw. Jednak w sieciach konwolucyjnych każda ukryta aktywacja jest obliczana przez pomnożenie małego lokalnego sygnału wejściowego względem wag. Wagi są następnie dzielone na całej przestrzeni wejściowej. Po obliczeniu ukrytych jednostek, maksimum warstwa pomaga usunąć zmienność ukrytych jednostek. W szczególności każda jednostka gromadząca maksimum otrzymuje aktywacje ze znalezionej ilości konwolucyjnych warstw, i wyprowadza maksymalną aktywacje z tych konwolucji. Większość CNN uzytych do rozpoznawania obrazu ma niższe warstwy sieciowe, które są konwolucyjne, a wyższe warstwy sieciowe są w pełni połączone.
 
 \subsubsection{U-Net}
-Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolucyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezultaty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w ścieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
+Sieć U-Net\cite{siec_unet} jest zbudowana na podstawie architektury pełnych sieci konwolucyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezultaty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w ścieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -1349,6 +1349,7 @@ Dane konkursowe zawierały obrazowanie prostat, których średnia objętość by
 \bibitem[10] {konkretny} \emph {Dane do uczenia sieci}, \path{https://wiki.cancerimagingarchive.net/display/Public/NCI-ISBI+2013+Challenge+-+Automated+Segmentation+of+Prostate+Structures}
 \bibitem[11] {zgloszenie} \emph{Zgłoszenie do konkursu}, \path{https://github.com/mirzaevinom/prostate\_segmentation}
 \bibitem[12] {standardDICOM} \emph {Standard DCIOM}, \path{https://www.dicomstandard.org/}
+\bibitem[13] {siec_unet} \emph {Sieć U-Net}, \path{https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/}
 
 
 %\bibitem[2] https://www.nhs.uk/conditions/prostate-cancer/diagnosis/
