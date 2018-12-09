@@ -407,3 +407,4 @@ xtend-gen/
 *.xml_gen
 
 # End of https://www.gitignore.io/api/tex,text,xtext,latex
+.DS_Store
