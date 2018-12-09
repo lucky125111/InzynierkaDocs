@@ -743,7 +743,7 @@ Moduł odpowiada za znajdowanie na obrazie wejściowym prostaty. Algorytm dział
 
 Segmentacja obrazu jest procesem dzielenia obrazu cyfrowego na wiele segmentów). Celem segmentacji jest uproszczenie i / lub zmiana reprezentacji obrazu na obszary, które są bardziej znaczące i łatwiejsze do analizy. Segmentacja obrazu jest używana do lokalizowania obiektów i granic (linii, krzywych itp.) w obrazach. Jest to proces przypisywania etykiety do każdego piksela na obrazie, tak że piksele z tą samą etykietą mają pewne cechy.
 
-Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  poszukiwanych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każda z wyżej wymienionych metod jest zestawem reguł które są przygotowane przez człowieka podczas tworzenia algorytmu. Algorytmy te nie zależą w żaden sposób od danych na których będą wykonywać obliczenia. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. Sieci na podstawie dużej ilości danych dobierają zestaw filtrów, który dajne najlepsze wyniki segmentacji dla danych treningowych. W naszej pracy postanowiliśmy zastosować sieci neuronowe, ponieważ rozwiązania oparte o głębokie uczenie od lat wygrywają konkursy na najlepsze wyniki  klasyfikacji oraz segmentacji. 
+Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  poszukiwanych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każda z wyżej wymienionych metod jest zestawem reguł które są przygotowane przez człowieka podczas tworzenia algorytmu. Algorytmy te nie zależą w żaden sposób od danych na których będą wykonywać obliczenia. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. Sieci na podstawie dużej ilości danych dobierają zestaw filtrów, który dajne najlepsze wyniki segmentacji dla danych treningowych. W naszej pracy postanowiliśmy zastosować sieci neuronowe, ponieważ rozwiązania oparte o głębokie uczenie od lat wygrywają konkursy na najlepsze wyniki  klasyfikacji oraz segmentacji. 
 
 \subsection{Sieci neuronowe}
 
@@ -823,10 +823,10 @@ Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych
 \end{minipage}
 
 
-Architektura ta dzieli się na trzy części:
+Architektura ta dzieli się na trzy części:
 
 \begin{description}
-	\item [Warstwa zstępująca] Zbiera informacje na temat kontekstu i znaczenia regionu. Interpretuje znaczenie obszaru poprzez zmniejszanie wielkości przestrzennej w każdym z bloku. Wszytkie bloki w tej ścieżsce składają się z następujących warstw:
+	\item [Warstwa zstępująca] Zbiera informacje na temat kontekstu i znaczenia regionu. Interpretuje znaczenie obszaru poprzez zmniejszanie wielkości przestrzennej w każdym z bloku. Wszytkie bloki w tej ścieżsce składają się z następujących warstw:
 	\begin{description}
 		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
 		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
@@ -834,13 +834,13 @@ Architektura ta dzieli się na trzy części:
 	\end{description}
    Każdy blok podwaja liczbę konwolucji oraz zmniejsza rozmiar przestrzenny o  połowę.
 	
-	\item [Wąskie gardło] Znajduje się pomiędzy dwoma ścieżkami. Składa się z dwóch warstw konwolucyjnych
+	\item [Wąskie gardło] Znajduje się pomiędzy dwoma ścieżkami. Składa się z dwóch warstw konwolucyjnych
 		\begin{description}
 		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
 		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
 		\end{description}
 	
-	\item [Warstwa wchodząca] Składa się warstw powiększających dane przestrzenne regionu oraz jest łączona z symetrycznie odbitymi blokami ścieżki zstępującej co pozwala ustalić obszar oraz jego kontekst. Wszytkie bloki w tej ścieżsce składają się z następujących warstw:
+	\item [Warstwa wchodząca] Składa się warstw powiększających dane przestrzenne regionu oraz jest łączona z symetrycznie odbitymi blokami ścieżki zstępującej co pozwala ustalić obszar oraz jego kontekst. Wszytkie bloki w tej ścieżsce składają się z następujących warstw:
 	\begin{description}
 		\item [UpSampling2D] 2x2 Warstwa powiększająca
 		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
@@ -986,27 +986,9 @@ Z uwagi na niedokładności masek zwracanych przez algorytm segmentacji proponuj
 \item Znalezienie otoczki wypukłej dla wszystkich elementów maski. Jest to modyfikacja poprzedniego algorytmu , w której szukamy otoczki wypukłej dla wszystkich pixeli maski.
 \end{enumerate}
 
-Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. 
+Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. Poniżej przedstawiamy różnice wynikające z zastosowania każdego z algorytmów.
 
-\subsection{Analiza wyników}
-Dane policzone objętości prostaty przedstawiono w tabli \ref{Objętości} \\
-\begin{table}[h!]
-\caption{Wartości objętości}
-\centering
-\begin{tabular}{|p{5cm}|l|} \hline  
-Algorytm & Uzyskana objętość  \\ \hline 
-Algorytm szpitalny & 189255 * 0,54 = 102198  \\ \hline 
-Wpisanie gruczołu w prostokąt & 71910  \\ \hline 
-Otoczka wypukła dla największego elementu & 34419  \\ \hline 
-Otoczka wypukła wokół całej maski & 46958  \\ \hline          
-\end{tabular}
-\label{Objętości}
-\end{table}
-
-
-Przykłady różnych wyników pola powierzchni dla masek:
-
-Przykład pierwszy, w którym Wysegmentowana maska jest jednym spójnym elementem. \\ \\
+Przykład pierwszy, w którym wysegmentowana maska jest jednym spójnym elementem. \\ \\
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=0.25\textwidth]{Mask/1/maska.png}
@@ -1056,6 +1038,58 @@ Przykład drugi, w którym wysegmentowana maska nie jest spójna. \\ \\
 \\
 Widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ prostata jest znaleziona częściowo w kilku elementach obrazu, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla największego spójnego fragmentu. Przykład obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
 
+\subsection{Analiza wyników}
+Aby przeanalizować wyniki osiągnięte przez proponowany przez nas algorytm segmentacji oraz liczenia objętości postanowiliśmy porównać wyniki liczenia objętości algorytmem szpitalnym na danych konkursowych (segmentacja prostaty została wykonana przez lekarza) oraz proponowane przez nas metody liczenia objętości na maskach uzyskanych w przez aplikacyjny system segmentacji wraz z metodami poprawy obrazu. Zbiór testowy składał się z 13 pacjentów pochodzących z danych konkursowych. Wartości uzyskane dla każdego z nich przedstawia tabela \ref{Objętości pacjenci}.
+
+\begin{table}[h!]
+\caption{Wartości objętości}
+\centering
+\begin{tabular}{|l|c|c|c|c|c|} \hline  
+Pacjent	& Szpital & Otoczka całość & Otoczka największa & Opisanie na kwadracie  \\ \hline 
+Prostate3T-01-0001 & 50 519,70    	 & 21 678,25  &  	 28 081,00  &  	 23 481,50   \\ \hline 
+Prostate3T-01-0006 & 81 881,28    	 & 49 371,75  &  	 68 668,00  &  	 55 471,75   \\ \hline 
+Prostate3T-01-0007 & 42 282,00    	 & 9 917,75   & 	 24 806,50  &  	 18 679,75   \\ \hline 
+Prostate3T-01-0008 & 68 065,92    	 & 27 709,50  &  	 44 875,00  &  	 34 201,75   \\ \hline 
+Prostate3T-01-0009 & 143 107,02    	 & 81 372,25  &  	 107 769,00 &    86 835,75   \\ \hline 
+ProstateDx-02-0002 & 173 560,32    	 & 89 050,50  &  	 638 992,00 &    248 745,50  \\ \hline  
+ProstateDx-02-0003 & 221 421,60    	 & 145 749,00 &   	 221 833,00 &    168 329,25  \\ \hline  
+ProstateDx-02-0004 & 209 018,88    	 & 91 919,25  &  	 162 448,50 &    116 387,75  \\ \hline  
+ProstateDx-02-0005 & 155 925,00    	 & 50 078,00  &  	 75 321,00  &  	 59 246,75   \\ \hline 
+ProstateDx-03-0002 & 64 783,80    	 & 98 652,00  &  	 137 690,00 &    111 755,00  \\ \hline  
+ProstateDx-03-0003 & 136 028,16    	 & 66 159,75  &  	 147 515,50 &    109 883,00  \\ \hline  
+ProstateDx-03-0004 & 69 765,30    	 & 124 994,50 &   	 265 676,00 &    192 162,75  \\ \hline  
+ProstateDx-03-0005 & 118 503,00    	 & 113 662,50 &    	 172 718,50 &    137 877,50  \\ \hline  
+\end{tabular}
+\label{Objętości pacjenci}
+\end{table}
+
+Rozbieżność pomiędzy wynikami przeprowadzonymi na maskach uzyskanych poprzez segmentację przez lekarza i przez algorytm różnią się znacząco. 
+\par
+Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostanie wykryta przez algorytm na warstwie, która znajduje się dużo przed faktycznym początkiem prostaty. Najbardziej jest to widoczne na przykładzie pacjenta \textit{ProstateDx-02-0002}, dla którego wyniki uzyskany przez nasz algorytm są nawet do 3 razy większe. Prostata znajduje się między 9 a 18 warstwą, jednak algorytm segmentacji wykrył obecność prostaty już na warstwie 4. 
+\par 
+Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0009} uzyskujemy wyniki istotnie mniejsze dzięki zwiększeniu dokładności algorytmu liczenia objętości.
+
+\begin{table}[h!]
+\caption{Analiza statystyczna algorytmów}
+\centering
+\begin{tabular}{|l|c|c|c|c|} \hline  
+Algorytm & Różnice średniej (\%) & Różnice odchylenie (\%) & Najmniejsza wartość & Największa wartość \\ \hline 
+Algorytm szpitalny	    & 0%	& 0% & 42282,00	& 221421,60 \\ \hline
+Otoczka całość	        & 37%	& 31% & 9917,75	& 145749,00 \\ \hline
+Otoczka największa	    & -37%	& -167% & 24806,50	& 638992,00 \\ \hline
+Opisane na kwadracie	& 11%	& -15% & 18679,75	& 248745,50 \\ \hline
+\end{tabular}
+\label{Analiza statystyczna algorytmów}
+\end{table}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{PorownanieMetod.png}
+	\captionof{figure}{Porównanie metod liczenia}
+\end{minipage}
+
+
+Tabela \ref{Analiza statystyczna algorytmów} przedstawia statystyki porównujące opisywane algorytmy. 
 
 \subsection{Alternatywne podejścia}
 Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również
