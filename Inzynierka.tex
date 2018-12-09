@@ -1001,53 +1001,71 @@ Z uwagi na niedokładności masek zwracanych przez algorytm segmentacji proponuj
 Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. Poniżej przedstawiamy różnice wynikające z zastosowania każdego z algorytmów.
 
 Przykład pierwszy, w którym wysegmentowana maska jest jednym spójnym elementem. \\ \\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/maska.png}
-	\captionof{figure}{Maska przykład 1}
-\end{minipage}
-\\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/square.png}
-	\captionof{figure}{Maska przykład 1 Wpisana w prostokąt}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/hull.png}
-	\captionof{figure}{Maska przykład 1 Otoczka wokół największego elementu}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/1/hull.png}
-	\captionof{figure}{Maska przykład 1 Otoczka wypukła}
-\end{minipage}
+
+
+\begin{figure}[htb]
+	\centering % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{Mask/1/maska.png}
+		\caption{Maska przykład 1}
+		\label{fig:1}
+	\end{subfigure}\hfil % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{Mask/1/square.png}
+		\caption{Maska przykład 1 Wpisana w prostokąt}
+		\label{fig:2}
+	\end{subfigure}\hfil % <-- added
+	
+	\medskip
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{Mask/1/hull.png}
+		\caption{Maska przykład 1 Otoczka wokół największego elementu}
+		\label{fig:3}
+	\end{subfigure}\hfil % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{Mask/1/hull.png}
+		\caption{Maska przykład 1 Otoczka wypukła}
+		\label{fig:4}
+	\end{subfigure}\hfil % <-- added
+
+	\caption{Przykłady wyników}
+	\label{fig:images}
+\end{figure}
+
 
 Algorytmy liczenia otoczek wypukłych dają ten sam rezultat w przypadku gdy maska jest spójna. Przykład obrazuje naddatek jaki pojawia się przy aproksymowaniu maski prostokątem. Prostata jest kształtem, który nie odpowiada, żadnemu kształtowi geometrycznemu, stąd przybliżanie go czworokątem jest nieefektywne.
 
 Przykład drugi, w którym wysegmentowana maska nie jest spójna. \\ \\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/mask.png}
-	\captionof{figure}{Maska przykład 2}
-\end{minipage}
-\\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/square.png}
-	\captionof{figure}{Maska przykład 2 Wpisana w prostokąt}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/biggest.png}
-	\captionof{figure}{Maska przykład 2 Otoczka wokół największego elementu}
-\end{minipage}
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.25\textwidth]{Mask/2/hull.png}
-	\captionof{figure}{Maska przykład 2 Otoczka wypukła}
-\end{minipage}
-\\
+
+\begin{figure}[htb]
+	\centering % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{Mask/2/mask.png}
+		\caption{Maska przykład 2}
+		\label{fig:1}
+	\end{subfigure}\hfil % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{Mask/2/square.png}
+		\caption{Maska przykład 2 Wpisana w prostokąt}
+		\label{fig:2}
+	\end{subfigure}\hfil % <-- added
+	
+	\medskip
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{Mask/2/biggest.png}
+		\caption{Maska przykład 2 Otoczka wokół największego elementu}
+		\label{fig:3}
+	\end{subfigure}\hfil % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{Mask/2/hull.png}
+		\caption{Maska przykład 2 Otoczka wypukła}
+		\label{fig:4}
+	\end{subfigure}\hfil % <-- added
+	
+	\caption{Przykłady wyników}
+	\label{fig:images}
+\end{figure}
+
 Widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ prostata jest znaleziona częściowo w kilku elementach obrazu, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla największego spójnego fragmentu. Przykład obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
 
 \subsection{Analiza wyników}
