@@ -26,6 +26,7 @@
 \usepackage{float}
 \usepackage{flafter}
 \usepackage{pdfpages}
+\usepackage[hyphens]{url}
 \usepackage{subcaption}
 \usepackage{caption} \captionsetup[table]{singlelinecheck=false}		
 \usepackage{listings,xcolor}
@@ -385,7 +386,7 @@ DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania
 Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi urządzeniami do przetwarzania obrazu.
 
 \section{Metody wspomagania pracy specjalisty}
-W chwili obecnej praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Na rynku istnieje wiele różnych narzędzi, które mogą wspomóc pracę lekarza jak na przykład oprogramowanie Future Processing \cite{FP}, które zapewnia możliwość automatycznej segmentacji obrazów narządów takich jak mózg oraz płuca, jednak obecnie nie jest dostępny moduł wykonujący to dla gruczołu prostaty. Sprzęt dostarczany przez dostawców oprogramowania w Polsce nie zapewnia takiej funkcjonalności.
+W chwili obecnej praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Na rynku istnieje wiele różnych narzędzi, które mogą wspomóc pracę lekarza jak na przykład oprogramowanie Future Processing \cite{FP} które zapewnia możliwość automatycznej segmentacji obrazów narządów takich jak mózg oraz płuca, jednak obecnie nie jest dostępny moduł wykonujący to dla gruczołu prostaty. Sprzęt dostarczany przez dostawców oprogramowania w Polsce nie zapewnia takiej funkcjonalności.
 \par
 W szpitalu MSWiA z którym współpracowaliśmy w trakcie pisania tej pracy podstawowym narzędziem było oprogramowanie dostarczane przez firmę Philips \cite{Philips}. Radiolog odczytuje, opisuje i analizuje obrazy na stacji wyposażonej w monitor diagnostyczny, następnie przepisuje je na komputer osobisty. Jednakże wiele badań dostarczanych jest przez pacjenta w formie papierowej. Problemy wynikające z używania jednocześnie dokumentacji papierowej oraz elektronicznej jednocześnie są opisane w dalszej części pracy.
 \par
@@ -755,7 +756,7 @@ Głęboka sieć neuronowa (DNN) to sztuczna sieć neuronowa z wieloma warstwami 
 Konwolucyjna  sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania obrazów. W przeciwieństwie do sieci użytej do głębokiego uczenia maszynowego, każda ukryta warstwa aktywacyjna jest obliczana jako iloczyn kartezjański wyników kolejnych warstw. Jednak w sieciach konwolucyjnych każda ukryta aktywacja jest obliczana przez pomnożenie małego lokalnego sygnału wejściowego względem wag. Wagi są następnie dzielone na całej przestrzeni wejściowej. Po obliczeniu ukrytych jednostek, maksimum warstwa pomaga usunąć zmienność ukrytych jednostek. W szczególności każda jednostka gromadząca maksimum otrzymuje aktywacje ze znalezionej ilości konwolucyjnych warstw, i wyprowadza maksymalną aktywacje z tych konwolucji. Większość CNN uzytych do rozpoznawania obrazu ma niższe warstwy sieciowe, które są konwolucyjne, a wyższe warstwy sieciowe są w pełni połączone.
 
 \subsubsection{U-Net}
-Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolucyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezultaty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w ścieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
+Sieć U-Net\cite{siec_unet} jest zbudowana na podstawie architektury pełnych sieci konwolucyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezultaty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w ścieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -912,6 +913,21 @@ Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobr
 	\label{fig:images}
 \end{figure}
 
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.65\textwidth]{segmentation/maski_segmentacji.png}
+	\captionof{figure}{Dostarczone maski z konkursu pacjenta ProstateDx-03-0003}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.65\textwidth]{segmentation/predykcje_segmentacji.png}
+	\captionof{figure}{Predykcje masek pacjenta ProstateDx-03-0003}
+\end{minipage}
+
+
+
+
 \subsection{Alternatywne podejścia}
 \begin{enumerate}
 \item Rozszerzecznie zbioru treningowego poprzez augmentację danych zawierających obrazy przetworzone filtrem Gaussowskim może poprawić przypadki w których zdjęcie jest rozmyte.
@@ -962,7 +978,7 @@ Aby zobrazować niedokładność aproksymacji elipsoidą postanowiliśmy porówn
 
 \subsection{Liczenie objętości}
 
-Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty jest liczona metodą przekrojów jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest suma objętości. 
+Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty jest liczona metodą przekrojów jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest sumą objętości. 
 
 \[V = \sum_{i=0}^{n-1} ((S_i + S_{i+1}) * (h_{d_{i+1}} - h_{d_i})) / 2 \]
 \\
@@ -973,17 +989,17 @@ n - liczba warstw \\
 \(h_{d_i}\) - lokalizacja warstwy o indeksie \(d_{i}\) \\
 
 Liczenie pola powierzchni maski została opisana w kolejnej sekcji. \\
-W przypadku naszego systemu algorytm należy poprawić o niedokładność segmentacji prostaty. Zdarzają się sytuacje gdzie kolejna warstwa nie jest warstwą ostatnią na której znajduje się prostata a algorytm nie znalazł na zdjęciu prostaty. W tym przypadku bierzemy kolejną następującą po niej niepustą warstwę.
+W przypadku przedstawionego systemu algorytm należy poprawić o niedokładność segmentacji prostaty. Zdarzają się sytuacje gdzie kolejna warstwa nie jest warstwą ostatnią na której znajduje się prostata a algorytm nie znalazł na zdjęciu prostaty. W tym przypadku wzięto kolejną następującą po niej niepustą warstwę.
 
 \subsection{Liczenie pola powierzchni}
 Z uwagi na niedokładności masek zwracanych przez algorytm segmentacji proponujemy 3 alternatywne funkcje poprawiające obraz:
 \begin{enumerate}
 \item Znalezienie otoczki wypukłej największego spójnego fragmentu maski. Alternatywnym podejściem do rozwiązania problemu jest algorytm znajdujący otoczkę wypukła dla największego spójnego elementu. Jest rozwiązaniem gdzie wyszukujemy kształt o największym polu powierzchni, a następnie liczymy tylko jego pole pomijając miejsca gdzie również została znaleziona prostata. W tym przypadku pole powierzchni jest policzone dużo dokładniej, niż w pierwszym przypadku jednak gdy maska nie jest spójna mogą być mocno zaniżone. 
 \item Pole powierzchni prostokąta na którym można opisać maskę. Najprostszy algorytm, wzorujący się bezpośrednio na obecnym podejściu stosowanym w szpitalu. Jednak w tym przypadku każdą warstwę opisujemy innym prostokątem, przez co wyniki powinny być dokładniejsze
-\item Znalezienie otoczki wypukłej dla wszystkich elementów maski. Jest to modyfikacja poprzedniego algorytmu , w której szukamy otoczki wypukłej dla wszystkich pixeli maski.
+\item Znalezienie otoczki wypukłej dla wszystkich elementów maski. Jest to modyfikacja poprzedniego algorytmu, w której szukano otoczki wypukłej dla wszystkich pixeli maski.
 \end{enumerate}
 
-Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. Poniżej przedstawiamy różnice wynikające z zastosowania każdego z algorytmów.
+Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. Poniżej przedstawiono różnice wynikające z zastosowania każdego z algorytmów.
 
 Przykład pierwszy, w którym wysegmentowana maska jest jednym spójnym elementem. \\ \\
 
@@ -1089,6 +1105,13 @@ ProstateDx-03-0005	&31	&31	&173	&134 \\ \hline
 \label{Objętości pacjenci}
 \end{table}
 
+Rozbieżność pomiędzy wynikami przeprowadzonymi na maskach uzyskanych poprzez segmentację przez lekarza i przez algorytm różnią się znacząco. 
+\par
+Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostanie wykryta przez algorytm na warstwie, która znajduje się dużo przed faktycznym początkiem prostaty. Najbardziej jest to widoczne na przykładzie pacjenta \textit{ProstateDx-02-0002}, dla którego wyniki uzyskany przez nasz algorytm są nawet dwukrotnie większe. Prostata znajduje się między 9 a 18 warstwą, jednak algorytm segmentacji wykrył obecność prostaty już na warstwie 4. 
+\par 
+Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0007} uzyskujemy wyniki zbliżone do wartości źródłowej. Błąd ten wynika z niedokładności algorytmu segmentacji.
+ 
+
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{WynikiObjetosc.png}
@@ -1113,10 +1136,10 @@ Otoczka	                & 17\%	        & 37\%	        & 24\%	            & 4	   
 Z zaproponowanych algorytmów jedynym który osiągnął większa dokładność niż algorytm aproksymujący elipsoidą jest algorytm znajdujący otoczkę wypukłą dla całej maski. Osiągneliśmy poziom około 3 $cm^3$  różnicy średnich względem sumy voxeli (17\%). Pokazuje to, że istnieją lepsze algorytmy niż obecnie najczęściej stosowany.
 
 \subsection{Alternatywne podejścia}
-Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również
+Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również:
 \begin{description}
-\item Pole powierzchni prostokąta na którym można opisać największy spójny element uzyskany w procesie segmentacji. Z uwagi na małe zróżnicowanie względem opisanych przez nas metod nie uwzględniliśmy jej w algorytmach udostępnianych przez naszą aplikację
-\item Wybór elementów wokół których szukamy otoczki wypukłej na podstawie pewnej funkcji. Jest to zagadnienie skomplikowane, ponieważ możliwych funkcji jest bardzo dużo. Na przykład moglibyśmy szukać otoczki wokół wszystkich elementów maski znajdujących się w określonej odległości od środka największego elementu maski.
+\item Pole powierzchni prostokąta na którym można opisać największy spójny element uzyskany w procesie segmentacji. Z uwagi na małe zróżnicowanie względem zastosowanych metod nie uwzględniliśmy jej w algorytmach udostępnianych przez naszą aplikację
+\item Wybór elementów wokół których jest szukana  otoczka wypułka na podstawie pewnej funkcji. Jest to zagadnienie skomplikowane, ponieważ możliwych funkcji jest bardzo dużo. Na przykład moglibyśmy szukać otoczki wokół wszystkich elementów maski znajdujących się w określonej odległości od środka największego elementu maski.
 \item Przy poprawianiu maski uwzględniamy wszystkie warstwy. Czyli w przypadku gdy aktualna maska jest niespójna z poprzedzającą oraz następującą po sobie, wówczas zamiast niej bierzemy maskę będącą średnią dwóch wymienionych.
 \end{description}
 
@@ -1312,7 +1335,12 @@ W trakcie realizacji projektu napotkaliśmy kilka trudności. Największymi z ni
 Trudności spowodowały rozwiązanie problemów w alternatywne sposoby niż początkowo zakładaliśmy. Jednak  aby dopuścić rozwiązanie do użytku produkcyjnego powinny być rozwiązane. 
 
 \section{Wnioski}
-W trakcie realizacji pracy pojawiły się problemy, które zmusiły nas do zmiany początkowego podejścia. Finalna wersja spełnia wszystkie założenia przyjęte na początku projektu. Przedstawiony system może poprawić komfort pracy lekarza radiologa oraz zapewnić istotne informacje przy wystawianiu diagnozy pacjenta poprzez informację o przybliżonej wartości objętości gruczołu prostaty. Z uwagi na dużą złożoność systemu jest wiele możliwości wprowadzania usprawnień.
+W trakcie realizacji pracy pojawiły się problemy, które zmusiły nas do zmiany początkowego podejścia. Finalna wersja spełnia wszystkie założenia przyjęte na początku projektu. Przedstawiony system może poprawić komfort pracy lekarza radiologa oraz zapewnić istotne informacje przy wystawianiu diagnozy pacjenta poprzez informację o przybliżonej wartości objętości gruczołu prostaty. 
+
+\par 
+Alogrytm segmentacji nauczony na danych konkursowych osiągnał współczynnika podobieństwa Sørensena na poziomie ~0.70 (maksymalna wartość to 1). Był to wystarczający wynik, aby na danych testowych wyznaczać maski. Predykcja masek pozwoliła nam na zaimplementowanie kilku algorytmów obliczania objętości gruczołu krokowego.
+
+Dane konkursowe zawierały obrazowanie prostat, których średnia objętość była X,cm3 oznacza to, że zebrane dane dotyczyły zdrowych gruczołów. Na podstawie zebranych danych ilościowych ze szpitala średnia objętość prostaty na podstawie wymiarów z MRI średnia objętość to Y cm\^3. Ze wzgledu na wiek pacjentów u których występuje podejrzenie obecności nowotworu prostaty częstym schorzeniem jest rozrost prostaty. To wpływa na jej zmienność manifestowaną również w wynikach obrazowania MRI. Zmieniona anatomia w przypadku pacjentów z podejrzeniem PCa (prostate cancer) poddaje w wątpliwość dokładność stosowanie algorytmów sztucznej inteligencji wyuczonych na danych pochodzących ze zdrowych pacjentów. Duża wariancja w anatomii wpływa na to, że algorytmy segmentacji wymagają uczenia na podstawie dużych zbiorów danych, obejmujących dane obrazowe z pacjentów zróżnicowanych wiekiem i stopniem zaawansowania schorzeń prostaty. Te dane obecnie nie są publicznie dostępne dlatego zastosowanie produkcyjne aplikacji jest uzależnione dostępnością odpowiednich danych.
 
 % -------------------- 6. Bibliografia -----------------------
 % Bibliografia leksykograficznie wg nazwisk autorów
@@ -1321,18 +1349,21 @@ W trakcie realizacji pracy pojawiły się problemy, które zmusiły nas do zmian
 
 % \bibitem[numerek]{referencja} Autor, \emph{Tytuł}, Wydawnictwo, rok, strony
 % cytowanie: \cite{referencja1, referencja 2,...}
-\bibitem[1] {rynekZdrowia} \emph{Strona internetowa Rynek Zdrowia}, http://www.rynekzdrowia.pl/Serwis-Onkologia/Eksperci-wzrasta-zachorowalnosc-i-umieralnosc-Polakow-na-raka-prostaty,153015,1013.html
-\bibitem[2] {konkurs} \emph{Dane konkursowe}, https://wiki.cancerimagingarchive.net/plugins/servlet/contentId=23691656/\#content/view/23691656
-\bibitem[3] {standardDICOM} \emph {Standard DCIOM}, https://www.dicomstandard.org/
-\bibitem[4] {OpenCV} \emph {Open CV} https://opencv.org/
-\bibitem[5] {imageOrg} \emph {Przetwarzanie danych w medycynie} http://www.image-net.org/
-\bibitem[6] {konkretny} \emph {Dane do uczenia sieci }https://wiki.cancerimagingarchive.net/display/Public/NCI-ISBI+2013+Challenge+-+Automated+Segmentation+of+Prostate+Structures
-\bibitem[7] {zgłodzenie} \emph{Zgłoszenie do konkursu}, https://github.com/mirzaevinom/prostate\_segmentation
-\bibitem[8]{Orthanc} \emph{Serwer PACS} https://www.orthanc-server.com/
-\bibitem[9]{Philips} \emph{Aplikacje dostarczane przez firmę Philips} https://www.philips.com.eg/healthcare/resources/support-documentation/dicom-clinical-applications
-\bibitem[10]{FP} \emph{Future Processing} https://www.future-processing.com/software-solutions/healthcare/
-\bibitem[11]{norma} \emph{norma PSA} https://www.webmd.com/prostate-cancer/guide/psa\#1
-\bibitem[12]{psadvspsa} \emph{norma PSAD jako dokładniejsza norma} www.researchgate.net/publication/40688578\_Does\_prostate\_specific\_antigen\_density\_correlate\_with\_aggressiveness\_of\_the\_prostate\_cancer
+\bibitem[1] {rynekZdrowia} \emph{Strona internetowa Rynek Zdrowia}, \path{http://www.rynekzdrowia.pl/Serwis-Onkologia/Eksperci-wzrasta-zachorowalnosc-i-umieralnosc-Polakow-na-raka-prostaty,153015,1013.html}
+\bibitem[2] {FP} \emph{Future Processing}, \path{https://www.future-processing.com/software-solutions/healthcare/}
+\bibitem[3] {Philips} \emph{Aplikacje dostarczane przez firmę Philips}, \path{https://www.philips.com.eg/healthcare/resources/support-documentation/dicom-clinical-applications}
+\bibitem[4] {norma} \emph{Norma PSA}, \path{https://www.webmd.com/prostate-cancer/guide/psa\#1}
+\bibitem[5] {Orthanc} \emph{Serwer PACS}, \path{https://www.orthanc-server.com/}
+\bibitem[6] {psadvspsa} \emph{Norma PSAD}, \path{https://www.jurology.com/article/S0022-5347(18)40786-0/abstract}
+\bibitem[7] {konkurs} \emph{Dane konkursowe},  \path{https://wiki.cancerimagingarchive.net/plugins/servlet/contentId=23691656/\#content/view/23691656}
+\bibitem[8] {OpenCV} \emph {Open CV}, \path{https://opencv.org/
+}\bibitem[9] {imageOrg} \emph {Przetwarzanie danych w medycynie}, \path{http://www.image-net.org/}
+\bibitem[10] {konkretny} \emph {Dane do uczenia sieci}, \path{https://wiki.cancerimagingarchive.net/display/Public/NCI-ISBI+2013+Challenge+-+Automated+Segmentation+of+Prostate+Structures}
+\bibitem[11] {zgloszenie} \emph{Zgłoszenie do konkursu}, \path{https://github.com/mirzaevinom/prostate\_segmentation}
+\bibitem[12] {standardDICOM} \emph {Standard DCIOM}, \path{https://www.dicomstandard.org/}
+\bibitem[13] {siec_unet} \emph {Sieć U-Net}, \path{https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/}
+
+
 %\bibitem[2] https://www.nhs.uk/conditions/prostate-cancer/diagnosis/
 %\bibitem[3] https://www.cancer.org/cancer/prostate-cancer/detection-diagnosis-staging/how-diagnosed.html
 %\bibitem[5] https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
