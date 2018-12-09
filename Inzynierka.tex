@@ -842,7 +842,7 @@ Architektura ta dzieli się na trzy części:
 	
 	\item [Warstwa wchodząca] Składa się z warstw powiększających dane przestrzenne regionu oraz jest łączona z symetrycznie odbitymi blokami ścieżki zstępującej co pozwala ustalić obszar oraz jego kontekst. Wszystkie bloki w tej ścieżce składają się z następujących warstw:
 	\begin{description}
-		\item [UpSampling2D] 2x2 Warstwa powiększająca <TODO>
+		\item [UpSampling2D] 2x2 Warstwa powiększająca która jest ztransponowaną warstwą konwolucyjną
 		\item [Conv2D] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
 		\item [Concatenate] Połączenie informacji o lokalizacji przestrzennej z informacje o konteksie obszaru
 		\item [Conv2d] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
@@ -856,7 +856,7 @@ Architektura ta dzieli się na trzy części:
 
 Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie wartości pixeli. Pomysł ten pojawił się po obserwacji jak lekarz diagnozuje obrazy z badania MRI oraz na co zwraca uwagę. Popularna praktyką jest inwersja pixeli w celu uzyskania lepszego kontrastu.
 
-Po augmentacji obrazów została wykonana \textit{cross walidacja} <TODO> parametrów uczenia podając liczbę epok równą 30 oraz \textit{batch\_size} wynoszący 32.
+Po augmentacji obrazów została wykonana \textit{cross walidacja} parametrów uczenia podając liczbę epok równą 30 oraz \textit{batch\_size} wynoszący 32.
 
 \subsection{Wyniki}
 
