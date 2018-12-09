@@ -912,6 +912,21 @@ Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobr
 	\label{fig:images}
 \end{figure}
 
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.65\textwidth]{segmentation/maski_segmentacji.png}
+	\captionof{figure}{Dostarczone maski z konkursu pacjenta ProstateDx-03-0003}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.65\textwidth]{segmentation/predykcje_segmentacji.png}
+	\captionof{figure}{Predykcje masek pacjenta ProstateDx-03-0003}
+\end{minipage}
+
+
+
+
 \subsection{Alternatywne podejścia}
 \begin{enumerate}
 \item Rozszerzecznie zbioru treningowego poprzez augmentację danych zawierających obrazy przetworzone filtrem Gaussowskim może poprawić przypadki w których zdjęcie jest rozmyte.
@@ -962,7 +977,7 @@ Aby zobrazować niedokładność aproksymacji elipsoidą postanowiliśmy porówn
 
 \subsection{Liczenie objętości}
 
-Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty jest liczona metodą przekrojów jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest suma objętości. 
+Po pierwsze proponujemy aby wszystkie obrazy nie były traktowane jako całość, a objętość całej prostaty jest liczona metodą przekrojów jako objętość kolejnych warstw nachodzących po sobie, a końcowa objętość jest sumą objętości. 
 
 \[V = \sum_{i=0}^{n-1} ((S_i + S_{i+1}) * (h_{d_{i+1}} - h_{d_i})) / 2 \]
 \\
@@ -973,17 +988,17 @@ n - liczba warstw \\
 \(h_{d_i}\) - lokalizacja warstwy o indeksie \(d_{i}\) \\
 
 Liczenie pola powierzchni maski została opisana w kolejnej sekcji. \\
-W przypadku naszego systemu algorytm należy poprawić o niedokładność segmentacji prostaty. Zdarzają się sytuacje gdzie kolejna warstwa nie jest warstwą ostatnią na której znajduje się prostata a algorytm nie znalazł na zdjęciu prostaty. W tym przypadku bierzemy kolejną następującą po niej niepustą warstwę.
+W przypadku przedstawionego systemu algorytm należy poprawić o niedokładność segmentacji prostaty. Zdarzają się sytuacje gdzie kolejna warstwa nie jest warstwą ostatnią na której znajduje się prostata a algorytm nie znalazł na zdjęciu prostaty. W tym przypadku wzięto kolejną następującą po niej niepustą warstwę.
 
 \subsection{Liczenie pola powierzchni}
 Z uwagi na niedokładności masek zwracanych przez algorytm segmentacji proponujemy 3 alternatywne funkcje poprawiające obraz:
 \begin{enumerate}
 \item Znalezienie otoczki wypukłej największego spójnego fragmentu maski. Alternatywnym podejściem do rozwiązania problemu jest algorytm znajdujący otoczkę wypukła dla największego spójnego elementu. Jest rozwiązaniem gdzie wyszukujemy kształt o największym polu powierzchni, a następnie liczymy tylko jego pole pomijając miejsca gdzie również została znaleziona prostata. W tym przypadku pole powierzchni jest policzone dużo dokładniej, niż w pierwszym przypadku jednak gdy maska nie jest spójna mogą być mocno zaniżone. 
 \item Pole powierzchni prostokąta na którym można opisać maskę. Najprostszy algorytm, wzorujący się bezpośrednio na obecnym podejściu stosowanym w szpitalu. Jednak w tym przypadku każdą warstwę opisujemy innym prostokątem, przez co wyniki powinny być dokładniejsze
-\item Znalezienie otoczki wypukłej dla wszystkich elementów maski. Jest to modyfikacja poprzedniego algorytmu , w której szukamy otoczki wypukłej dla wszystkich pixeli maski.
+\item Znalezienie otoczki wypukłej dla wszystkich elementów maski. Jest to modyfikacja poprzedniego algorytmu, w której szukano otoczki wypukłej dla wszystkich pixeli maski.
 \end{enumerate}
 
-Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. Poniżej przedstawiamy różnice wynikające z zastosowania każdego z algorytmów.
+Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. Poniżej przedstawiono różnice wynikające z zastosowania każdego z algorytmów.
 
 Przykład pierwszy, w którym wysegmentowana maska jest jednym spójnym elementem. \\ \\
 
@@ -1082,7 +1097,7 @@ Rozbieżność pomiędzy wynikami przeprowadzonymi na maskach uzyskanych poprzez
 \par
 Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostanie wykryta przez algorytm na warstwie, która znajduje się dużo przed faktycznym początkiem prostaty. Najbardziej jest to widoczne na przykładzie pacjenta \textit{ProstateDx-02-0002}, dla którego wyniki uzyskany przez nasz algorytm są nawet dwukrotnie większe. Prostata znajduje się między 9 a 18 warstwą, jednak algorytm segmentacji wykrył obecność prostaty już na warstwie 4. 
 \par 
-Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0007} uzyskujemy wyniki zbliżone do wartości źródłowej. Błąd tutaj wynika z niedokładności algorytmu segmentacji.
+Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0007} uzyskujemy wyniki zbliżone do wartości źródłowej. Błąd ten wynika z niedokładności algorytmu segmentacji.
  
 
 \begin{minipage}{\linewidth}
@@ -1105,13 +1120,13 @@ Otoczka cała (3) & -2\%	 & -34\% & 18 &   248 \\ \hline
 \label{Analiza statystyczna algorytmów}
 \end{table}
 
-Z zaproponowanych algorytmów jedynym który osiągnął większa dokładność niż algorytm aproksymujący elipsoidą jest algorytm znajdujący otoczkę wypukłą dla całej maski. Pierwszy miał około 15 procentowe przeszacowania, natomiast drugi około 2\% niedoszacowanie względem danych źródłowych. Pokazuje to, że istnieją lepsze algorytmy niż obecnie najczęściej stosowany.
+Z zaproponowanych algorytmów jedynym, który osiągnął większą dokładność niż algorytm aproksymujący elipsoidą jest algorytm znajdujący otoczkę wypukłą dla całej maski. Pierwszy miał około 15 procentowe przeszacowania, natomiast drugi około 2\% nidoszacowania względem danych źródłowych. Pokazuje to, że istnieją lepsze algorytmy niż obecnie najczęściej stosowany.
 
 \subsection{Alternatywne podejścia}
-Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również
+Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również:
 \begin{description}
-\item Pole powierzchni prostokąta na którym można opisać największy spójny element uzyskany w procesie segmentacji. Z uwagi na małe zróżnicowanie względem opisanych przez nas metod nie uwzględniliśmy jej w algorytmach udostępnianych przez naszą aplikację
-\item Wybór elementów wokół których szukamy otoczki wypukłej na podstawie pewnej funkcji. Jest to zagadnienie skomplikowane, ponieważ możliwych funkcji jest bardzo dużo. Na przykład moglibyśmy szukać otoczki wokół wszystkich elementów maski znajdujących się w określonej odległości od środka największego elementu maski.
+\item Pole powierzchni prostokąta na którym można opisać największy spójny element uzyskany w procesie segmentacji. Z uwagi na małe zróżnicowanie względem zastosowanych metod nie uwzględniliśmy jej w algorytmach udostępnianych przez naszą aplikację
+\item Wybór elementów wokół których jest szukana  otoczka wypułka na podstawie pewnej funkcji. Jest to zagadnienie skomplikowane, ponieważ możliwych funkcji jest bardzo dużo. Na przykład moglibyśmy szukać otoczki wokół wszystkich elementów maski znajdujących się w określonej odległości od środka największego elementu maski.
 \item Przy poprawianiu maski uwzględniamy wszystkie warstwy. Czyli w przypadku gdy aktualna maska jest niespójna z poprzedzającą oraz następującą po sobie, wówczas zamiast niej bierzemy maskę będącą średnią dwóch wymienionych.
 \end{description}
 
