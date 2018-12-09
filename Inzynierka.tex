@@ -26,6 +26,7 @@
 \usepackage{float}
 \usepackage{flafter}
 \usepackage{pdfpages}
+\usepackage{subcaption}
 \usepackage{caption} \captionsetup[table]{singlelinecheck=false}		
 \usepackage{listings,xcolor}
 
@@ -735,13 +736,13 @@ W poniższym rozdziale opiszemy poszczególne moduły. Wytłumaczymy drogę doj�
 
 \section{Moduł segmentacji}
 
-Moduł odpowiada za znajdowanie na obrazie wejściowym prostaty. Algorytm działa na zdjęciach w formacie PNG i zwraca również obraz w tym samym formacie. Do obliczeń użyliśmy konwolucyjnych sieci neuronowych, na podstawie danych z konkursu \cite{konkurs}. Problem segmentacji gruczołu prostaty jest niezwykle istotny z perspektywy lekarzy, którzy na podstawie wysegmentowanej maski gruczołu są w stanie łatwiej postawić diagnozę dotyczącą raka prostaty.
+Moduł odpowiada za znajdowanie na obrazie wejściowym prostaty. Algorytm działa na zdjęciach w formacie PNG i zwraca również obraz w tym samym formacie. Do obliczeń użyliśmy konwolucyjnych sieci neuronowych, na podstawie danych z konkursu \cite{konkurs}, które składały się  z obrazów badań MRI oraz wysegmentowanych masek przez specjalistów. Problem segmentacji gruczołu prostaty jest niezwykle istotny z perspektywy lekarzy, którzy na podstawie wysegmentowanej maski gruczołu są w stanie łatwiej postawić diagnozę dotyczącą raka prostaty.
 
 \subsection{Segmentacja obrazu}
 
-Segmentacja obrazu jest procesem dzielenia obrazu cyfrowego na wiele segmentów). Celem segmentacji jest uproszczenie i / lub zmiana reprezentacji obrazu na obszary, które są bardziej znaczące i łatwiejsze do analizy. Segmentacja obrazu jest używana do lokalizowania obiektów i granic (linii, krzywych itp.) w obrazach. Jest to proces przypisywania etykiety do każdego piksela na obrazie, tak że piksele z tą samą etykietą mają pewne cechy
+Segmentacja obrazu jest procesem dzielenia obrazu cyfrowego na wiele segmentów). Celem segmentacji jest uproszczenie i / lub zmiana reprezentacji obrazu na obszary, które są bardziej znaczące i łatwiejsze do analizy. Segmentacja obrazu jest używana do lokalizowania obiektów i granic (linii, krzywych itp.) w obrazach. Jest to proces przypisywania etykiety do każdego piksela na obrazie, tak że piksele z tą samą etykietą mają pewne cechy.
 
-Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  pewnych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każdej z wyżej wymienionych metod wynik nie zmienia się dla kolejnego uruchomienia algorytmu z tymi samymi danymi wejściowymi. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. W naszej pracy postanowiliśmy zastosować sieci neuronowe jako bardziej nowoczesne podejście. Mając nadzieję, że da ono lepsze rezultaty. 
+Na początku wyjaśnijmy pojęcie segmentacji. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  poszukiwanych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każda z wyżej wymienionych metod jest zestawem reguł które są przygotowane przez człowieka podczas tworzenia algorytmu. Algorytmy te nie zależą w żaden sposób od danych na których będą wykonywać obliczenia. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. Sieci na podstawie dużej ilości danych dobierają zestaw filtrów, który dajne najlepsze wyniki segmentacji dla danych treningowych. W naszej pracy postanowiliśmy zastosować sieci neuronowe, ponieważ rozwiązania oparte o głębokie uczenie od lat wygrywają konkursy na najlepsze wyniki  klasyfikacji oraz segmentacji. 
 
 \subsection{Sieci neuronowe}
 
@@ -812,7 +813,7 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Postanowiliśmy do tego celu wykorzystać dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczęliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie dostaliśmy są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
 Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny sposób zwiększyliśmy zbiór testowy. Rozwiązanie jest  procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnieniu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, stosowanie filtru Gaussowskiego lub progowania.
 \par
-Pracę nad naszym algorytmem rozpoczęliśmy od analizy aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu. Rozwiązanie nauczyliśmy ponownie na przygotowanych przez nas danych. Architekturę sieci przedstawia poniższy diagram. 
+Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawia poniższy diagram. 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -820,41 +821,44 @@ Pracę nad naszym algorytmem rozpoczęliśmy od analizy aktualnie wykorzystywany
 	\captionof{figure}{Architektura sieci}
 \end{minipage}
 
-Pierwszy blok składa się z następujących warstw
+
+Architektura ta dzieli się na trzy części:
 
 \begin{description}
-	\item [conv2d\_1] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
-	\item [conv2d\_2] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
-	\item [max\_pooling2d\_1]2x2 Max Pooling
-\end{description}
+	\item [Warstwa zstępująca] Zbiera informacje na temat kontekstu i znaczenia regionu. Interpretuje znaczenie obszaru poprzez zmniejszanie wielkości przestrzennej w każdym z bloku. Wszytkie bloki w tej ścieżsce składają się z następujących warstw:
+	\begin{description}
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\item [MaxPooling2D]2x2 Max Pooling
+	\end{description}
+   Każdy blok podwaja liczbę konwolucji oraz zmniejsza rozmiar przestrzenny o  połowę.
+	
+	\item [Wąskie gardło] Znajduje się pomiędzy dwoma ścieżkami. Składa się z dwóch warstw konwolucyjnych
+		\begin{description}
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\end{description}
+	
+	\item [Warstwa wchodząca] Składa się warstw powiększających dane przestrzenne regionu oraz jest łączona z symetrycznie odbitymi blokami ścieżki zstępującej co pozwala ustalić obszar oraz jego kontekst. Wszytkie bloki w tej ścieżsce składają się z następujących warstw:
+	\begin{description}
+		\item [UpSampling2D] 2x2 Warstwa powiększająca
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\item [Concatenate] Połączenie informacji o lokalizacji przestrzennej z informacja o konteksie obszaru
+		\item [Conv2d] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\item [Conv2d] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		
+	\end{description}
 
-Kolejne dwa bloki zawierają identyczne warstwy. Te 3 bloki są nazywane ścieżką zstępującą. Jej zadanie to ustalenie znaczenia danych na obrazie. Następnie ten kontekst będzie przetransformowany do ścieżki wschodzącej. Kolejnym krokiem jest znalezienie bloku wąskiego gardła. 
+\end{description} 
 
-\begin{description}
-	\item [conv2d\_5] 2x2 Max Pooling
-	\item [conv2d\_6] 2x2 Max Pooling
-\end{description}
-
-Następny blok składa się z następujących warstw
-
-\begin{description}
-	\item [up\_sampling2d\_1] up sampling 2x2 
-	\item [con2d\_7] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
-	\item [max\_pooling2d\_1] Połączenie z kontekstem danych
-	\item [conv2d\_7] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
-
-\end{description}
-
-Tę część sieci nazywamy ścieżką wstępująca odpowiedzialną za ustalenie dokładnej lokalizacji segmentacji.
 
 \par 
 
-Szybko dotarło do nas, że sieć zaczyna uzyskiwać dobre wyniki, lecz była zbyt wrażliwa na dane. Dlatego dołączyliśmy dodatkowe wariancje obrazów wewnętrznych.
 
 Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie wartości pixeli. Pomysł ten pojawił się obserwując jak lekarz diagnozuje obrazy z badania MRI oraz na co zwraca uwagę. W celu poradzenia sobie ze słabym kontrastem Pani doktor odwracała kolory pixeli.
 
+Po augmentacji obrazów wykonaliśmy \textit{cross walidację} parametrów uczenia podając liczbę epok równą 30 oraz \textit{batch\_size} wynoszący 32.
 
-Po augmentacji obrazów dobrane zostały parametry sieci. Parametry zostały poddane \textit{cross walidacji}.Rezultatem było określenie liczby epok równą 30 natomiast rozmiar \textit{batch\_size} równy 32.
 \subsection{Alternatywne podejścia}
 //todo
 Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na stopień skomplikowania nie podjęliśmy się badaniu ich w pracy inżynierskiej.
@@ -862,55 +866,58 @@ Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na st
 
 \subsection{Wyniki}
 
-Do ustalenia skuteczności użyliśmy miary wykorzystywanej w zadaniach segmentacji tj. współczynnika podobieństwa Sørensena. Miara ta mówi jak podobne są dwa obiekty. Jej wartość to wspólny obszar regionu segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
+Do ustalenia skuteczności użyliśmy miary wykorzystywanej w zadaniach segmentacji tj. współczynnika podobieństwa Sørensena. Miara ta mówi jak podobne są dwa obiekty. 
+\[dice\_coefficient =  \dfrac { \sum (2 * TRUE\_SEG \cap PRED\_SEG) }  { \sum TRUE\_SEG +  \sum PRED\_SEG} \]
+gdzie: \\
+TRUE\_SEG - Binarny obraz zawierjący prawidłową maskę segemntacji \\
+PRED\_SEG - Binarny obraz zawierjący predykcję maski segemntacji \\
+Jej wartość to wspólny obszar regionu segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
 
-Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy ~0.68 na danych testowych. Jest to wartość lekko niższa niż wartość uzyskana w rozwiązaniu zgłoszonym do konkursu. Różnica może być spowodowana różnymi danymi (zostały one lekko zmienione od czasu konkursu). 
+
+Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy ~0.70 na danych testowych. Wartość ta pokrywa się z wartością uzyskaną w zgłoszeniu do konkursu.
 
 \par
 
 Analizując wyniki segmentacji zauważyliśmy, że nasza sieć radzi sobie bardzo dobrze w momentach, gdzie granica pomiędzy organami jest mocno zarysowna.
 
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{segmentation/segmentation_train_1.png}
-	\captionof{figure}{Zdjęcie z badania MRI}
-\end{minipage}
+\begin{figure}[htb]
+	\centering % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{segmentation/segmentation_train_1.png}
+		\caption{Obraz wejściowy}
+		\label{fig:1}
+	\end{subfigure}\hfil % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{segmentation/segmentaion_mask_1.png}
+		\caption{Poprawna maska}
+		\label{fig:2}
+	\end{subfigure}\hfil % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{segmentation/pred_mask_1.png}
+		\caption{Predykcja maski}
+		\label{fig:3}
+	\end{subfigure}
+	
+	\medskip
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{segmentation/segmentation_train_2.png}
+		\caption{Obraz wejściowy}
+		\label{fig:4}
+	\end{subfigure}\hfil % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{segmentation/pred_mask_2.png}
+		\caption{Poprawna maska}
+		\label{fig:5}
+	\end{subfigure}\hfil % <-- added
+	\begin{subfigure}{0.25\textwidth}
+		\includegraphics[width=\linewidth]{segmentation/segmentation_mask_2.png}
+		\caption{Predykcja maski}
+		\label{fig:6}
+	\end{subfigure}
+	\caption{Przykłady wyników}
+	\label{fig:images}
+\end{figure}
 
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{segmentation/segmentaion_mask_1.png}
-	\captionof{figure}{Maska wyznaczona przez lekarzy}
-\end{minipage}
-
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{segmentation/pred_mask_1.png}
-	\captionof{figure}{Poprawna predykcja}
-\end{minipage}
-
-Problemy sieci pojawiają się natomiast w momencie, gdy obraz jest rozmyty i nie można jasno wyznaczyć granic pomiędzy ścianami narządów. 
-
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{segmentation/segmentation_train_2.png}
-	\captionof{figure}{Zdjęcie z badania MRI}
-\end{minipage}
-
-
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{segmentation/pred_mask_2.png}
-	\captionof{figure}{Maska wyznaczona przez lekarzy}
-\end{minipage}
-
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{segmentation/segmentation_mask_2.png}
-	\captionof{figure}{Poprawna predykcja}
-\end{minipage}
-
-
-Skuteczność sieci może zostać poprawiona poprzez dołożenie obrazów rozmytych. Tworzać obrazy treningowe z szumem sieć nauczy się odnajdować szukany region pomimo rozmytych krawędzi.
 
 \section{Moduł obliczania objętości}
 
