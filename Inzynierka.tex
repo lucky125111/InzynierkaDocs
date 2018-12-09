@@ -340,15 +340,15 @@ Pełna nazwa badania brzmi \textit{Obrazowanie metodą rezonansu magnetycznego}.
 \subsubsection{Badanie objętości gruczołu}
 W szpitalach używane są trzy metody pomiaru objętości stercza. Pierwszym jest subiektywne badanie per rectum w ktrórym lekarz ręcznie sprawdza objętość prostaty. Dwie pozostałe opierają się na tych samych obliczeniach, różnią się sposobem pozyskiwania danych. Pierwszym z nich jest badanie MR, a drugim TRUS, czyli przezodbytnicze badanie USG. Lekarz ogląda gruczoł w różnych płaszczyznach, zaznaczając punkty skrajne. Po zaznaczeniu najbardziej skrajnych punktów wyliczane są trzy wymiary prostaty: szerokość, wysokość i długość. Aby uzyskać objętość gruczłu krokowego należy zastosować wzór 
 
-\[V = d * h * l * 0.54\]
+\[V = h*w* l * 0.54\]
 gdzie
-d - szerokość
 h - wysokość
+w - szerokość
 l - długość
 Stała 0.54 jest próbą przybliżenia kształtu prostaty figurą geometryczną. Gruczoł przypomina elipsoidę, więc zastosowany został wzór na objętość elipsy
 
-\[V = pi/6 * a*b*c\]
-gdzie abc, to kolejne wymiary elipsy. 
+\[V = pi/6 * h*w*l\]
+gdzie h,w,l, to kolejne wymiary elipsy. 
 
 \section{Architektura szpitala}
 
@@ -474,10 +474,10 @@ Płat & płat prostaty, w którym znajduje się zmiana nowotworowa              
 Liczba biopsji                                                                                                       \\ \hline 
 PSA & swoisty antygen sterczowy w ng/ml, opisane niżej                                                              \\ \hline 
 Liczba PSA & liczba wykonanych badań PSA                                                                            \\ \hline 
-X, Y, Z & wymiary stercza wyznaczone z badania USG                                                                  \\ \hline 
+H, W, L & Wysokość, szerokość i długość stercza wyznaczone z badania USG                                                                  \\ \hline 
 Objętość z usg & liczona równaniem X*Y*Z*0,54                                                                     \\ \hline 
 PSAD USG & zależność między objętością prostaty, a PSA                                                              \\ \hline 
-X, Y, Z & wymiary stercza wyznaczone z badania MR                                                                   \\ \hline 
+H, W, L & Wysokość, szerokość i długość stercza wyznaczone z badania MR                                                                   \\ \hline 
 Objętość z MR & liczona równaniem X*Y*Z*0,54                                                                         \\ \hline 
 PSAD MR & zależność między objętością prostaty, a PSA                                                               \\ \hline 
 PI-RADS V2 & radiologiczna skala wykorzystywana do wyznaczania prawdopodobieństwa wystąpienia zmian nowotworowych   \\ \hline 
@@ -558,6 +558,7 @@ Na wykresie poziomy PIRADS 2,3 i 4 mają stosunkowo podobne wyniki średniego PS
 
 
 \section{Ciekawe przypadki}
+Podczas analizy danych pacjentów udało się zidentyfikować trzy najbardziej interesujące przypadki. Kryterium wyboru ich ciekawości było czysto subiektywne. Przypadki opisane są za pomocą identyfikatora PW, który został nadany pacjentom w celu anonimizacji ich danych.
 \par
 \begin{description}
 \item  PW86 - PSA na poziomie 483,3 ng/ml, najwyższe dotychczas spotkane. Podwyższone PSA, oczywiście jest następstwem raka znalezionego w obu płatach prostaty.
