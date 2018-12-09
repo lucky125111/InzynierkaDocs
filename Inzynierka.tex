@@ -1326,9 +1326,7 @@ Trudności spowodowały rozwiązanie problemów w alternatywne sposoby niż pocz
 W trakcie realizacji pracy pojawiły się problemy, które zmusiły nas do zmiany początkowego podejścia. Finalna wersja spełnia wszystkie założenia przyjęte na początku projektu. Przedstawiony system może poprawić komfort pracy lekarza radiologa oraz zapewnić istotne informacje przy wystawianiu diagnozy pacjenta poprzez informację o przybliżonej wartości objętości gruczołu prostaty. 
 
 \par 
-Moduł segmentacji 
-
-
+Alogrytm segmentacji nauczony na danych konkursowych osiągnał współczynnika podobieństwa Sørensena na poziomie ~0.70 (maksymalna wartość to 1). Był to wystarczający wynik, aby na danych testowych wyznaczać maski. Predykcja masek pozwoliła nam na zaimplementowanie kilku algorytmów obliczania objętości gruczołu krokowego.
 
 Dane konkursowe zawierały obrazowanie prostat, których średnia objętość była X,cm3 oznacza to, że zebrane dane dotyczyły zdrowych gruczołów. Na podstawie zebranych danych ilościowych ze szpitala średnia objętość prostaty na podstawie wymiarów z MRI średnia objętość to Y cm\^3. Ze wzgledu na wiek pacjentów u których występuje podejrzenie obecności nowotworu prostaty częstym schorzeniem jest rozrost prostaty. To wpływa na jej zmienność manifestowaną również w wynikach obrazowania MRI. Zmieniona anatomia w przypadku pacjentów z podejrzeniem PCa (prostate cancer) poddaje w wątpliwość dokładność stosowanie algorytmów sztucznej inteligencji wyuczonych na danych pochodzących ze zdrowych pacjentów. Duża wariancja w anatomii wpływa na to, że algorytmy segmentacji wymagają uczenia na podstawie dużych zbiorów danych, obejmujących dane obrazowe z pacjentów zróżnicowanych wiekiem i stopniem zaawansowania schorzeń prostaty. Te dane obecnie nie są publicznie dostępne dlatego zastosowanie produkcyjne aplikacji jest uzależnione dostępnością odpowiednich danych.
 
