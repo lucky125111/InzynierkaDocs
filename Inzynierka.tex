@@ -295,17 +295,17 @@ Oświadczenie % Declaration - for English
 % -------------------- Wstęp -----------------------
 \chapter{Wstęp} % Intruduction
 
-Rak prostaty to drugi – zaraz po raku płuc – najczęściej diagnozowany nowotwór u mężczyzn. W ciągu ostatnich lat w Polsce wzrasta zachorowalności na raka stercza, a także – choć w mniejszym stopniu – umieralność. KRN prognozuje, że w naszym kraju w 2015 r. zostanie wykrytych 14 tys. nowych przypadków raka prostaty, a 5 tys. chorych z wcześniej wykrytą chorobą umrze. W 2012 r., zaledwie trzy lata temu, z powodu tego nowotworu zachorowało 11 tys. mężczyzn, a 4,1 tys. zmarło. Odwrotną tendencję obserwuje się w zachodniej Europie i Stanach Zjednoczonych, gdzie odnotowuje się spadek zachorowalności i umieralności na ten nowotwór. Wszystko dzięki zastosowaniu najnowszych metod leczenia i wczesnej diagnostyce. \cite{rynekZdrowia}
+Rak prostaty to drugi – zaraz po raku płuc – najczęściej diagnozowany nowotwór u mężczyzn. W ciągu ostatnich lat w Polsce wzrasta zachorowalności na raka stercza (prostaty), a także – choć w mniejszym stopniu – umieralność. KRN prognozuje, że w naszym kraju w 2015 r. zostanie wykrytych 14 tys. nowych przypadków raka prostaty, a 5 tys. chorych z wcześniej wykrytą chorobą umrze. W 2012 r., zaledwie trzy lata temu, z powodu tego nowotworu zachorowało 11 tys. mężczyzn, a 4,1 tys. zmarło. Odwrotną tendencję obserwuje się w zachodniej Europie i Stanach Zjednoczonych, gdzie odnotowuje się spadek zachorowalności i umieralności na ten nowotwór. Wszystko dzięki zastosowaniu najnowszych metod leczenia i wczesnej diagnostyce. \cite{rynekZdrowia}
 \par
-Dlatego też, w niniejszej pracy podjęto się zbadania możliwości automatyzacji wykrywania prostaty na zdjęciach rezonansu magnetycznego., poprzez automatyczną segmentację prostaty i obliczanie objętości. Opisane poniżej algorytmy obliczania wielkości gruczołu mogą być wskazówka dla lekarza podczas stawiania diagnozy. 
+Dlatego też, w niniejszej pracy podjęto się zbadania możliwości automatyzacji wykrywania prostaty na zdjęciach rezonansu magnetycznego, poprzez automatyczną segmentację prostaty i obliczanie objętości. Opisane poniżej algorytmy obliczania wielkości gruczołu mogą być wskazówka dla lekarza podczas stawiania diagnozy. 
 \par
 System powstały jako produkt poniższej pracy dzięki zastosowaniu modularnej architektury może być dostosowany do zaawansowanych systemów szpitalnych oraz rozszerzony o alternatywne algorytmy na przykład oparte o głębokie uczenie maszynowe.
 \par
-Za implementację oraz wdrożenie algorytmu segmentacji prostaty bazującej na danych konkursowych przy użyciu konwolucyjnych sieci neuronowych oraz moduł prezentacji aplikacji odpowiada Rafał Buzun.
+Za implementację oraz wdrożenie algorytmu segmentacji prostaty bazującego na danych konkursowych przy użyciu konwolucyjnych sieci neuronowych oraz za moduł prezentacji aplikacji odpowiada Rafał Buzun.
 \par
-Za stworzenie, opisanie zbioru testowego, przeprowadzenie analizy biznesowej oraz statystycznej wyników badań rezonansu magnetycznego oraz rozpoznanie architektury szpitalnego systemu informatycznego i integrację z systemem PACS odpowiada Jakub Karolak.
+Za stworzenie, opisanie zbioru testowego, przeprowadzenie analizy biznesowej oraz statystycznej wyników badań rezonansu magnetycznego oraz za rozpoznanie architektury szpitalnego systemu informatycznego i integrację z systemem PACS odpowiada Jakub Karolak.
 \par
-Za zaprojektowanie architektury oraz implementacje serwera, w tym obsługę bazy danych i przetwarzanie plików DICOM oraz implementacja wybranych metod obliczania objętości prostaty odpowiada Łukasz Berwid
+Za zaprojektowanie architektury oraz implementację serwera, w tym obsługę bazy danych i przetwarzanie plików DICOM oraz za implementację wybranych metod obliczania objętości prostaty odpowiada Łukasz Berwid.
 
 \section{Diagnostyka raka prostaty}
 Objawemi świadczącymi o problemach z gruczołem prostaty jest ból lub pieczenie przy oddawaniu moczu lub nieregularne oddawanie moczu. Takie same objawy ma schorzenie nazywane "łagodnym rozrostem gruczołu krokowego". Mężczyźni nie zwykli bagatelizować takich problemów, więc rak prostaty w 75\% jest wykrywany w bezobjawowym stadium ograniczonym do narządu, dzięki czemu łatwo jest go wyleczyć. 
@@ -322,10 +322,10 @@ Pełny zestaw badań, tj, badanie PSA, badanie palpacyjne, USG, MR oraz biopsja 
 W obecnej chwili, w szpitalu MSWiA w Warszawie, do opisu prawdopodobieństwa istnienia nowotworu w danym miejscu prostaty jest używana skala PI-RADS v2.
 
 \subsubsection{PIRADS} 
-Ocena PI-RADS v2 opiera się na wykorzystaniu pięciopunktowej skali opracowanej w oparciu o obserwację, że istnieje zależność pomiędzy trzema badanymi obszarami: T2W, DWI oraz DCE a prawdopodobieństwem, że uwidocznione zmiany mają charakter nowotworowy.Zaszeregowanie do określonej kategorii według PI-RADS v2 powinno opierać się na wynikach badań mpMRI i nie powinno uwzględniać innych czynników, takich jak stężenie PSA, wynik badania per rectum, dane uzyskane z wywiadu lub przebytego leczenia. Przy wynikach rzędu 4-5 w skali PIRADS występuje wysokie prawdopodobieństwo posiadania istotnej klinicznie formy nowotworu. W takich przypadkach, jeśli jeszcze nie została wystawiona diagnoza, należy bezzwłocznie wykonać biopsję.
+Ocena PI-RADS v2 opiera się na wykorzystaniu pięciopunktowej skali opracowanej w oparciu o obserwację, że istnieje zależność pomiędzy trzema badanymi obszarami: T2W, DWI oraz DCE a prawdopodobieństwem, że uwidocznione zmiany mają charakter nowotworowy. Zaszeregowanie do określonej kategorii według PI-RADS v2 powinno opierać się na wynikach badań mpMRI i nie powinno uwzględniać innych czynników, takich jak stężenie PSA, wynik badania per rectum, dane uzyskane z wywiadu lub przebytego leczenia. Przy wynikach rzędu 4-5 w skali PIRADS występuje wysokie prawdopodobieństwo posiadania istotnej klinicznie formy nowotworu. W takich przypadkach, jeśli jeszcze nie została wystawiona diagnoza, należy bezzwłocznie wykonać biopsję.
 
 \subsubsection{PSA}
-PSA czyli swoisty antygen sterczowy. Jest to związek wytwarzany w gruczole krokowym (prostacie). Obecność tego enzymu we krwi jest wykorzystywana w diagnostyce, monitorowaniu i leczeniu raka prostaty od 1986 roku. Fakt posiadania podwyższonego poziomu PSA we krwi nie jest zawsze jednoznaczny z chorobą. Badanie to daje około 25\% fałszywie dodatnich wyników. Niestety fakt nieposiadania podwyższonego PSA może być równie mylący. W 20\% przypadków to badanie daje fałszywie ujemny wynik. Standardy Europejskiego Towarzystwa Urologicznego zalecają coroczne oznaczanie PSA u mężczyzn po 50 roku życia. 
+PSA czyli swoisty antygen sterczowy. Jest to związek wytwarzany w gruczole krokowym (prostacie). Obecność tego enzymu we krwi jest wykorzystywana w diagnostyce, monitorowaniu i leczeniu raka prostaty od 1986 roku. Fakt posiadania podwyższonego poziomu PSA we krwi nie jest zawsze jednoznaczny z chorobą. Badanie to daje około 25\% fałszywie dodatnich wyników. Fakt nieposiadania podwyższonego PSA może być równie mylący. W 20\% przypadków to badanie daje fałszywie ujemny wynik. Standardy Europejskiego Towarzystwa Urologicznego zalecają coroczne oznaczanie PSA u mężczyzn po 50 roku życia. 
 Kompletnie zdrowy mężczyzna powinien mieć PSA na poziomie <1,5 ng/ml. Przy tak niskiej wartości zaleca się kolejny pomiar w odstępie 5 lat. 
 
 \subsubsection{PSAD}
@@ -338,21 +338,21 @@ Rezonans magnetyczny (MRI) to technika obrazowania medycznego stosowana w radiol
 Pełna nazwa badania brzmi \textit{Obrazowanie metodą rezonansu magnetycznego}. Warto jest zaznaczyć fakt obrazowania, ponieważ istnieje jeszcze drugie zastosowanie tego aparatu, mianowicie spektroskopia, wykorzystywana w chemii i fizyce molekularnej. 
 
 \subsubsection{Badanie objętości gruczołu}
-W szpitalach używane są trzy metody pomiaru objętości stercza. Pierwszym jest subiektywne badanie per rectum w ktrórym lekarz ręcznie sprawdza objętość prostaty. Dwie pozostałe opierają się na tych samych obliczeniach, różnią się sposobem pozyskiwania danych. Pierwszym z nich jest badanie MR, a drugim TRUS, czyli przezodbytnicze badanie USG. Lekarz ogląda gruczoł w różnych płaszczyznach, zaznaczając punkty skrajne. Po zaznaczeniu najbardziej skrajnych punktów wyliczane są trzy wymiary prostaty: szerokość, wysokość i długość. Aby uzyskać objętość gruczłu krokowego należy zastosować wzór 
+W szpitalach używane są trzy metody pomiaru objętości stercza. Pierwszym jest subiektywne badanie per rectum w ktrórym lekarz palpacyjnie sprawdza objętość prostaty. Dwie pozostałe opierają się na tych samych obliczeniach, różnią się sposobem pozyskiwania danych. Pierwszym z nich jest badanie MR, a drugim TRUS, czyli przezodbytnicze badanie USG. Lekarz ogląda gruczoł w różnych płaszczyznach, zaznaczając punkty skrajne. Po zaznaczeniu najbardziej skrajnych punktów wyliczane są trzy wymiary prostaty: wysokość, szerokość i długość. Aby uzyskać objętość gruczłu krokowego należy zastosować wzór:
 
-\[V = h*w* l * 0.54\]
-gdzie
-h - wysokość
-w - szerokość
-l - długość
-Stała 0.54 jest próbą przybliżenia kształtu prostaty figurą geometryczną. Gruczoł przypomina elipsoidę, więc zastosowany został wzór na objętość elipsy
+\[V = h*w* l * 0.52\]
+gdzie: \newline
+h - wysokość, \newline
+w - szerokość, \newline
+l - długość, \newline
+Stała 0.54 jest próbą przybliżenia kształtu prostaty figurą geometryczną. Gruczoł przypomina elipsoidę, więc zastosowany został wzór na objętość elipsy:
 
 \[V = pi/6 * h*w*l\]
 gdzie h,w,l, to kolejne wymiary elipsy. 
 
 \section{Architektura szpitala}
 
-Architektura szpitalna składa się z wielu komponentów w poniższej pracy zlokalizowaliśmy komponenty, które będą niezbędne do integracji z opisywanym system. Podstawowym elementem w sieci IT szpitala jest system informacji szpitalnej (HIS), który koncentruje się głównie na potrzebach administracyjnych szpitali. W wielu wdrożeniach system HIS jest kompleksowym, zintegrowanym systemem informatycznym zaprojektowanym do zarządzania wszystkimi aspektami funkcjonowania szpitala, takimi jak zarządzają danymi demograficznymi pacjentów, ubezpieczeniem informacje, planowaniem leczenia klinicznego, działaniem laboratorium oraz zarządzaniem historią pacjenta i badaniami.
+Architektura szpitalna składa się z wielu komponentów w poniższej pracy zlokalizowaliśmy komponenty, które będą niezbędne do integracji z opisywanym system. Podstawowym elementem w sieci IT szpitala jest system informacji szpitalnej (HIS), który koncentruje się głównie na potrzebach administracyjnych szpitali. W wielu wdrożeniach system HIS jest kompleksowym, zintegrowanym rozwiązaniem informatycznym zaprojektowanym do zarządzania wszystkimi aspektami funkcjonowania szpitala, takimi jak zarządzanie danymi demograficznymi pacjentów, ubezpieczenia, planowanie leczenia klinicznego, działanie laboratorium oraz zarządzanie historią pacjenta i badaniami.
 
 \subsection{System archiwizacji obrazu PACS}
 PACS czyli system archiwizacji i komunikacji obrazu) to technologia obrazowania medycznego stosowana głównie w szpitalach i jednostkach medycznych do bezpiecznego przechowywania i cyfrowej transmisji obrazów elektronicznych i raportów o znaczeniu klinicznym. Korzystanie z PACS eliminuje potrzebę ręcznego przechowywania, wyszukiwania i wysyłania poufnych informacji, filmów i raportów. Daje to możliwość aby dokumentacja medyczna i obrazy były bezpiecznie przechowywane w zewnętrznych serwerach i dostępne z każdego miejsca na świecie przy użyciu oprogramowania PACS, stacji roboczych i urządzeń mobilnych. Ze względu na panujące prawo dotyczące ochrony danych osobowy i tego, że dane medyczne pacjentów są danymi wrażliwymi takie rozwiązania rzadko są stosowane w praktyce. Dane pacjentów są przechowywane na serwerach szpitalnych - tego wymaga prawo.
@@ -361,17 +361,17 @@ PACS ma cztery główne komponenty:
 \begin{enumerate}
 	\item Sprzętowe urządzenia obrazujące.
 	\item Bezpieczna sieć do dystrybucji i wymiany obrazów pacjentów.
-	\item stacja robocza lub urządzenie mobilne do przeglądania, przetwarzania i interpretowania obrazów.
+	\item Stacja robocza lub urządzenie mobilne do przeglądania, przetwarzania i interpretowania obrazów.
 	\item Elektroniczne archiwa do przechowywania i wyszukiwania obrazów oraz powiązanej dokumentacji i raportów.
 \end{enumerate}
 
 \subsection{Radiologiczny System Informatyczny RIS}
-System informacji radiologicznej (RIS) to sieciowy system oprogramowania do zarządzania obrazami medycznymi i powiązanymi danymi. RIS jest szczególnie przydatny do śledzenia zleceń obrazowania radiologicznego i informacji rozliczeniowych i jest często używany w połączeniu z PACS do zarządzania archiwami obrazów i rejestrowaniem.
+System informacji radiologicznej (RIS) to sieciowy system oprogramowania do zarządzania obrazami medycznymi i powiązanymi danymi. RIS jest szczególnie przydatny do śledzenia zleceń obrazowania radiologicznego i informacji rozliczeniowych. Jest często używany w połączeniu z PACS do zarządzania archiwami obrazów i rejestrowaniem.
 
 RIS spełnia podstawowe funkcji:
 \begin{enumerate}
-\item Zarządzanie pacjentem - RIS może śledzić cały przebieg pracy pacjenta w dziale radiologii. Specjaliści mogą dodawać zdjęcia i raporty do EHRs, gdzie mogą być pozyskane i oglądane przez upoważniony personel radiologii.
-\item Planowanie - RIS umożliwia personelowi umawianie się na wizyty zarówno w szpitalach, jak i ambulatoriach.
+\item Zarządzanie pacjentem - RIS może śledzić cały przebieg diagnozowania pacjenta w dziale radiologii. Specjaliści mogą dodawać zdjęcia i raporty do EHRs, gdzie mogą być pozyskane i oglądane przez upoważniony personel radiologii.
+\item Planowanie - RIS umożliwia personelowi umawianie pacjentów na wizyty zarówno w szpitalach, jak i ambulatoriach.
 \item Monitorowanie pacjenta - Korzystając z systemu RIS, dostawcy mogą śledzić historię całej radiologii pacjenta od przyjęcia do wypisu i koordynować historię z przeszłymi, obecnymi i przyszłymi spotkaniami.
 \item Raportowanie wyników - RIS może generować raporty statystyczne dla pojedynczego pacjenta, grupy pacjentów lub poszczególnych procedur.
 \item Śledzenie obrazu - Tradycyjnie, specjaliści używają RIS do śledzenia poszczególnych filmów i związanych z nimi danych. Ponieważ EHR stały się standardem w branży medycznej, a ucyfrowienie obrazów i PACS zostały powszechnie przyjęte, działy radiologii i ich systemy RIS-PACS zostały zintegrowane w kliniczny obieg pracy całego przedsiębiorstwa medycznego.
@@ -379,7 +379,7 @@ RIS spełnia podstawowe funkcji:
 
 \subsection{Format DICOM}
 
-DICOM jest standardowym protokołem do zarządzania i przesyłania obrazów medycznych i powiązanych danych i jest stosowany w większości szpitali. DICOM to międzynarodowy standard komunikacji i zarządzania obrazami i danymi medycznymi. Celem jest zapewnienie przechowywania, udostępniania, współdziałania systemów używanych do produkcji, wyświetlania, wysyłania, odpytywania, przetwarzania, pobierania i drukowania obrazów medycznych, a także do zarządzania powiązanymi przepływami pracy.
+DICOM jest standardowym protokołem do zarządzania i przesyłania obrazów medycznych i powiązanych danych. Jest stosowany w większości szpitali. DICOM to międzynarodowy standard komunikacji i zarządzania obrazami i danymi medycznymi. Celem jest zapewnienie przechowywania, udostępniania, współdziałania systemów używanych do produkcji, wyświetlania, wysyłania, odpytywania, przetwarzania, pobierania i drukowania obrazów medycznych, a także do zarządzania powiązanymi przepływami pracy.
 \par
 DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania obrazów medycznych, umożliwiając integrację medycznych urządzeń obrazujących wielu producentów. Dane pacjenta i powiązane obrazy są wymieniane i przechowywane w znormalizowanym formacie.
 Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi urządzeniami do przetwarzania obrazu.
@@ -391,21 +391,21 @@ W szpitalu MSWiA z którym współpracowaliśmy w trakcie pisania tej pracy pods
 \par
 Pomimo tego, że na rynku istnieją rozwiązania pozwalające na automatyzację pracy lekarza poprzez na przykład automatyczne wykrywanie i oznaczanie zmian w organach. Narzędziach do przeglądania obrazów DICOM wykorzystywanych obecnie w szpitalach przez radiologów brakuje modułów automatyzujących pracę. Są to, w większości, przeglądarki zdjęć, które radiolog musi później sam ręcznie analizować. 
 \par
-Proponujemy stworzenie systemu zapewniającego automatyczną segmentację oraz liczenie objętości prostaty na podstawie zdjęć. Dzięki temu będziemy mogli znacząco skrócić czas jaki lekarza poświęca na analizę obrazów oraz zapewnić szybką informację mającą wpływ na diagnozę.
+Proponujemy stworzenie systemu zapewniającego automatyczną segmentację oraz liczenie objętości prostaty na podstawie zdjęć. Umożliwi to znaczące skrócenie czasu jaki lekarza poświęca na analizę obrazów oraz zapewnienie szybkiej informacji mających wpływ na diagnozę.
 
 
 \section{Słownik pojęć}
-Pojęcia których będziemy używać w poniższej pracy:
+Pojęcia które są używane w poniższej pracy:
 \begin {enumerate}
-\item DICOM - (Digital Imaging and Communications in Medicine) Międzynarodowy standard służący do przesyłania, przechowywania, pobierania, przetwarzania oraz wyświetlania obrazów medycznych. Darmowy standard umożliwiający unifikację zdjęć medycznych pochodzących z maszyn wielu producentów.
-\item Segmentacja – Proces podziału obrazu na części określane jako obszary (regiony), które są jednorodne pod względem pewnych wybranych własności.
+\item DICOM - (Digital Imaging and Communications in Medicine) Międzynarodowy standard służący do przesyłania, przechowywania, pobierania, przetwarzania oraz wyświetlania obrazów medycznych. Darmowy standard umożliwiający unifikację zdjęć medycznych pochodzących z maszyn wielu producentów
+\item Segmentacja – Proces podziału obrazu na części określane jako obszary (regiony), które są jednorodne pod względem pewnych wybranych własności
 \item Slice - Warstwa obrazu DICOM zawierająca jeden obraz
 \item Maska - Obraz przedstawiający wysegmentowaną prostatę
 \item Komponent - Usługa siwciowa lub element jednego z serwisów spełniający jedno określone zadanie
 \item Endpoint - Adres pozwalający na dostęp do API aplikacji z zewnątrz
 \item API - Interfejs pozwalający na komunikowanie się aplikacji między sobą 
 \item Backend - Część serwerowa aplikacji 
-\item Frontend - Warstwa prezentacji aplikacji, w przypadku naszej pracy to strona internetowa
+\item Frontend - Warstwa prezentacji aplikacji, w przypadku tej pracy jest to strona internetowa
 \item HTTP - Internetowy protokół komunikacyjny
 \item Web serwis - Usługa sieciowa, do której można się odwołać za pomocą wywołań funkcji określonych przez jej API za pomocą protokołu komunikacyjnego
 \item JSON - Format wymiany danych komputerowych
@@ -419,22 +419,22 @@ Pojęcia których będziemy używać w poniższej pracy:
 
 % -------------------- Opis danych -----------------------
 \chapter{Dane szpitalne}
-Analiza problemu została rozpoczęta przez spotkanie z doświadczonym radiologiem (> 12 lat doświadczenia). Radiolog przedstawił problemy z którymi zmaga się w codziennej pracy i które uważa, że mogłoby zostać rozwiązane za pomocą dodatkowego oprogramowania. Ze względu na prowadzone prace analityczne w trakcie wytwarzania oprogramowania przyjęta została zwinna metoda wytwarzania oprogramowania. Po finalnym ustaleniu wymagań, przeprowadzona została analiza szpitalnej architektury informatycznej szpitala MSWiA w Warszawie oraz pozyskaliśmy dane dotyczące pacjentów. 
+Analiza problemu została rozpoczęta od spotkania z doświadczonym radiologiem (> 12 lat doświadczenia). Radiolog przedstawił problemy z którymi zmaga się w codziennej pracy i które uważa, że mogłoby zostać rozwiązane za pomocą dodatkowego oprogramowania. Ze względu na prowadzone prace analityczne w trakcie wytwarzania oprogramowania przyjęta została zwinna metoda wytwarzania oprogramowania. Po finalnym ustaleniu wymagań, przeprowadzona została analiza szpitalnej architektury informatycznej szpitala MSWiA w Warszawie oraz pozyskane zostały dane dotyczące pacjentów. 
 \par
 Pierwszym krokiem było zgromadzenia danych pacjentów. Następnie poczynione zostały kroki w kierunku integracji docelowego programu wspomagającego pracę radiologa ze szpitalną bazą danych HIS. Z powodu umowy zawartej między szpitalem a dostawcą oprogramowania nie byliśmy w stanie zintegrować się z systemem informatycznym szpitala w standardowy sposób, ponieważ umowa zawiera zapis, iż wszelkie zmiany w kodzie klienta bazy danych mogą być wprowadzane jedynie przez pracowników firmy dostarczającej oprogramowanie.
 \par
-Kolejnym kierunkiem jaki został przez nas obrany było wyszukiwanie przeglądarki zdjęć DICOM. Jako główne kryterium wyboru zastosowane zostało kryterium zostało zdefiniowane czy narzędzie jest w łatwy sposób rozszerzalne. Po znalezieniu odpowiedniego rozwiązania nastąpiła próba instalacji tej przeglądarki na szpitalnym komputerze. Nie byliśmy w stanie zainstalować oprogramowania z powodu prawnych regulacji dotyczących bezpieczeństwa danych pacjentów znajdujących się na szpitalnych serwerach.
+Kolejnym kierunkiem jaki został przez nas obrany było wyszukiwanie przeglądarki zdjęć DICOM. Głównym kryterium wyboru był fakt czy narzędzie jest w łatwy sposób rozszerzalne. Po znalezieniu odpowiedniego rozwiązania nastąpiła próba instalacji tej przeglądarki na szpitalnym komputerze. Nie byliśmy w stanie zainstalować oprogramowania z powodu prawnych regulacji dotyczących bezpieczeństwa danych pacjentów znajdujących się na szpitalnych serwerach.
 \par
-Finalnie zdecydowaliśmy na pozyskanie kopii zanonimizowanych danych pacjentów na dysk twardy i przenoszenie ich na komputer, który nie jest podłączony do sieci szpitalnej. 
+Finalnie podjęta została decyzja o pozyskaniu kopii zanonimizowanych danych pacjentów na dysk twardy i przenoszeniu ich na komputer, który nie jest podłączony do sieci szpitalnej. 
 
 \section{Proces pozyskania danych}
 Kompleksowe dane pacjentów w szpitalu MSWiA są przechowywane w formie papierowej. Każdy pacjent ma indywidualną dokumentację, w której znajdują się wyniki wszystkich badań wykonanych poza szpitalem MSWiA, wywiady z wizyt u lekarzy specjalistów oraz wyniki badań krwi zrobionych w szpitalu. W szpitalnej bazie danych przechowywane są wywiady środowiskowe, wyniki oraz opisy badań MR. 
 \par
 Nie została wyrażona zgoda na instalację zewnętrznego oprogramowania na komputerach podłączonych do sieci szpitalnej. Jest to spowodowane regulacjami prawnymi dotyczącymi ochrony wrażliwych danych pacjentów. Otwarte oprogramowanie używane przez nas mogłoby naruszyć regulacje bezpieczeństwa szpitala. Po podjęciu decyzji o przenoszeniu danych nośnikiem fizycznym należało się skupić na module anonimizującym. Szpitalna baza danych posiada taką funkcję, więc dane pacjentów kopiowane na dysk twardy są już anonimowe. Został użyty dysk twardy, ponieważ plik zawierający kompleksowe badanie jednego pacjenta zajmuje średnio ponad Gigabajt danych. 
 \par
-Na komputerze niepodłączonym do sieci szpitalnej doktor może dokonać analizy i predykcji za pomocą naszego oprogramowania. Następnie musi sprawdzić identyfikator pacjenta w arkuszu kalkulacyjnym i odnieść się z wynikami wygenerowanymi przez nas do prawdziwego przypadku. Rozwiązanie takie jest bezpieczne, co jest kluczowe w kontekście działania szpitala jednak jest nie wygodne oraz wolne.
+Na komputerze niepodłączonym do sieci szpitalnej doktor może dokonać analizy i predykcji za pomocą naszego oprogramowania. Następnie musi sprawdzić identyfikator pacjenta w arkuszu kalkulacyjnym i odnieść się z wynikami wygenerowanymi przez nas do prawdziwego przypadku. Rozwiązanie takie jest bezpieczne, co jest kluczowe w kontekście działania szpitala, jednak jest niewygodne oraz wolne.
 \par
-Procedura pozyskiwania danych polegała na otworzeniu karty pacjenta leczonego przez współpracującego z nami lekarza (dr n. med. Katarzyna Sklinda), znalezieniu jego wywiadu środowiskowego oraz opisu badania w bazie danych RIS. Następnie należało ręcznie wypełnić wszystkie pola w arkuszu kalkulacyjnym, które dotyczyły badanego pacjenta. Dane z wywiadu środowiskowego zostały zakodowane, w celu przyspieszenia wypełniania arkusza oraz zachowania ogólnej estetyki. Legendę opisu tych danych przedstawimy w dalszej części pracy. 
+Procedura pozyskiwania danych polegała na otworzeniu karty pacjenta leczonego przez współpracującego z nami lekarza, znalezieniu jego wywiadu środowiskowego oraz opisu badania w bazie danych RIS. Następnie należało ręcznie wypełnić wszystkie pola w arkuszu kalkulacyjnym, które dotyczyły badanego pacjenta. Dane z wywiadu środowiskowego zostały zakodowane, w celu przyspieszenia wypełniania arkusza oraz zachowania ogólnej estetyki. Legendę opisu tych danych przedstawimy w dalszej części pracy. 
 \par
 Dokumentacja medyczna pacjentów zajmowała od 1 do 30 stron w postaci wyników opisowych.  Zadaniem było wyznaczenie wartości wszystkich klinicznych deskryptorów wspólnych dla informacji znajdujących się w dokumentacji medycznej. 
 \par
@@ -442,17 +442,17 @@ Po uzupełnieniu arkusza kalkulacyjnego należało jeszcze wykonać niezbędne o
 \par
 W początkowych fazach projektu rozważane było użycie systemu OCR na zeskanowanych kartach pacjentów. System OCR (z ang. Optical Character Recognition) to oprogramowanie pozwalające na znajdowanie i rozpoznawanie fragmentów tekstu w plikach graficznych. Jednak z uwagi na niejednolity format kart oraz zmiany nanoszone ręcznie przez lekarza takie rozwiązanie okazało się nieefektywne.
 \par
-Procedura pozyskiwania danych jest wyjątkowo nieoptymalna oraz podatna na błędy. Przy obecnej infrastrukturze szpitalnej ręczne przepisywanie danych jest jedynym sposobem na digitalizację zasobów pacjentów. Wypełnienie danych jednego pacjenta w badaniu było procesem trwającym 15 minut. W szpitalu MSWiA lekarz radiolog dziennie wykonuje około 4 badań rezonansu magnetycznego, więc można założyć, że około godziny dziennie poświęca na na przeglądanie papierowej dokumentacji. Po konsultacjach z doktor podjęta została decyzja aby stworzyć program, który pozwoli przyspieszenie tego procesu. Lekarze którzy dostarczyli swojej ekspertyzy przyznali, że w codziennych obowiązkach pomógłby im program wyliczający objętość prostaty na podstawie plików DICOM. Jest to jedna z płaszczyzn, na których informatyka jest w stanie pomóc oszczędzać czas lekarzy, co przekłada się na komfort oraz zdrowie pacjentów.
+Procedura pozyskiwania danych jest wyjątkowo nieoptymalna oraz podatna na błędy. Przy obecnej infrastrukturze szpitalnej ręczne przepisywanie danych jest jedynym sposobem na digitalizację zasobów pacjentów. Wypełnienie danych jednego pacjenta w badaniu było procesem trwającym 15 minut. W szpitalu MSWiA lekarz radiolog dziennie wykonuje około 4 badań przy użyciu rezonansu magnetycznego, więc można założyć, że około godziny dziennie poświęca na przeglądanie papierowej dokumentacji. Po konsultacjach z doktorem podjęta została decyzja aby stworzyć program, który pozwoli przyspieszenie tego procesu. Lekarze którzy dostarczyli swojej ekspertyzy przyznali, że w codziennych obowiązkach pomógłby im program wyliczający objętość prostaty na podstawie plików DICOM. Jest to jedna z płaszczyzn, na których informatyka jest w stanie pomóc oszczędzać czas lekarzy, co przekłada się na komfort oraz zdrowie pacjentów.
 \par
 
 \section{Dane szpitalne}
 W badaniach szczególną uwagę należało zwrócić poszczególne aspekty: \\
 \begin{description}
-\item[wiek pacjenta] - mężczyźni od 50 do 75 roku życia znajdują się w grupie ryzyka
+\item[wiek pacjenta] - mężczyźni od 50 do 75 roku życia znajdują się w grupie ryzyka.
 \item[wywiad środowiskowy] - ważnym aspektem podczas wywiadu jest obciążenie rodzinne, czyli fakt występowania raka prostaty w najbliższej rodzinie pacjenta. Warto oczywiście zwrócić uwagę w jakim momencie diagnozy znajduje się pacjent. Czy ma stwierdzony nowotwór prostaty? Kolejną ważną informacją jest historia choroby pacjenta. Warto odnotować, iż niektórzy pacjenci byli badani po zakończeniu leczenia radioterapią bądź chemioterapią. Wtedy lekarz sprawdza czy udało się wyeliminować nowotwór, czy może pacjent jest w fazie nawrotu choroby.
 \item[biopsja] - jeśli była przeprowadzona to jaki był jej wynik? Kiedy była przeprowadzona? W której części prostaty znaleziono zmiany nowotworowe?
 \item[wynik w skali Gleasona] - w przypadku pacjenta ze stwierdzonym nowotworem bardzo dużą rolę odgrywa skala Gleasona. Jest to skala opracowana z myślą o klasyfikacji nowotworów prostaty. Składa się ona z dwóch części, opisujących różne charakterystyki nowotworu. Po określeniu części składowych sumuje się je, aby otrzymać całościowy wynik Gleasona. Im wyższa punktacja tym bardziej niebezpieczny jest nowotwór.
-\item[PSA] - wynik ostatniego badania PSA we krwi. Specyfika antygeny PSA była przytoczona we wcześniejszej części tej pracy. 
+\item[PSA] - wynik ostatniego badania PSA we krwi. Specyfika antygenu PSA była przytoczona we wcześniejszej części tej pracy. 
 \item[Objętość prostaty] - wyliczona na podstawie wymiarów określonych w opisie badania USG oraz MR. Objętość prostaty potrzebna jest to wyliczenia współczynnika PSAD, oraz do ogólnej diagnozy. 
 \item[PIRADS] - najbardziej znaczące jest ognisko o najwyższej ocenie w skali PIRADS. Gdy pacjent ma ocenę 5, co zdarzało się w 25\% zbadanych przypadków, to istnieje bardzo wysokie prawdopodobieństwo posiadania nowotworu prostaty w obserwowanym przez radiologa miejscu. 
 \end{description}
@@ -464,25 +464,24 @@ W badaniach szczególną uwagę należało zwrócić poszczególne aspekty: \\
 \centering
 \begin{tabular}{|l|p{10cm}|} \hline 
 Nazwa kolumny & Opis \\ \hline 
-PW & unikalne ID nadawane pacjentowi w naszym badaniu                                                             \\ \hline 
+PW & Unikalne ID nadawane pacjentowi w naszym badaniu                                                             \\ \hline 
 Data & Data badania MR                                                                                              \\ \hline 
-Dane kliniczne & opisane poniżej, w legendzie                                                                       \\ \hline 
-Hist-pat & dane z badania histopatologicznego, czyli biopsji prostaty, także opisane w legendzie poniżej            \\ \hline 
+Dane kliniczne & Opisane poniżej, w legendzie                                                                       \\ \hline 
+Hist-pat & Dane z badania histopatologicznego, czyli biopsji prostaty, także opisane w legendzie poniżej            \\ \hline 
 Data hist-pat & Data wykonania biopsji                                                                              \\ \hline 
-Gleason & klasyfikacja patomorfologiczna raka gruczołu krokowego                                                    \\ \hline 
-Płat & płat prostaty, w którym znajduje się zmiana nowotworowa                                                      \\ \hline 
-Liczba biopsji                                                                                                       \\ \hline 
-PSA & swoisty antygen sterczowy w ng/ml, opisane niżej                                                              \\ \hline 
-Liczba PSA & liczba wykonanych badań PSA                                                                            \\ \hline 
+Gleason & Klasyfikacja patomorfologiczna raka gruczołu krokowego                                                    \\ \hline 
+Płat & Płat prostaty, w którym znajduje się zmiana nowotworowa                                                      \\ \hline 
+PSA & Swoisty antygen sterczowy w ng/ml, opisane niżej                                                              \\ \hline 
+Liczba PSA & =Liczba wykonanych badań PSA                                                                            \\ \hline 
 H, W, L & Wysokość, szerokość i długość stercza wyznaczone z badania USG                                                                  \\ \hline 
-Objętość z usg & liczona równaniem X*Y*Z*0,54                                                                     \\ \hline 
-PSAD USG & zależność między objętością prostaty, a PSA                                                              \\ \hline 
+Objętość z USG & Liczona równaniem X*Y*Z*0,52                                                                     \\ \hline 
+PSAD USG & Zależność między objętością prostaty, a PSA                                                              \\ \hline 
 H, W, L & Wysokość, szerokość i długość stercza wyznaczone z badania MR                                                                   \\ \hline 
-Objętość z MR & liczona równaniem X*Y*Z*0,54                                                                         \\ \hline 
-PSAD MR & zależność między objętością prostaty, a PSA                                                               \\ \hline 
-PI-RADS V2 & radiologiczna skala wykorzystywana do wyznaczania prawdopodobieństwa wystąpienia zmian nowotworowych   \\ \hline 
-Płat & oznaczenie płatu prostaty z największym oznaczeniem PI-RADS V2                                               \\ \hline 
-Oznaczenie strefy & dokładna część prostaty, w której znajduje się zmiana                                           \\ \hline 
+Objętość z MR & Liczona równaniem X*Y*Z*0,52                                                                         \\ \hline 
+PSAD MR & Zależność między objętością prostaty, a PSA                                                               \\ \hline 
+PI-RADS V2 & Radiologiczna skala wykorzystywana do wyznaczania prawdopodobieństwa wystąpienia zmian nowotworowych   \\ \hline 
+Płat & Oznaczenie płatu prostaty z największym oznaczeniem PI-RADS V2                                               \\ \hline 
+Oznaczenie strefy & Dokładna część prostaty, w której znajduje się zmiana                                           \\ \hline 
 \end{tabular}
 \label{Dane szpitalne}
 \end{table}
