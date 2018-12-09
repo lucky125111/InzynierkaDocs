@@ -734,41 +734,41 @@ Każdy z naszych serwisów udostępnia REST API. Najwięcej metod ma moduł do k
 
 \chapter{Opis modułów}
 
-W poniższym rozdziale opiszemy poszczególne moduły. Wytłumaczymy drogę dojścia do rozwiązania oraz ewentualne modyfikacje jakie można zastosować przy dalszym rozwoju. Skupiliśmy się na unikaniu zależności pomiędzy modułami. Wszystkie moduły zaprojektowaliśmy w sposób modularny, tak aby dowolnie móc je wymieniać. 
+W poniższym rozdziale opiszemy zostaną dokładnie opisane poszczególne moduły. Przedstawiona zostanie droga dojścia do rozwiązania oraz ewentualne modyfikacje jakie można zastosować przy dalszym rozwoju. Skupiliśmy się na unikaniu zależności pomiędzy modułami. Wszystkie moduły zostały zaprojektowane w sposób modularny, tak aby mogły być dowolnie wymienialne. 
 
 \section{Moduł segmentacji}
 
-Moduł odpowiada za znajdowanie na obrazie wejściowym prostaty. Algorytm działa na zdjęciach w formacie PNG i zwraca również obraz w tym samym formacie. Do obliczeń użyliśmy konwolucyjnych sieci neuronowych, na podstawie danych z konkursu \cite{konkurs}, które składały się  z obrazów badań MRI oraz wysegmentowanych masek przez specjalistów. Problem segmentacji gruczołu prostaty jest niezwykle istotny z perspektywy lekarzy, którzy na podstawie wysegmentowanej maski gruczołu są w stanie łatwiej postawić diagnozę dotyczącą raka prostaty.
+Moduł odpowiada za znajdowanie na obrazie wejściowym prostaty. Algorytm działa na zdjęciach w formacie PNG i zwraca również obraz w tym samym formacie. Do obliczeń użyto konwolucyjnych sieci neuronowych, na podstawie danych z konkursu \cite{konkurs}, które składały się  z obrazów badań MRI oraz wysegmentowanych masek przez specjalistów. Problem segmentacji gruczołu prostaty jest niezwykle istotny z perspektywy lekarzy, którzy na podstawie wysegmentowanej maski gruczołu są w stanie łatwiej postawić diagnozę dotyczącą raka prostaty.
 
 \subsubsection{Segmentacja obrazu}
 
-Segmentacja obrazu jest procesem dzielenia obrazu cyfrowego na wiele segmentów). Celem segmentacji jest uproszczenie i / lub zmiana reprezentacji obrazu na obszary, które są bardziej znaczące i łatwiejsze do analizy. Segmentacja obrazu jest używana do lokalizowania obiektów i granic (linii, krzywych itp.) w obrazach. Jest to proces przypisywania etykiety do każdego piksela na obrazie, tak że piksele z tą samą etykietą mają pewne cechy. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  poszukiwanych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. W przypadku każda z wyżej wymienionych metod jest zestawem reguł które są przygotowane przez człowieka podczas tworzenia algorytmu. Algorytmy te nie zależą w żaden sposób od danych na których będą wykonywać obliczenia. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. Sieci na podstawie dużej ilości danych dobierają zestaw filtrów, który dajne najlepsze wyniki segmentacji dla danych treningowych. W naszej pracy postanowiliśmy zastosować sieci neuronowe, ponieważ rozwiązania oparte o głębokie uczenie od lat wygrywają konkursy na najlepsze wyniki  klasyfikacji oraz segmentacji. 
+Segmentacja obrazu jest procesem dzielenia obrazu cyfrowego na wiele segmentów). Celem segmentacji jest uproszczenie lub zmiana reprezentacji obrazu na obszary, które są bardziej znaczące i łatwiejsze do analizy. Segmentacja obrazu jest używana do lokalizowania obiektów i granic (linii, krzywych itp.) w obrazach. Jest to proces przypisywania etykiety do każdego piksela na obrazie, tak że piksele z tą samą etykietą mają pewne cechy. Proces polega na podziale obrazu na  obszary, które są jednorodne pod względem pewnych wybranych cech. Przez obszar najczęściej rozumiemy zbiór pikseli obrazu. Zadanie segmentacji nie tylko wymaga zrozumienia co się znajduje na obrazie, lecz również ustalenia gdzie się ten obszar znajduje. Celem segmentacji jest wyeksponowanie  poszukiwanych własności obrazu, które są istotniejsze od pozostałych. Istnieje wiele algorytmów segmentacji, najpopularniejszymi są: progowanie obrazu, wykrywanie krawędzi, rozszerzanie obszaru. Każda z wyżej wymienionych metod jest zestawem reguł które są przygotowane przez człowieka podczas tworzenia algorytmu. Algorytmy te nie zależą w żaden sposób od danych na których będą wykonywane obliczenia. W ostatnich latach głębokie sieci neuronowe oraz konwolucyjne sieci neuronowe wykazały, że radzą sobie z problemem klasyfikacji lepiej niż statyczne rozwiązania.\cite{imageOrg}. Sieci na podstawie dużej ilości danych dobierają zestaw filtrów, który daje najlepsze wyniki segmentacji dla danych treningowych. W naszej pracy zostały zastosowane sieci neuronowe, ponieważ rozwiązania oparte o głębokie uczenie od lat wygrywają konkursy na najlepsze wyniki  klasyfikacji oraz segmentacji. 
 
 \subsubsection{Sieci neuronowe}
 
-Głęboka sieć neuronowa (DNN) to sztuczna sieć neuronowa z wieloma warstwami między warstwami wejściową i wyjściową. DNN znajduje matematyczne przekształcenie, aby zmienić dane wejściowe na dane wyjściowe, niezależnie od tego, czy jest to relacja liniowa czy nieliniowa. Sieć przechodzi przez warstwy obliczające prawdopodobieństwo każdego wyjścia. Każda manipulacja matematyczna uważana za warstwę. Złożone głębokie sieci neuronowe mają wiele warstw. Celem jest, aby ostatecznie sieć została nauczona w zakresie rozkładania obrazu na funkcje, identyfikowania trendów istniejących we wszystkich próbkach i klasyfikowania nowych obrazów według ich podobieństw bez konieczności wprowadzania danych przez człowieka.
+Głęboka sieć neuronowa (DNN) to sztuczna sieć neuronowa z wieloma warstwami między warstwami wejściową i wyjściową. DNN znajduje matematyczne przekształcenie, aby zmienić dane wejściowe na dane wyjściowe, niezależnie od tego, czy jest to relacja liniowa czy nieliniowa. Sieć przechodzi przez warstwy obliczające prawdopodobieństwo każdego wyjścia. Każda manipulacja matematyczna jest uważana za warstwę. Złożone głębokie sieci neuronowe mają wiele warstw. Celem wielu warstw jest, aby ostatecznie sieć została nauczona w zakresie rozkładania obrazu na funkcje, identyfikowania trendów istniejących we wszystkich próbkach i klasyfikowania nowych obrazów według ich podobieństw bez konieczności wprowadzania danych przez człowieka.
 \par
-Konwolucyjna  sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania obrazów. W przeciwieństwie do sieci użytej do głębokiego uczenia maszynowego, każda ukryta warstwa aktywacyjna jest obliczany jako iloczyn kartezjański wyników kolejnych warstw. Jednak w sieciach konwolucyjnych każda ukryta aktywacja jest obliczana przez pomnożenie małego lokalnego sygnału wejściowego względem wag. Wagi są następnie dzielone na całej przestrzeni wejściowej. Po obliczeniu ukrytych jednostek, maksimum warstwa pomaga usunąć zmienność ukrytych jednostek. W szczególności każda jednostka gromadząca maksimum otrzymuje aktywacje ze znalezionej ilości splotowych pasm, i wyprowadza maksimum aktywacje z tych splotów. Większość CNN uzytych do rozpoznawania obrazu ma niższe warstwy sieciowe, które są splotowe, a wyższe warstwy sieciowe są w pełni połączone.
+Konwolucyjna  sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzystywanej w rozpoznawaniu i przetwarzaniu obrazów, która jest specjalnie zaprojektowana do przetwarzania obrazów. W przeciwieństwie do sieci użytej do głębokiego uczenia maszynowego, każda ukryta warstwa aktywacyjna jest obliczana jako iloczyn kartezjański wyników kolejnych warstw. Jednak w sieciach konwolucyjnych każda ukryta aktywacja jest obliczana przez pomnożenie małego lokalnego sygnału wejściowego względem wag. Wagi są następnie dzielone na całej przestrzeni wejściowej. Po obliczeniu ukrytych jednostek, maksimum warstwa pomaga usunąć zmienność ukrytych jednostek. W szczególności każda jednostka gromadząca maksimum otrzymuje aktywacje ze znalezionej ilości konwolucyjnych warstw, i wyprowadza maksymalną aktywacje z tych konwolucji. Większość CNN uzytych do rozpoznawania obrazu ma niższe warstwy sieciowe, które są konwolucyjne, a wyższe warstwy sieciowe są w pełni połączone.
 
 \subsubsection{U-Net}
-Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolencyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezulataty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w scieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
+Sieć U-Net jest zbudowana na podstawie architektury pełnych sieci konwolucyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezultaty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w ścieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
 
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=10cm]{unet-architecture.png}
-	\captionof{figure}{Architektura sieci UNet}
+	\captionof{figure}{Architektura sieci U-Net}
 \end{minipage}
 
 
-W procesie uczenia sieci neuronowych najbardziej czasochłonnym elementem jest proces trenowania. Uczenie sieci neuronowych odbywa się na kartach graficznych ze względu na ich lepsze przystosowanie do przetwarzania dużej ilości operacji w sposób równoległy. Procesor ma za zadanie przełączanie kontekstów, ale nie zapewnia wysokiej przepustowości. Musi przełączać się między wieloma zadaniami i przechowywać konteksty podczas przełączania i dbać o pamięć współdzieloną. Procesor może być wykorzystywany do zadań o niskiej przepustowości i wysokiej latencji. Z drugiej strony procesor graficzny został zaprojektowany z myślą o dużym obciążeniu pracą i wysokiej przepustowości.
+W procesie uczenia sieci neuronowych najbardziej czasochłonnym elementem jest proces trenowania. Uczenie sieci neuronowych odbywa się na kartach graficznych ze względu na ich lepsze przystosowanie do przetwarzania dużej ilości operacji w sposób równoległy. Procesor ma za zadanie przełączanie kontekstów, ale nie zapewnia wysokiej przepustowości. Musi przełączać się między wieloma zadaniami przechowując konteksty podczas przełączania i dbać o pamięć współdzieloną. Procesor może być wykorzystywany do zadań o niskiej przepustowości i wysokiej latencji. Z drugiej strony procesor graficzny został zaprojektowany z myślą o dużym obciążeniu pracą i wysokiej przepustowości.
 
 \subsection{Opis danych}
 
-Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony konkursowe ponieważ zawierają obrazy z już odnalezioną prostatą na zdjęciu. Organizowanych jest wiele konkursów \cite{konkurs} w celu opracowania stabilnego algorytmu wyznaczania gruczołu prostaty, jednak my po analizie zdecydowaliśmy się na dane z konkursu \textit{Automated Segmentation of Prostate Structures Challange} \cite{konkretny}.
+Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony konkursowe ponieważ zawierają obrazy z już odnalezioną prostatą na zdjęciu. Organizowanych jest wiele konkursów \cite{konkurs} w celu opracowania stabilnego algorytmu wyznaczania gruczołu prostaty, jednak po analizie zdecydowaliśmy się na dane z konkursu \textit{Automated Segmentation of Prostate Structures Challange} \cite{konkretny}.
 
 \begin{description}
 	\item [Dane] \hfill \\
-	Dostarczone dane składały się z plików DICOM zawierających dane pacjentów oraz z maski zawierających obszary gdzie znajduje się prostata. Dane były przygotowane przez lekarzy, oraz podległy wcześniejszemu procesowi anonimazacji, stąd w plikach nie ma żadnych danych wrażliwych na temat pacjentów. Osoby poddano badaniom za równo pod maszynami o mocy 1.5T oraz 3T z użyciem cewki endorektalnej oraz cewki powierzchniowej. Maski zostały przygotowane  przez zespól lekarzy z uniwersytetów Boston University School of Medicine oraz Case Western University. Zdjęcia zostały przygotowane w formacie nrrd, gdzie zaznaczone są dwa regiony: część obwodową gruczołu krokowego (PZ) oraz centralny gruczoł(CG). 
+	Dostarczone dane składały się z plików DICOM zawierających dane pacjentów oraz z maski zawierających obszary gdzie znajduje się prostata. Dane były przygotowane przez lekarzy, oraz podlegały wcześniejszemu procesowi anonimazacji, stąd w plikach nie ma żadnych danych wrażliwych na temat pacjentów. Osoby poddano badaniom zarówno pod maszynami o mocy 1.5T oraz 3T z użyciem cewki endorektalnej oraz cewki powierzchniowej. Maski zostały przygotowane  przez zespół lekarzy z uniwersytetów Boston University School of Medicine oraz Case Western University. Zdjęcia zostały przygotowane w formacie nrrd, gdzie zaznaczone są dwa regiony: część obwodową gruczołu krokowego (PZ) oraz centralny gruczoł(CG). 
 	
 	\begin{minipage}{\linewidth}
 		\centering
@@ -794,7 +794,7 @@ Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony
 
 
 	\item [Oznaczone maski] \hfill \\
-Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Ponieważ nasz problemy był bardziej ogólny nie było potrzeby wprowadzenia rozróżnienia między strefami prostaty. Dlatego dane poddaliśmy procesowi normalizacji maski do wartości z przedziału [0;1].
+Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Ponieważ nasz problemy był bardziej ogólny nie było potrzeby wprowadzenia rozróżnienia między strefami prostaty. Dlatego dane zostały poddane procesowi normalizacji maski do wartości z przedziału [0;1].
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -807,10 +807,10 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 
 \subsection{Opis rozwiązania}
 
-W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Postanowiliśmy do tego celu wykorzystać dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczęliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie dostaliśmy są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
-Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny sposób zwiększyliśmy zbiór testowy. Rozwiązanie jest  procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnieniu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, stosowanie filtru Gaussowskiego lub progowania.
+W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Zostały do tego celu wykorzystane dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczęliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie otrzymano są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
+Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny sposób został zwiększony zbiór testowy. Rozwiązanie jest  procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnieniu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, stosowanie filtru Gaussowskiego lub progowania.
 \par
-Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawia poniższy diagram. 
+Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-Net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawia poniższy diagram. 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -822,55 +822,53 @@ Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych
 Architektura ta dzieli się na trzy części:
 
 \begin{description}
-	\item [Warstwa zstępująca] Zbiera informacje na temat kontekstu i znaczenia regionu. Interpretuje znaczenie obszaru poprzez zmniejszanie wielkości przestrzennej w każdym z bloku. Wszytkie bloki w tej ścieżsce składają się z następujących warstw:
+	\item [Warstwa zstępująca] Zbiera informacje na temat kontekstu i znaczenia regionu. Interpretuje znaczenie obszaru poprzez zmniejszanie wielkości przestrzennej w każdym bloku. Wszytkie bloki w tej ścieżce składają się z następujących warstw:
 	\begin{description}
-		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
-		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
 		\item [MaxPooling2D]2x2 Max Pooling
 	\end{description}
    Każdy blok podwaja liczbę konwolucji oraz zmniejsza rozmiar przestrzenny o  połowę.
 	
 	\item [Wąskie gardło] Znajduje się pomiędzy dwoma ścieżkami. Składa się z dwóch warstw konwolucyjnych
 		\begin{description}
-		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
-		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
 		\end{description}
 	
-	\item [Warstwa wchodząca] Składa się warstw powiększających dane przestrzenne regionu oraz jest łączona z symetrycznie odbitymi blokami ścieżki zstępującej co pozwala ustalić obszar oraz jego kontekst. Wszytkie bloki w tej ścieżsce składają się z następujących warstw:
+	\item [Warstwa wchodząca] Składa się z warstw powiększających dane przestrzenne regionu oraz jest łączona z symetrycznie odbitymi blokami ścieżki zstępującej co pozwala ustalić obszar oraz jego kontekst. Wszystkie bloki w tej ścieżce składają się z następujących warstw:
 	\begin{description}
 		\item [UpSampling2D] 2x2 Warstwa powiększająca
-		\item [Conv2D] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
-		\item [Concatenate] Połączenie informacji o lokalizacji przestrzennej z informacja o konteksie obszaru
-		\item [Conv2d] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
-		\item [Conv2d] 3x3 Warstwa konwolucyjna + funckja aktywacji ReLu
+		\item [Conv2D] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
+		\item [Concatenate] Połączenie informacji o lokalizacji przestrzennej z informacje o konteksie obszaru
+		\item [Conv2d] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
+		\item [Conv2d] 3x3 Warstwa konwolucyjna + funkcja aktywacji ReLu
 		
 	\end{description}
 
 \end{description} 
 
-
 \par 
 
+Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie wartości pixeli. Pomysł ten pojawił się po obserwacji jak lekarz diagnozuje obrazy z badania MRI oraz na co zwraca uwagę. W celu poradzenia sobie ze słabym kontrastem Pani doktor odwracała kolory pixeli.
 
-Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie wartości pixeli. Pomysł ten pojawił się obserwując jak lekarz diagnozuje obrazy z badania MRI oraz na co zwraca uwagę. W celu poradzenia sobie ze słabym kontrastem Pani doktor odwracała kolory pixeli.
-
-Po augmentacji obrazów wykonaliśmy \textit{cross walidację} parametrów uczenia podając liczbę epok równą 30 oraz \textit{batch\_size} wynoszący 32.
+Po augmentacji obrazów została wykonana \textit{cross walidacja} parametrów uczenia podając liczbę epok równą 30 oraz \textit{batch\_size} wynoszący 32.
 
 \subsection{Wyniki}
 
-Do ustalenia skuteczności użyliśmy miary wykorzystywanej w zadaniach segmentacji tj. współczynnika podobieństwa Sørensena. Miara ta mówi jak podobne są dwa obiekty. 
+Do ustalenia skuteczności użyto miary wykorzystywanej w zadaniach segmentacji tj. współczynnika podobieństwa Sørensena. Miara ta mówi jak podobne są dwa obiekty. 
 \[dice\_coefficient =  \dfrac { \sum (2 * TRUE\_SEG \cap PRED\_SEG) }  { \sum TRUE\_SEG +  \sum PRED\_SEG} \]
 gdzie: \\
-TRUE\_SEG - Binarny obraz zawierjący prawidłową maskę segemntacji \\
-PRED\_SEG - Binarny obraz zawierjący predykcję maski segemntacji \\
+TRUE\_SEG - Binarny obraz zawierający prawidłową maskę segmentacji \\
+PRED\_SEG - Binarny obraz zawierający predykcję maski segmentacji \\
 Jej wartość to wspólny obszar regionu segmentacji podzielony przez całkowity rozmiar dwóch obrazów.
 
 
-Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy około 0.70 na danych testowych. Wartość ta pokrywa się z wartością uzyskaną w zgłoszeniu do konkursu. Jest to wynik zadawalający, który pozwala nam na liczenie objętości gruczołu alternatywmi metodami.
+Po nauczeniu sieci osiągneliśmy współczynnik podobieństwa równy około 0.70 na danych testowych. Wartość ta pokrywa się z wartością uzyskaną w zgłoszeniu do konkursu. Jest to wynik zadawalający, który pozwala na obliczenie objętości gruczołu alternatywmi metodami.
 
 \par
 
-Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobrze w momentach, gdy granica pomiędzy organami jest mocno zarysowna. Problematyczne są zdjęcia rozmazane, na których gruczoł zlewa się z otaczająco go tkanką.
+Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobrze w momentach, gdy granica pomiędzy organami jest mocno zarysowna. Problematyczne są zdjęcia rozmazane, na których gruczoł zlewa się z otaczającą go tkanką.
 
 \begin{figure}[htb]
 	\centering % <-- added
