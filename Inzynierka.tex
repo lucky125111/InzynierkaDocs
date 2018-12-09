@@ -382,11 +382,11 @@ Podstawowe funkcje systemu informacji radiologicznej:
 
 DICOM jest standardowym protokołem do zarządzania,  przesyłania obrazów medycznych oraz powiązanych danych.  Jest stosowany w większości szpitali. DICOM to międzynarodowy standard komunikacji i zarządzania obrazami i danymi medycznymi. Celem jest zapewnienie przechowywania, udostępniania, współdziałania systemów używanych do produkcji, wyświetlania, wysyłania, odpytywania, przetwarzania, pobierania i drukowania obrazów medycznych, a także do zarządzania powiązanymi przepływami pracy.
 \par
-DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania obrazów medycznych, umożliwiając integrację medycznych urządzeń obrazujących wielu producentów. Dane pacjenta i powiązane obrazy są wymieniane i przechowywane w znormalizowanym formacie.
+DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania obrazów medycznych, umożliwiając integrację medycznych urządzeń obrazujących wielu producentów. Dane pacjenta i powiązane obrazy są wymieniane, przechowywane w znormalizowanym formacie.
 Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi urządzeniami do przetwarzania obrazu.
 
 \section{Metody wspomagania pracy specjalisty}
-W chwili obecnej praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Na rynku istnieje wiele różnych narzędzi, które mogą wspomóc pracę lekarza jak na przykład oprogramowanie Future Processing \cite{FP}, które zapewnia możliwość automatycznej segmentacji obrazów dla mózgu oraz płuc, jednak obecnie nie jest dostępny moduł wykonujący to dla gruczołu prostaty. Z uwagi na zasady formalne istniejące w szpitalach w Polsce sprzęt wykorzystywany w szpitalach nie zapewnia takiej funkcjonalności.
+W chwili obecnej praca radiologa jest ściśle powiązana z pracą przy użyciu dostarczanego oprogramowania zintegrowanego z infrastrukturą szpitalną. Na rynku istnieje wiele różnych narzędzi, które mogą wspomóc pracę lekarza jak na przykład oprogramowanie Future Processing \cite{FP}, które zapewnia możliwość automatycznej segmentacji obrazów narządów takich jak mózg oraz płuca, jednak obecnie nie jest dostępny moduł wykonujący to dla gruczołu prostaty. Z uwagi na zasady formalne istniejące w szpitalach w Polsce sprzęt wykorzystywany w szpitalach nie zapewnia takiej funkcjonalności.
 \par
 W szpitalu MSWiA z którym współpracowaliśmy w trakcie pisania tej pracy podstawowym narzędziem było oprogramowanie dostarczane przez firmę Philips \cite{Philips}. Radiolog odczytuje, opisuje i analizuje wyniki badania na komputerze. Jednakże wiele badań dostarczanych jest przez pacjenta w formie papierowej. Problemy wynikające z używania dokumentacji papierowej oraz elektronicznej jednocześnie są opisane w dalszej części pracy.
 \par
@@ -920,9 +920,9 @@ Każde z wyżej opisanych podejść jest warte rozważenia, jednak z uwagi na st
 
 \section{Moduł obliczania objętości}
 
-Jedynym z celów pracy było zaproponowanie alternatywnej metody do liczenia objętości. Obecnie w szpitalu objętość gruczoły obliczana jest za pomocą aproksymacji przedstawionej wzorem:
+Jedynym z celów pracy było zaproponowanie alternatywnej metody do liczenia objętości. W szpitalu stosowany jest wzór na objętość gruczołu, jako aproksymację kształtem elipsoidy, przedstawiony wzorem:
 
-\[V = (h_{max} - h_{min}) * S_{max} * 0.54\]
+\[V = (h_{max} - h_{min}) * V_{max} * 0.54\]
 \\
 gdzie 
 \\
@@ -930,27 +930,14 @@ gdzie
 \\
 \(h_{min}\) - wysokość dolnego końca gruczoły prostaty                     
 \\
-\(S_{max}\) - pole powierzchni warstwy o największym, każdym liczonym jako:  
-
-\[S_d = (i_{d_{max}} - i_{d_{min}}) * (j_{d_{max}} - j_{d_{min}})\] 
-
-gdzie \\
-\(i_{d_{max}}\) - pozycja najdalej wysuniętego pixela prostaty poziomo \\
-\(i_{d_{min}}\) - pozycja najmniej wysuniętego pixela prostaty poziomo \\
-\(j_{d_{max}}\) - pozycja najdalej wysuniętego pixela prostaty pionowo \\
-\(j_{d_{min}}\) - pozycja najmniej wysuniętego pixela prostaty pionowo \\
-d - indeks warstwy \\
-
-Metoda polega na znalezieniu prostopadłościanu w który możemy wpisać gruczoł i obliczenie jego objętości. Następnie wartość jest przemnażana przez stałą aby przybliżyć kształt elipsoidą. Metoda wydaje się być niedokładna, co potwierdzają lekarze. Obecnie najdokładniejszą metodą jest zbadanie objętości po wycięciu gruczołu. Dowiedzieliśmy się, że wyniki uzyskane z aproksymacji objętości oraz wartości uzyskane po ekstrakcji są bardzo rozbieżne. 
-
-
-Objętość voxela liczona jest wzorem:
-
+\(S_{max}\) - Objętość warstwy o największym polu powierzchni, każde liczone jako suma objętości voxeli maski, gdzie objętość każdego voxela liczona jest jako:
 \[ V_{d_{ij}} = PixelSpacing_0 * PixelSpacing_1 * SliceThickness\]
 gdzie \\
 \(PixelSpacing_0\) - pierwsza wartość atrybutu PixelSpacing (0028, 0030) z pliku DICOM \\
 \(PixelSpacing_1\)  - druga wartość atrybutu PixelSpacing (0028, 0030) z pliku DICOM \\
 \(SliceThickness\) - atrybut SliceThickness (0018, 0050) z pliku DICOM \\
+
+Metoda polega na znalezieniu prostopadłościanu w który możemy wpisać gruczoł i obliczenie jego objętości. Następnie wartość jest przemnażana przez stałą aby przybliżyć kształt elipsoidą. Metoda jest niedokładna, co potwierdzają lekarze. Obecnie najdokładniejszą metodą jest zbadanie objętości po wycięciu gruczołu. Dowiedzieliśmy się, że wyniki uzyskane z aproksymacji objętości oraz wartości uzyskane po ekstrakcji są bardzo rozbieżne. 
 
 Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku, stąd w dalszej części opisu dla uproszczenia przyjmiemy parametry pochodzące z pliku DICOM jako stałe równe 1. Przy współczynnikach jednostkowych wartość objętości warstwy jest równa polu powierzchni maski dla danej warstwy. Stąd w dalszej części będziemy posługiwać się polem powierzchni jako czynnikiem determinującym objętość.
 
@@ -1171,7 +1158,7 @@ W bazie danych przechowujemy wybrane dane istotne z punktu widzenia działania a
 \end{minipage}
 
 \section{Moduł prezentacji}
-Aplikacja jest stworzona w architekturze SPA (Single Page Application). Wykorzystanie tego podejścia pozwala na wyświetlanie wielu widoków bez konieczności pobierania ponownie tych samych informacji, dzięki temu zachowując płynne działanie strony internetowej. Stusując te podejście zyskujemy na płynności działania oraz lepsze odczucia użytkownika przy korzystaniu z serwisu.
+Aplikacja jest stworzona w architekturze SPA (Single Page Application). Wykorzystanie tego podejścia pozwala na wyświetlanie wielu widoków bez konieczności pobierania ponownie tych samych informacji, dzięki temu zachowując płynne działanie strony internetowej. Stosując te podejście zyskujemy na płynności działania oraz lepsze odczucia użytkownika przy korzystaniu z serwisu.
 
 Naszą aplikację stworzyliśmy przy pomocy biblioteki React. Ułatwia ona myślenie o logice biznesowej aplikacji dzieląc stronę na komponenty. Każdy komponent składa się z co najmniej jednego HTML tagu i jest odpowiedzialny za inną część widoczną na stronie. Granulacja komponentów sprzyja pisaniu złożonych aplikacji poprzez separację stanów każdego z komponentów.
 Naszą aplikację stworzyliśmy przy pomocy biblioteki React. Ułatwia ona myślenie o logice biznesowej aplikacji dzieląc stronę na komponenty. Każdy komponent składa się z co najmniej jednego HTML tagu i jest odpowiedzialny za inną część widoczną na stronie. Granulacja komponentów sprzyja pisaniu złożonych aplikacji poprzez separację stanów każdego z komponentów.
