@@ -524,7 +524,7 @@ Podczas pracy z danymi szpitalnymi zostało postawione pytanie: 'Czy objętość
 	\captionof{figure}{Korelacja między objętością z MR i objętością z USG}
 \end{minipage}
 \\ \newline
-Z przeprowadzonych obliczeń wynika wniosek, że te dwie objętości są ze sobą w silnej korelacji. Współczynnik korelacji dla tych dwóch zmiennych wynosi 0.76. (p<0,001).
+Z przeprowadzonych obliczeń wynika wniosek, że te dwie objętości są ze sobą w silnej korelacji. Współczynnik korelacji dla tych dwóch zmiennych wynosi 0.76 (p<0,001).
 \newline \newline 
 Kolejna ze statystyk umieszczonych na wykresie to rozkład PSA względem wieku. Miała na celu uzyskanie informacji na temat tego jak wiek pacjentów przekłada się na potencjalna zachorowalność na raka prostaty.
 \\
@@ -617,7 +617,7 @@ Funkcjonalność aplikacji WWW rozbita jest na trzy podstrony:
 Po wejściu na stronę internetową wyświetlana jest lista pacjentów znajdujących się obecnie w bazie danych. Dodatkowo po wcześniejszym połączeniu się z systemem szpitalnym PACS istnieje możliwość wyświetlenia pacjentów ze szpitalnej bazy danych. W ramach środowiska deweloperskiego dane, którymi inicjalnie zasilona jest aplikacyjna baza danych pochodzą z konkursu. \cite{konkurs}
 Lekarz ma możliwość dodania nowego pacjenta z pliku lub ze szpitalnej bazy danych. Aby dodać pacjenta z pliku wystarczy w przeglądarce wybrać pacjenta, obraz DICOM zostanie pobrany z bazy PACS aplikacja, zanonimizowany po stronie przeglądarki, a następnie wysłany do serwera. Dodatkowo użytkownik ma możliwość dodania pacjenta z pliku DICOM poprzez przeciągnięcie zbioru zdjęć pacjenta na okno przeglądarki. W przypadku, gdy wybrany pacjent nie znajduje się jeszcze w bazie danych aplikacja tworzy nową encję opisującą tego pacjenta, w przeciwnym przypadku, jeżeli obraz nie znajduje się jeszcze w bazie danych dla pacjenta o takim identyfikatorze, aplikacja dodaje kolejne zdjęcia dla już istniejącego pacjenta.
 Następnie lekarz ma możliwość oglądania zdjęć pacjenta oraz danych jakie o tym pacjencie aktualnie znajdują się w bazie danych. Strona wyświetla kolejne obrazy, które zostały dodane dotyczące wybranego przypadku. Dodatkowo wyświetlane są informacje z pliku DICOM dotyczące informacji o pacjencie i wyników badań, jeżeli taki znajdowały się w pliku, który  został wysłany do bazy danych. Ponadto aplikacja wyświetla maskę przedstawiającą wynik procesu segmentacji prostaty. Użytkownik ma możliwość ukrycia maski oraz jej edycji za pomocą dostarczonych narzędzi. 
-Aplikacja dodatkowo liczy objętość wysegmentowanej prostaty na podstawie masek znajdujących się w bazie danych. W aplikacji dostępne jest kilka alternatywnych algorytmów liczenia objętości. Wartość nie jest przeliczana automatycznie w przypadku edycji. Lekarz po edycji wszystkich masek, naciska przycisk na stronie, który uruchamia proces liczenia objętości 
+Aplikacja dodatkowo liczy objętość wysegmentowanej prostaty na podstawie masek znajdujących się w bazie danych. W aplikacji dostępne jest kilka alternatywnych algorytmów liczenia objętości. Wartość nie jest przeliczana automatycznie w przypadku edycji. Lekarz po edycji wszystkich masek, naciska przycisk na stronie, który uruchamia proces liczenia objętości.
 \par
 Na poniższym rysunku przedstawiono w postaci diagramu UML zbiór przypadków użycia platformy dla lekarza. W tabeli \ref{Przypadki użycia} zebrano szczegółowe opisy przypadków użycia.
 \par
@@ -791,7 +791,7 @@ Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony
 	
 	\begin{minipage}[h]{\linewidth}
 		\centering
-		\includegraphics[width=0.5\textwidth,angle=90,origin=c]{segmentation/example_MRI_image.png}
+		\includegraphics[width=0.5\textwidth,angle=270,origin=c]{segmentation/example_MRI_image.png}
 		\captionof{figure}{Przykładowy obraz z badania MRI}
 	\end{minipage}
 
@@ -801,7 +801,7 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 
 \begin{minipage}[h]{\linewidth}
 	\centering
-	\includegraphics[width=0.5\textwidth,angle=90,origin=c]{segmentation/example_mask.png}
+	\includegraphics[width=0.5\textwidth,angle=270,origin=c]{segmentation/example_mask.png}
 	\captionof{figure}{Przykładowy obraz z badania MRI}
 \end{minipage}
 
@@ -873,34 +873,34 @@ Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobr
 \begin{figure}[htb]
 	\centering % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_train_1.png}
+		\includegraphics[width=\linewidth,angle=270,origin=c]{segmentation/segmentation_train_1.png}
 		\caption{Obraz wejściowy}
 		\label{fig:1}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentaion_mask_1.png}
+		\includegraphics[width=\linewidth,angle=270,origin=c]{segmentation/segmentaion_mask_1.png}
 		\caption{Poprawna maska}
 		\label{fig:2}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/pred_mask_1.png}
+		\includegraphics[width=\linewidth,angle=270,origin=c]{segmentation/pred_mask_1.png}
 		\caption{Predykcja maski}
 		\label{fig:3}
 	\end{subfigure}
 	
 	\medskip
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_train_2.png}
+		\includegraphics[width=\linewidth,angle=270,origin=c]{segmentation/segmentation_train_2.png}
 		\caption{Obraz wejściowy}
 		\label{fig:4}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/pred_mask_2.png}
+		\includegraphics[width=\linewidth,angle=270,origin=c]{segmentation/pred_mask_2.png}
 		\caption{Poprawna maska}
 		\label{fig:5}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_mask_2.png}
+		\includegraphics[width=\linewidth,angle=270,origin=c]{segmentation/segmentation_mask_2.png}
 		\caption{Predykcja maski}
 		\label{fig:6}
 	\end{subfigure}
@@ -1070,7 +1070,7 @@ Tabela \ref{Analiza statystyczna algorytmów} przedstawia statystyki porównują
 \caption{Analiza statystyczna algorytmów ($cm^3$)}
 \centering
 \begin{tabular}{|l|c|c|c|c|c|} \hline  
-Algorytm	            & Średnia	& Mediana	& Odchylenie	& Max  	& Min \\ \hline
+Algorytm	            & Średnia	& Mediana	& Odchylenie	& Min  	& Max \\ \hline
 Otoczka największa	    & 89        & 99        & 41	            & 41	        & 134 \\ \hline
 Opisane na prostokącie	& 149       & 139       & 95	            & 95	        & 325 \\ \hline
 Otoczka	                & 22        & 24        & 12	            & 12	        & 39  \\ \hline
