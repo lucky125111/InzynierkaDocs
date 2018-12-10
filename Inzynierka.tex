@@ -237,7 +237,7 @@
 \tytul
 \end{center}
 
-Celem pracy dyplomowej jest stworzenie narzędzia wspomagającego diagnostykę nowotworu prostaty oraz jego integracja ze szpitalną bazą danych. Proponowane narzędzie będzie umożliwiało obliczanie objętości prostaty bazując na wysegmentowanym fragmencie obrazu pochodzącego z obrazowania metodą multiparametrycznego rezonansu magnetycznego. Dodatkowo stworzona zostanie baza badań zawierająca informacje o referencyjnych wartościach objętości gruczołu krokowego pochodzących z estymacji bazującej na obrazowaniu ultrasonografem. Narzędzie zostanie przygotowane do wdrożenia w szpitalnym systemie informatycznym.
+Obecnie prostata liczona jest ze wzoru, który aproksymuje kształt gruczołu elipsoidą. W pracy dyplomowej przedstawiamy alternatywne metody obliczania objętości, mogące znacząco poprawić dokładność obliczeń. Opisany system pozwala na segmentację obrazów gruczołu pochodzącego z obrazowania metodą multiparametrycznego rezonansu magnetycznego oraz obliczanie objętości na podstawie masek segmentacji. Narzędzie zostało przygotowane do integracji ze szpitalnym systemem PACS.  Dodatkowo stworzona została baza badań zawierająca informacje o referencyjnych wartościach objętości gruczołu krokowego pochodzących z estymacji bazującej na obrazowaniu ultrasonografem. 
 
 \noindent \textbf{Słowa kluczowe:} przetwarzanie obrazu, analiza danych, bioinformatyka
 \end{abstract}
@@ -251,7 +251,7 @@ Celem pracy dyplomowej jest stworzenie narzędzia wspomagającego diagnostykę n
 %\title
 \end{center}
 
-The aim of the diploma thesis is to create a tool that supports the diagnostics of prostate cancer and its integration with the hospital database. The proposed tool will be able to calculate prostate volume based on the segmented image from multiparameter Magnetic Resonance imaging. In addition, a database containing information on reference prostate volume values from the estimation based on ultrasonography imaging will be created. The tool will be prepared for implementation in the hospital IT system.
+The prostate is calculated from a formula that approximates the glandular shape of the ellipsoid. In the diploma thesis we present alternative methods of volume calculation, which can significantly improve the accuracy of calculations. The described system allows segmentation of images of the gland derived from imaging using the multiparameter magnetic resonance method and volume calculation based on segmentation masks. The tool has been prepared for integration with the hospital PACS system. In addition, a research database was created containing information on reference prostate volume values ​​derived from estimation based on ultrasound imaging.
 
 \noindent \textbf{Keywords:} image processing, data analysis, bioinformatics
 \end{abstract}}
@@ -1201,14 +1201,6 @@ Aby obliczyć objętość na podstawie masek znajdujących się obecnie w bazie 
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Patient/343.png}
 	\captionof{figure}{Kalkulacja objętości}
-\end{minipage}
-
-Aby przełączać się pomiędzy poszczególnymi warstwami należy nacisnąć przycisk po prawej lub lewej stronie obrazu.
-
-\begin{minipage}[h]{\linewidth}
-	\centering
-	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/15.png}
-	\captionof{figure}{Przechodzenie pomiędzy kolejnymi obrazami}
 \end{minipage}
 
 \subsection{Edycja obrazu}
