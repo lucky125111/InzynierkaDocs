@@ -793,7 +793,7 @@ Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony
 	
 	\begin{minipage}{\linewidth}
 		\centering
-		\includegraphics[width=0.5\textwidth,angle=90]{segmentation/example_MRI_image.png}
+		\includegraphics[width=0.5\textwidth,angle=90,origin=c]{segmentation/example_MRI_image.png}
 		\captionof{figure}{Przykładowy obraz z badania MRI}
 	\end{minipage}
 
@@ -803,7 +803,7 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.5\textwidth,angle=90]{segmentation/example_mask.png}
+	\includegraphics[width=0.5\textwidth,angle=90,origin=c]{segmentation/example_mask.png}
 	\captionof{figure}{Przykładowy obraz z badania MRI}
 \end{minipage}
 
@@ -815,7 +815,7 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Zostały do tego celu wykorzystane dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczęliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie otrzymano są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
 Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny sposób został zwiększony zbiór testowy. Rozwiązanie jest  procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnieniu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, stosowanie filtru Gaussowskiego lub progowania.
 \par
-Przed wyborem rozwiązania przeprowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-Net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawia poniższy diagram. 
+Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-Net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawia poniższy diagram. 
 
 \begin{minipage}{\linewidth}
 	\centering
@@ -878,34 +878,34 @@ Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobr
 \begin{figure}[htb]
 	\centering % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{segmentation/segmentation_train_1.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_train_1.png}
 		\caption{Obraz wejściowy}
 		\label{fig:1}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{segmentation/segmentaion_mask_1.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentaion_mask_1.png}
 		\caption{Poprawna maska}
 		\label{fig:2}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{segmentation/pred_mask_1.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/pred_mask_1.png}
 		\caption{Predykcja maski}
 		\label{fig:3}
 	\end{subfigure}
 	
 	\medskip
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{segmentation/segmentation_train_2.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_train_2.png}
 		\caption{Obraz wejściowy}
 		\label{fig:4}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{segmentation/pred_mask_2.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/pred_mask_2.png}
 		\caption{Poprawna maska}
 		\label{fig:5}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{segmentation/segmentation_mask_2.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{segmentation/segmentation_mask_2.png}
 		\caption{Predykcja maski}
 		\label{fig:6}
 	\end{subfigure}
@@ -951,6 +951,7 @@ gdzie
 \(S_{max}\) - Objętość warstwy o największym polu powierzchni, każde liczone jako suma objętości voxeli maski, gdzie objętość każdego voxela liczona jest jako:
 \[ V_{d_{ij}} = PixelSpacing_0 * PixelSpacing_1 * SliceThickness\]
 gdzie \\
+i - indeks wartstwy \\
 \(PixelSpacing_0\) - pierwsza wartość atrybutu PixelSpacing (0028, 0030) z pliku DICOM \\
 \(PixelSpacing_1\)  - druga wartość atrybutu PixelSpacing (0028, 0030) z pliku DICOM \\
 \(SliceThickness\) - atrybut SliceThickness (0018, 0050) z pliku DICOM \\
@@ -1007,29 +1008,29 @@ Przykład pierwszy, w którym wysegmentowana maska jest jednym spójnym elemente
 \begin{figure}[htb]
 	\centering % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{Mask/1/maska.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/maska.png}
 		\caption{Maska przykład 1}
 		\label{fig:1}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{Mask/1/square.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/square.png}
 		\caption{Maska przykład 1 Wpisana w prostokąt}
 		\label{fig:2}
 	\end{subfigure}\hfil % <-- added
 	
 	\medskip
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{Mask/1/hull.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/hull.png}
 		\caption{Maska przykład 1 Otoczka wokół największego elementu}
 		\label{fig:3}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{Mask/1/hull.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/hull.png}
 		\caption{Maska przykład 1 Otoczka wypukła}
 		\label{fig:4}
 	\end{subfigure}\hfil % <-- added
 
-	\caption{Przykłady wyników}
+	\caption{Przykłady wyników automatycznej segmentacji}
 	\label{fig:images}
 \end{figure}
 
@@ -1041,33 +1042,33 @@ Przykład drugi, w którym wysegmentowana maska nie jest spójna. \\ \\
 \begin{figure}[htb]
 	\centering % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{Mask/2/mask.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/mask.png}
 		\caption{Maska przykład 2}
 		\label{fig:1}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{Mask/2/square.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/square.png}
 		\caption{Maska przykład 2 Wpisana w prostokąt}
 		\label{fig:2}
 	\end{subfigure}\hfil % <-- added
 	
 	\medskip
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{Mask/2/biggest.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/biggest.png}
 		\caption{Maska przykład 2 Otoczka wokół największego elementu}
 		\label{fig:3}
 	\end{subfigure}\hfil % <-- added
 	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90]{Mask/2/hull.png}
+		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/hull.png}
 		\caption{Maska przykład 2 Otoczka wypukła}
 		\label{fig:4}
 	\end{subfigure}\hfil % <-- added
 	
-	\caption{Przykłady wyników}
+	\caption{Przykłady wyników automatycznej segmentacji dla niespójnej maski}
 	\label{fig:images}
 \end{figure}
 
-Widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ prostata jest znaleziona częściowo w kilku elementach obrazu, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla największego spójnego fragmentu. Przykład obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
+Widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ maska nie jest spójna, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla pojedynczego fragmentu. Przykład obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
 
 \subsection{Analiza wyników}
 Aby przeanalizować wyniki osiągnięte przez proponowany przez nas algorytm segmentacji oraz liczenia objętości postanowiliśmy porównać wyniki liczenia objętości algorytmem szpitalnym na danych konkursowych (segmentacja prostaty została wykonana przez lekarza) oraz proponowane przez nas metody liczenia objętości na maskach uzyskanych w przez aplikacyjny system segmentacji wraz z metodami poprawy obrazu. Zbiór testowy składał się z 13 pacjentów pochodzących z danych konkursowych. Po wykonaniu algorytmu uzyskaliśmy następujące wyniki.
@@ -1075,12 +1076,11 @@ Aby przeanalizować wyniki osiągnięte przez proponowany przez nas algorytm seg
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Pacjenci.png}
-	\captionof{figure}{Wartości obliczone wszystkimi algorytmami}
+	\captionof{figure}{Objętości pacjentów na podstawie różnych algorytmów}
 \end{minipage}
 
-Rozbieżność pomiędzy wynikami przeprowadzonymi na maskach uzyskanych poprzez segmentację przez lekarza i przez algorytm różnią się znacząco. 
 \par
-Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostanie wykryta przez algorytm na warstwie, która znajduje się dużo przed faktycznym początkiem prostaty. Najbardziej jest to widoczne na przykładzie pacjenta \textit{ProstateDx-03-0003}, dla którego wyniki uzyskany przez nasz algorytm są nawet dwukrotnie większe. Prostata znajduje się między 9 a 18 warstwą, jednak algorytm segmentacji wykrył obecność prostaty już na warstwie 4. 
+Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostanie wykryta przez algorytm na warstwie, która znajduje się dużo przed faktycznym początkiem prostaty. Najbardziej jest to widoczne na przykładzie pacjenta \textit{ProstateDx-03-0003}, dla którego wyniki uzyskany przez nasz algorytm są nawet dwukrotnie większe. Prostata znajduje się między 9 a 18 warstwą, jednak algorytm segmentacji wykrył obecność prostaty już na warstwie 4. Rozbieżności pomiędzy maskami segmenacji zostały dokładnie opisane w rozdziale poprzednim, między innymi na rysunku \ref{fig:images}. 
 \par 
 Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0007} uzyskujemy wyniki zbliżone do wartości źródłowej. Błąd tutaj wynika z niedokładności algorytmu segmentacji.
 
@@ -1090,17 +1090,17 @@ Z uwagi na duże rozbieżności w wynikach postanowiliśmy usunąć ze zbioru pa
 \caption{Wartości objętości ($cm^3$)}
 \centering
 \begin{tabular}{|l|c|c|c|c|c|} \hline  
-Pacjent & Źródło &  Otoczka element	(1) & Wpisanie w prostokąt (2)	& Otoczka cała (3)\\ \hline
-Prostate3T-01-0001	&13	&7	&36	&30  \\ \hline
-Prostate3T-01-0006	&16	&16	&104	&77  \\ \hline
-Prostate3T-01-0007	&5	&4	&23	&13  \\ \hline
-Prostate3T-01-0009	&35	&24	&123	&98  \\ \hline
-ProstateDx-02-0002	&16	&39	&325	&126 \\ \hline
-ProstateDx-02-0004	&22	&26	&149	&99  \\ \hline
-ProstateDx-02-0005	&13	&17	&132	&73  \\ \hline
-ProstateDx-03-0002	&19	&24	&146	&105 \\ \hline
-ProstateDx-03-0004	&21	&36	&281	&131 \\ \hline
-ProstateDx-03-0005	&31	&31	&173	&134 \\ \hline
+Pacjent             & Źródło    &  Otoczka element	(1) & Wpisanie w prostokąt (2)	& Otoczka cała (3)\\ \hline
+Prostate3T-01-0001	& 13	    & 7	                    & 36	                    & 30  \\ \hline
+Prostate3T-01-0006	& 16	    & 16	                & 104	                    & 77  \\ \hline
+Prostate3T-01-0007	& 5	        & 4	                    & 23	                    & 13  \\ \hline
+Prostate3T-01-0009	& 35	    & 24	                & 123	                    & 98  \\ \hline
+ProstateDx-02-0002	& 16	    & 39	                & 325	                    & 126 \\ \hline
+ProstateDx-02-0004	& 22	    & 26	                & 149	                    & 99  \\ \hline
+ProstateDx-02-0005	& 13	    & 17	                & 132	                    & 73  \\ \hline
+ProstateDx-03-0002	& 19	    & 24	                & 146	                    & 105 \\ \hline
+ProstateDx-03-0004	& 21	    & 36	                & 281	                    & 131 \\ \hline
+ProstateDx-03-0005	& 31	    & 31	                & 173	                    & 134 \\ \hline
 \end{tabular}
 \label{Objętości pacjenci}
 \end{table}
@@ -1124,22 +1124,24 @@ Tabela \ref{Analiza statystyczna algorytmów} przedstawia statystyki porównują
 \caption{Analiza statystyczna algorytmów ($cm^3$)}
 \centering
 \begin{tabular}{|l|c|c|c|c|c|} \hline  
-Algorytm	            & średnia	& mediana	& odchylenie	& min	& max  \\ \hline
-Otoczka największa	    & 89        & 99        & 79\%	            & 41	        & 134           \\ \hline
-Opisane na prostokącie	& 149       & 139        & 974\%	            & 95	        & 325           \\ \hline
-Otoczka	                & 22        & 24        & 24\%	            & 12	            & 39            \\ \hline
+Algorytm	            & Średnia	& Mediana	& Odchylenie	& Min	& Max  \\ \hline
+Otoczka największa	    & 89        & 99        & 41	            & 41	        & 134 \\ \hline
+Opisane na prostokącie	& 149       & 139       & 95	            & 95	        & 325 \\ \hline
+Otoczka	                & 22        & 24        & 12	            & 12	        & 39  \\ \hline
+źródło	                & 19	    & 9	        & 17,5	            & 35            & 5   \\ \hline
+
 
 \end{tabular}
 \label{Analiza statystyczna algorytmów}
 \end{table}
 
-Z zaproponowanych algorytmów jedynym który osiągnął większa dokładność niż algorytm aproksymujący elipsoidą jest algorytm znajdujący otoczkę wypukłą dla całej maski. Osiągneliśmy poziom około 3 $cm^3$  różnicy średnich względem sumy voxeli (17\%). Pokazuje to, że istnieją lepsze algorytmy niż obecnie najczęściej stosowany.
+Z zaproponowanych algorytmów jedynym który osiągnął większa dokładność niż algorytm aproksymujący elipsoidą jest algorytm znajdujący otoczkę wypukłą dla całej maski. Osiągnęliśmy poziom około 3 $cm^3$  różnicy średnich względem sumy voxeli (17\%). Na podstawie przeprowadzonej analizy można zakładać, że proponowany algorytm może zwiększyć dokładność liczenia objętości prostaty. Z uwagi na okrojony zbiór testowy nie możemy założyć jego 100\% skuteczności. Pokazuje on jednak, że istnieją lepsze algorytmy niż aproksymacja elipsoidą.
 
 \subsection{Alternatywne podejścia}
 Algorytmy opisane powyżej są jednymi z wielu możliwości poprawienia efektywności badania objętości prostaty w sposób analityczny. Jak widać w dużej mierze objętość opiera się o dokładność segmentacji. Wartymi do rozważenia modyfikacjami jest również:
 \begin{description}
 \item Pole powierzchni prostokąta na którym można opisać największy spójny element uzyskany w procesie segmentacji. Z uwagi na małe zróżnicowanie względem zastosowanych metod nie uwzględniliśmy jej w algorytmach udostępnianych przez naszą aplikację
-\item Wybór elementów wokół których jest szukana  otoczka wypułka na podstawie pewnej funkcji. Jest to zagadnienie skomplikowane, ponieważ możliwych funkcji jest bardzo dużo. Na przykład moglibyśmy szukać otoczki wokół wszystkich elementów maski znajdujących się w określonej odległości od środka największego elementu maski.
+\item Wybór elementów wokół których jest szukana  otoczka wypukła na podstawie pewnej funkcji. Jest to zagadnienie skomplikowane, ponieważ możliwych funkcji jest bardzo dużo. Na przykład moglibyśmy szukać otoczki wokół wszystkich elementów maski znajdujących się w określonej odległości od środka największego elementu maski.
 \item Przy poprawianiu maski uwzględniamy wszystkie warstwy. Czyli w przypadku gdy aktualna maska jest niespójna z poprzedzającą oraz następującą po sobie, wówczas zamiast niej bierzemy maskę będącą średnią dwóch wymienionych.
 \end{description}
 
@@ -1233,7 +1235,7 @@ Widok pacjenta przedstawia nam wszystkie informacje jakie posiadamy na temat dan
 \begin{description}
 \item Dane pacjenta z pliku DICOM, takie jak: nazwa, wiek, płeć, wzrost, waga oraz inne. Wyświetlamy tylko informacje, które w danym pliku się znajdowały. Jeżeli jakieś dane miały wartość pustą pomijamy je. Jeżeli dane podlegały wcześniejszej anonimizacji dane wrażliwe jakie zobaczymy na interfejsie użytkownika nie będą danymi odpowiadającymi tym z systemu szpitalnego.
 \item Informacje na temat obrazu, takie jak: wymiary obrazu (szerokość i wysokość), odległość między kolejnymi obrazami w badaniu, odległości między konkretnymi pixelami na obrazie.
-\item Informacje na temat objętości oraz przyciski do kalkulacji objętości według wybranego algorytmu.
+\item Informacje na temat objętości oraz przyciski do obliczania objętości według wybranego algorytmu.
 \item Obraz z rezonansu magnetycznego oraz maskę znalezioną w procesie segmentacji wraz z możliwością edycji.
 \end{description}
 
@@ -1340,7 +1342,7 @@ W trakcie realizacji pracy pojawiły się problemy, które zmusiły nas do zmian
 \par 
 Alogrytm segmentacji nauczony na danych konkursowych osiągnął współczynnika podobieństwa Sørensena na poziomie ~0.70 (maksymalna wartość to 1). Był to wystarczający wynik, aby na danych testowych wyznaczać maski. Predykcja masek pozwoliła nam na zaimplementowanie kilku algorytmów obliczania objętości gruczołu krokowego.
 
-Dane konkursowe zawierały obrazowanie prostat, których średnia objętość wynosiła 19 $cm^3$ oznacza to, że zebrane dane dotyczyły zdrowych gruczołów. Algorytm proponowany przez nas który osiągnął najlepszy wynik to metoda liczenia otoczki wypukłej wokół największego spójnego elementu maski. Osiągnął on średni wynik 22 $cm^3$, czyli odbiega od wartości oczekiwanej tylko o 3 $cm^3$. Jest to znacząca poprawa względem metody stosowanej obecnie w szpitalu, która dawała średni wynik na poziomie 53 $cm^3$ na danych testowych. Na podstawie zebranych danych ilościowych ze szpitala średnia objętość prostaty na podstawie wymiarów z MRI średnia objętość to 50 $cm^3$. jednak ze względu na wiek pacjentów u których występuje podejrzenie obecności nowotworu prostaty częstym schorzeniem jest rozrost prostaty. To wpływa na jej zmienność manifestowaną również w wynikach obrazowania MRI. Zmieniona anatomia w przypadku pacjentów z podejrzeniem PCa (prostate cancer) poddaje w wątpliwość dokładność stosowanie algorytmów sztucznej inteligencji wyuczonych na danych pochodzących ze zdrowych pacjentów. Duża wariancja w anatomii wpływa na to, że algorytmy segmentacji wymagają uczenia na podstawie dużych zbiorów danych, obejmujących dane obrazowe z pacjentów zróżnicowanych wiekiem i stopniem zaawansowania schorzeń prostaty. Te dane obecnie nie są publicznie dostępne dlatego zastosowanie produkcyjne aplikacji jest uzależnione dostępnością odpowiednich danych.
+Dane konkursowe zawierały obrazowanie prostat, których średnia objętość wynosiła 19 $cm^3$ oznacza to, że zebrane dane dotyczyły zdrowych gruczołów. Algorytm proponowany przez nas który osiągnął najlepszy wynik to metoda liczenia otoczki wypukłej wokół największego spójnego elementu maski. Osiągnął on średni wynik 22 $cm^3$, czyli odbiega od wartości oczekiwanej tylko o 3 $cm^3$. Jest to znacząca poprawa względem metody aproksymowania elipsoidą, która dawała średni wynik na poziomie 53 $cm^3$ na danych testowych. Na podstawie zebranych danych ilościowych ze szpitala średnia objętość prostaty na podstawie wymiarów z MRI średnia objętość to 50 $cm^3$. jednak ze względu na wiek pacjentów u których występuje podejrzenie obecności nowotworu prostaty częstym schorzeniem jest rozrost prostaty. To wpływa na jej zmienność manifestowaną również w wynikach obrazowania MRI. Zmieniona anatomia w przypadku pacjentów z podejrzeniem raka prostaty poddaje w wątpliwość dokładność stosowanie algorytmów sztucznej inteligencji wyuczonych na danych pochodzących ze zdrowych pacjentów. Duża wariancja w anatomii wpływa na to, że algorytmy segmentacji wymagają uczenia na podstawie dużych zbiorów danych, obejmujących dane obrazowe z pacjentów zróżnicowanych wiekiem i stopniem zaawansowania schorzeń prostaty. Te dane obecnie nie są publicznie dostępne dlatego zastosowanie produkcyjne aplikacji jest uzależnione dostępnością odpowiednich danych.
 
 % -------------------- 6. Bibliografia -----------------------
 % Bibliografia leksykograficznie wg nazwisk autorów
