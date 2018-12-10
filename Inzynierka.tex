@@ -30,6 +30,7 @@
 \usepackage{subcaption}
 \usepackage{caption} \captionsetup[table]{singlelinecheck=false}		
 \usepackage{listings,xcolor}
+\usepackage{placeins}
 
 % ---------------- Marginesy, akapity, interlinia ------------------
 
@@ -449,15 +450,15 @@ W badaniach szczególną uwagę należało zwrócić na poszczególne aspekty: \
 \item[wiek pacjenta] - mężczyźni od 50 do 75 roku życia znajdują się w grupie ryzyka
 \item[wywiad środowiskowy] - ważnym aspektem podczas wywiadu jest obciążenie rodzinne, czyli fakt występowania raka prostaty w najbliższej rodzinie pacjenta. Warto oczywiście zwrócić uwagę w jakim momencie diagnozy znajduje się pacjent. Czy, ma stwierdzony nowotwór prostaty. Kolejną ważną informacją jest historia choroby pacjenta. Warto odnotować, iż niektórzy pacjenci byli badani po zakończeniu leczenia radioterapią bądź chemioterapią. Wtedy lekarz sprawdza, czy udało się wyeliminować nowotwór, czy może pacjent jest w fazie nawrotu choroby.
 \item[biopsja] - jeśli była przeprowadzona to jaki był jej wynik. Kiedy była przeprowadzona. W której części prostaty znaleziono zmiany nowotworowe.
-\item[wynik w skali Gleasona \cite{gleason}]] - w przypadku pacjenta ze stwierdzonym nowotworem kluczową rolę odgrywa skala Gleasona. Jest to skala opracowana z myślą o klasyfikacji nowotworów prostaty. Składa się ona z dwóch części, opisujących różne charakterystyki nowotworu. Po określeniu części składowych sumuje się je, aby otrzymać całościowy wynik Gleasona. Im wyższa punktacja tym bardziej histopatologicznie złośliwy jest nowotwór.
+\item[wynik w skali Gleasona \cite{gleason}] - w przypadku pacjenta ze stwierdzonym nowotworem kluczową rolę odgrywa skala Gleasona. Jest to skala opracowana z myślą o klasyfikacji nowotworów prostaty. Składa się ona z dwóch części, opisujących różne charakterystyki nowotworu. Po określeniu części składowych sumuje się je, aby otrzymać całościowy wynik Gleasona. Im wyższa punktacja tym bardziej histopatologicznie złośliwy jest nowotwór.
 \item[PSA] - wynik ostatniego badania PSA we krwi. Specyfika antygeny PSA była przytoczona we wcześniejszej części tej pracy. 
 \item[Objętość prostaty] - wyliczona na podstawie wymiarów określonych w opisie badania USG oraz MR. Objętość prostaty potrzebna jest to wyliczenia współczynnika PSAD, oraz do ogólnej diagnozy. 
 \item[PIRADS] - najbardziej znaczące jest ognisko o najwyższej ocenie w skali PIRADS. Gdy pacjent ma ocenę 5, co zdarzało się w 25\% zbadanych przypadków, to istnieje bardzo wysokie prawdopodobieństwo posiadania nowotworu prostaty w obserwowanym przez radiologa miejscu. 
+\newline  \newline   \newline   \newline   \newline   \newline   \newline   \newline   \newline   \newline   \newline   \newline   \newline   \newline   \newline  \newline  
 \end{description}
-\par
-\ref{Dane szpitalne} przedstawia wybrane kolumny uzyskane z danych szpitalnych
+Tabela \ref{Dane szpitalne} przedstawia wybrane kolumny uzyskane z danych szpitalnych. Są to kolumny na podstawie których zostały przeprowadzone przez nas badania.
 \\
-\begin{table}[h!]
+\begin{table}[!htbp]
 \caption{Dane szpitalne}
 \centering
 \begin{tabular}{|l|p{10cm}|} \hline 
@@ -469,7 +470,7 @@ Hist-pat & dane z badania histopatologicznego, czyli biopsji prostaty \\ \hline
 Data hist-pat & Data wykonania biopsji                                                                              \\ \hline 
 Gleason & klasyfikacja patomorfologiczna raka gruczołu krokowego                                                    \\ \hline 
 Płat & płat prostaty, w którym znajduje się zmiana nowotworowa                                                      \\ \hline 
-Liczba biopsji                                                                                                       \\ \hline 
+Liczba biopsji & Liczba biopsji                                                   \\\hline 
 PSA & poziom swoistego antygenu stercza w ng/ml \\ \hline 
 Liczba PSA & liczba wykonanych badań PSA, które zostały wykonane \\ \hline 
 Objętość z usg & szacowana na podstawie przybliżenia elipsoidą \\ \hline 
@@ -483,18 +484,18 @@ Oznaczenie strefy & dokładna część prostaty, w której znajduje się zmiana 
 \label{Dane szpitalne}
 \end{table}
 
-
 \section{Wstępna analiza}
 U wszystkich pacjentów z nowotworem poziom PSA jest zdecydowanie podwyższony (norma to około 4 ng/ml \cite{norma}), jednakże u pacjentów, u których nie stwierdzono zmian nowotworowych PSA może być podwyższone. Skala PI-RADS V2 zapewnia dobrą dokładność, aczkolwiek, jest obarczona błędem wynikającym z ograniczonej dokładności i charakterystyki metody obrazowania, niejasności w interpretacji skali PIRADSv2 oraz dokładności standardu. Jedynym badaniem determinującym istnienie raka stercza jest bezpośrednia biopsja przezodbytnicza. 
 \par 
 Wstępna analiza wykazała rozbieżność między objętościami wyliczonymi z badania USG oraz MR. Średnia różnica pomiędzy objętościami otrzymanymi w tych dwóch badaniach wynosi 14 $cm^3$. Lekarz nie ma w momencie badania dokładnych wymiarów prostaty. Sposób wyliczania jej objętości jest przybliżeniem jej kształtu przez elipsoidę, co jest źródłem utraty dokładności pomiaru.
 \par 
-Najniższe wyniki PSA mają pacjenci, którzy przeszli resekcję prostaty, co oznacza, że Ci pacjenci nie wykazują cech wznowy. Najwyższe wyniki, natomiast, mają pacjenci ze stwierdzoną, przez biopsję, co jest zgodne z udowodnioną korelacją pomiędzy poziomem PSA a stopniem złośliwości histopatologicznej wykrytego nowotworu.
+Najniższe wyniki PSA mają pacjenci, którzy przeszli resekcję prostaty, co oznacza, że Ci pacjenci nie wykazują cech wznowy. Najwyższe wyniki, natomiast, mają pacjenci ze stwierdzoną, przez biopsję, co jest zgodne z udowodnioną korelacją pomiędzy poziomem PSA a stopniem złośliwości histopatologicznej wykrytego nowotworu\cite{psaCorrelation}.
 
 \section{Statystyki}
-
+Poniżej zostały przedstawione wyliczenia oraz wykresy dla istotnych w tej pracy danych. Rozdział ten jest rozpoczęty od zbioru statystyk ogólnych, następnie przedstawiony jest wykres korelacji objętości wyliczonej z MR z objętością wyliczoną z USG. W kolejnej części znajdują się wykresy słupkowe.
+\newline
 Tabela \ref{Podstawowe statystyki} przedstawia statystyki zebrane z utworzonego zbioru danych
-\begin{table}[h!]
+\begin{table}[!htbp]
 	\caption{Podstawowe statystyki}
 	\centering
 	\begin{tabular}{|p{5cm}|l|} \hline  
@@ -502,27 +503,31 @@ Tabela \ref{Podstawowe statystyki} przedstawia statystyki zebrane z utworzonego 
 		Liczba pacjentów & 222  \\ \hline 
 		Średni wiek pacjenta & 67  \\ \hline 
 		Liczba pacjentów, u których zdiagnozowano raka & 69  \\ \hline 
-		Średnia objętość z USG & 52,02  \\ \hline 
-		Odchylenie standardowe objętości z USG & 30,43  \\ \hline       
-		Średnia objętość z MR & 50,28  \\ \hline       
-		Odchylenie standardowe objętości z MR & 32,63  \\ \hline       
+		Średnia objętość z USG & 52,02 $cm^3$ \\ \hline 
+		Odchylenie standardowe objętości z USG & 30,43 $cm^3$ \\ \hline  
+		Mediana objętości z USG & 39,8  $cm^3$   \\ \hline
+		Średnia objętość z MR & 50,28 $cm^3$ \\ \hline
+		Mediana objętości z MR & 44,3 $cm^3$ \\ \hline       
+		Odchylenie standardowe objętości z MR & 32,63 $cm^3$ \\ \hline       
 		Średnie PSA & 12,05  \\ \hline   
-		Odchylenie standardowe PSA & 36,46  \\ \hline         
+		Odchylenie standardowe PSA & 36,46  \\ \hline
+		Mediana różnicy między objętościami & 8,67  $cm^3$  \\ \hline
 	\end{tabular}
 	\label{Podstawowe statystyki}
 \end{table}
 \\ 
-
+\newline
+Podczas pracy z danymi szpitalnymi zostało postawione pytanie: 'Czy objętość wyliczona z badań MR koreluje z objętością wyliczoną z badań USG?'. Poniższy wykres odpowiada na to pytanie.
 \begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Wykresy/Scatter.png}
 	\captionof{figure}{Korelacja między objętością z MR i objętością z USG}
 \end{minipage}
 \\ \newline
-Z przeprowadzonych obliczeń wynika wniosek, że te dwie objętości są ze sobą w silnej korelacji. Współczynnik korelacji dla tych dwóch zmiennych wynosi 0.76.
-\\
+Z przeprowadzonych obliczeń wynika wniosek, że te dwie objętości są ze sobą w silnej korelacji. Współczynnik korelacji dla tych dwóch zmiennych wynosi 0.76. (p<0,001).
+\newline \newline 
 Kolejna ze statystyk umieszczonych na wykresie to rozkład PSA względem wieku. Miała na celu uzyskanie informacji na temat tego jak wiek pacjentów przekłada się na potencjalna zachorowalność na raka prostaty.
-
+\\
 \begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Wykresy/AgePSA.png}
@@ -530,13 +535,13 @@ Kolejna ze statystyk umieszczonych na wykresie to rozkład PSA względem wieku. 
 \end{minipage}
 \\
 Wiek pacjentów został pogrupowany. Widać, że największe średnie PSA mają mężczyźni między 50 a 60 rokiem życia. Jest to obserwacja, którą dało się przewidzieć, ponieważ mężczyźni często zaczynają się badać dopiero po 50. roku życia. 
-\\
+\\ \newline
 Następnie sprawdzono, czy istnieje korelacja pomiędzy poziomem PSA i wynikiem uzyskanym w skali Gleasona.
 \\
 \begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Wykresy/PSAGleason.png}
-	\captionof{figure}{PSA względem Gleasona}
+	\captionof{figure}{PSA względem oceny w skali Gleason}
 \end{minipage}
 \\
 U dwóch badanych pacjentów zdiagnozowano raka z oceną Gleasona na poziomie 9. Średnie PSA tych pacjentów wynosiło ponad 50 ng/ml co jest pięćdziesięciokrotnym przekroczeniem normy.
@@ -1300,6 +1305,8 @@ Dane konkursowe zawierały obrazowanie prostat, których średnia objętość wy
 \bibitem[12] {standardDICOM} \emph {Standard DCIOM}, \path{https://www.dicomstandard.org/}
 \bibitem[13] {siec_unet} \emph {Sieć U-Net}, \path{https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/}
 \bibitem[14] {gleason} \emph {Skala Gleasona} \path {https://www.prostateconditions.org/about-prostate-conditions/prostate-cancer/newly-diagnosed/gleason-score}
+\bibitem[15] {psaCorrelation} \emph {Korelacja między PSA a złośliwością}, 
+\path{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4186957/}
 
 
 %\bibitem[2] https://www.nhs.uk/conditions/prostate-cancer/diagnosis/
