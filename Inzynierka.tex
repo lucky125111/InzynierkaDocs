@@ -378,9 +378,9 @@ Podstawowe funkcje RIS:
 \item Raportowanie wyników - System może generować raporty statystyczne dla pojedynczego pacjenta, grupy pacjentów lub poszczególnych procedur.
 \end{enumerate}
 
-\subsubsection{Format DICOM}\cite{standardDICOM}]
+\subsubsection{Format DICOM}
 
-DICOM jest standardowym protokołem do zarządzania,  przesyłania obrazów medycznych oraz powiązanych danych.  Jest stosowany w większości szpitali. DICOM to międzynarodowy standard komunikacji,zarządzania obrazami oraz danymi medycznymi. Celem jest zapewnienie przechowywania, udostępniania, współdziałania systemów używanych do produkcji, wyświetlania, wysyłania, odpytywania, przetwarzania, pobierania i drukowania obrazów medycznych, a także do zarządzania powiązanymi przepływami pracy.
+DICOM jest standardowym protokołem do zarządzania,  przesyłania obrazów medycznych oraz powiązanych danych.  Jest stosowany w większości szpitali. DICOM to międzynarodowy standard komunikacji,zarządzania obrazami oraz danymi medycznymi. Celem jest zapewnienie przechowywania, udostępniania, współdziałania systemów używanych do produkcji, wyświetlania, wysyłania, odpytywania, przetwarzania, pobierania i drukowania obrazów medycznych, a także do zarządzania powiązanymi przepływami pracy.\cite{standardDICOM}]
 \par
 DICOM jest używany na całym świecie do przechowywania, wymiany i przesyłania obrazów medycznych, umożliwiając integrację medycznych urządzeń obrazujących wielu producentów. Dane pacjenta i powiązane obrazy są wymieniane, przechowywane w znormalizowanym formacie.
 Standaryzacja ułatwia dzielenie i interpretację informacji między różnymi urządzeniami do przetwarzania obrazu.
@@ -390,7 +390,7 @@ W chwili obecnej praca radiologa jest ściśle powiązana z pracą przy użyciu 
 \par
 W szpitalu MSWiA z którym współpracowaliśmy w trakcie pisania tej pracy podstawowym narzędziem było oprogramowanie dostarczane przez firmę Philips \cite{Philips}. Radiolog odczytuje, opisuje i analizuje obrazy na stacji wyposażonej w monitor diagnostyczny, następnie przepisuje je na komputer osobisty. Jednakże wiele badań dostarczanych jest przez pacjenta w formie papierowej. Problemy wynikające z używania jednocześnie dokumentacji papierowej oraz elektronicznej jednocześnie są opisane w dalszej części pracy.
 \par
-Pomimo tego, że na rynku istnieją rozwiązania pozwalające na automatyzację pracy lekarza poprzez na przykład automatyczne wykrywanie i oznaczanie zmian w organach nie zawierają modułu segmentacji narządów. Narzędziom przeglądania obrazów DICOM wykorzystywanych obecnie w szpitalach przez radiologów brakuje modułów automatyzujących pracę. Są to, w większości, przeglądarki zdjęć, które radiolog musi później sam ręcznie analizować. 
+Pomimo tego, że na rynku istnieją rozwiązania pozwalające na automatyzację pracy lekarza poprzez na przykład automatyczne wykrywanie i oznaczanie zmian w organach nie zawierają modułu segmentacji narządów. Narzędziom przeglądania obrazów DICOM wykorzystywanych obecnie w szpitalach przez radiologów brakuje modułów automatyzujących pracę. Są to, w większości, przeglądarki zdjęć, które radiolog musi później sam ręcznie analizować. 
 \par
 Proponujemy stworzenie systemu zapewniającego automatyczną segmentację oraz liczenie objętości prostaty na podstawie obrazowania stercza metodą rezonansu magnetycznego. Pozwoli to znacząco skrócić czas jaki lekarza poświęca na analizę obrazów oraz zapewnić szybką informację mającą wpływ na diagnozę.
 
@@ -517,7 +517,7 @@ Tabela \ref{Podstawowe statystyki} przedstawia statystyki zebrane z utworzonego 
 \end{table}
 \\ 
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Wykresy/Scatter.png}
 	\captionof{figure}{Korelacja między objętością z MR i objętością z USG}
@@ -527,7 +527,7 @@ Z przeprowadzonych obliczeń wynika wniosek, że te dwie objętości są ze sob�
 \\
 Kolejna ze statystyk umieszczonych na wykresie to rozkład PSA względem wieku. Miała na celu uzyskanie infomacji na temat tego jak wiek pacjentów przekłada się na potencjalna zachorowalność na raka prostaty.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Wykresy/AgePSA.png}
 	\captionof{figure}{PSA względem wieku}
@@ -537,7 +537,7 @@ Wiek pacjentów został pogrupowany. Widać, że największe średnie PSA mają 
 \\
 Następnie sprawdzono czy istnieje korelacja pomiędzy poziomem PSA i wynikiem uzyskanym w skali Gleasona.
 \\
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Wykresy/PSAGleason.png}
 	\captionof{figure}{PSA względem Gleasona}
@@ -547,7 +547,7 @@ U dwóch badanych pacjentów zdiagnozowano raka z oceną Gleasona na poziomie 9.
 \\
 Kolejnym badaniem jakie zostało przeprowadzone było sprawdzenie powiązania czy PSAD rośnie wraz z punktacją Gleasona
 \\
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Wykresy/PSADGleason.png}
 	\captionof{figure}{PSAD względem Gleasona}
@@ -557,7 +557,7 @@ Na tym wykresie można zobaczyć Jak skala Gleasona wpływa na PSAD, czyli poł�
 \\
 Ostatnim testem było sprawdzenie czy istnieje zależność pomiędzy PSA oraz PIRADS.
 \\
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Wykresy/PIRADSPSA.png}
 	\captionof{figure}{PSA względem PIRADS}
@@ -623,9 +623,9 @@ Aplikacja dodatkowo liczy objętość wysegmentowanej prostaty na podstawie mase
 \par
 Na poniższym rysunku przedstawiono w postaci diagramu UML zbiór przypadków użycia platformy dla lekarza. W tabeli \ref{Przypadki użycia} zebrano szczegółowe opisy przypadków użycia.
 \par
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
-	\includegraphics[width=0.5\textwidth]{useCase.png}
+	\includegraphics[width=0.75\textwidth]{useCase.png}
 	\captionof{figure}{Diagram przypadków użycia}
 \end{minipage}
 \par
@@ -717,7 +717,7 @@ W tym rozdziale przedstawione zostaną efekty pracy. Na wstępie przedstawimy wy
 
 System składa się z modułów realizujących ściśle określone zadania, niezależne zadania, dlatego też łatwo wydzielić je jako osobne serwisy działające niezależnie od siebie. Każdy z serwisów działa jako osobny kontener. Konteneryzacja polega na tym, że umożliwia się uruchomienie wskazanych procesów aplikacji w wydzielonych obiektach, które z punktu widzenia aplikacji są odrębnymi instancjami środowiska uruchomieniowego. Każdy kontener posiada wydzielony obszar pamięci, odrębny interface sieciowy z własnym prywatnym adresem IP oraz wydzielony obszar na dysku.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{Architektura.png}
 	\captionof{figure}{Schemat architektury aplikacji}
@@ -758,7 +758,7 @@ Konwolucyjna  sieć neuronowa (CNN) to rodzaj sztucznej sieci neuronowej wykorzy
 \subsubsection{U-Net}
 Sieć U-Net\cite{siec_unet} jest zbudowana na podstawie architektury pełnych sieci konwolucyjnych(ang. Fully Convolutional Network) zmodyfikowaną w taki sposób, aby uzyskiwać lepsze rezultaty segmentacji na obrazach medycznych. Lepsze rezultaty pochodzą z kształtu architektury U, który skutkuje większą ilością cech w ścieżce wstępującej co przekłada się na lepszy przepływ informacji o kontekście i lokalizacji na obrazach o niskiej rozdzielczości.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=10cm]{unet-architecture.png}
 	\captionof{figure}{Architektura sieci U-Net}
@@ -775,7 +775,7 @@ Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony
 	\item [Dane] \hfill \\
 	Dostarczone dane składały się z plików DICOM zawierających dane pacjentów oraz z maski zawierających obszary gdzie znajduje się prostata. Segmentacja wykonana została na danych pochodzących z obrazowania rezonansem magnetycznym mpMRI. Do segmentacji użyta jest modalność T2WI ponieważ niedokładniej odwzorowuje struktury anatomiczne. Dane były przygotowane przez lekarzy, oraz podlegały wcześniejszemu procesowi anonimazacji, stąd w plikach nie ma żadnych danych wrażliwych na temat pacjentów. Osoby poddano badaniom zarówno pod maszynami o mocy 1.5T oraz 3T z użyciem cewki endorektalnej oraz cewki powierzchniowej. Maski zostały przygotowane  przez zespół lekarzy z uniwersytetów Boston University School of Medicine oraz Case Western University. Zdjęcia zostały przygotowane w formacie nrrd, gdzie zaznaczone są dwa regiony: część obwodową gruczołu krokowego (PZ) oraz centralny gruczoł(CG). 
 	
-	\begin{minipage}{\linewidth}
+	\begin{minipage}[h]{\linewidth}
 		\centering
 		\includegraphics[width=0.5\textwidth]{segmentation/prostate_seg.png}
 		\captionof{figure}{Zaznaczone regiony prostaty na zdjęciu z badania MR}
@@ -791,7 +791,7 @@ Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony
 	\item [Obrazy wejściowe] \hfill \\
 	Dane zostały przetransformowane z formatu DICOM w taki sposób, aby wyeksportować tag pixelData i przekonwertować do postaci tablicy zawierającą tylko intensywność pixeli.
 	
-	\begin{minipage}{\linewidth}
+	\begin{minipage}[h]{\linewidth}
 		\centering
 		\includegraphics[width=0.5\textwidth,angle=90,origin=c]{segmentation/example_MRI_image.png}
 		\captionof{figure}{Przykładowy obraz z badania MRI}
@@ -801,7 +801,7 @@ Najlepszym źródłem pozyskania danych dla naszych celów badawczych są strony
 	\item [Oznaczone maski] \hfill \\
 Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obszar CG został oznaczony wartościami 2, obszar PZ wartościami 1 natomiast pozostały obszar wartością 0.  Ponieważ nasz problemy był bardziej ogólny nie było potrzeby wprowadzenia rozróżnienia między strefami prostaty. Dlatego dane zostały poddane procesowi normalizacji maski do wartości z przedziału [0;1].
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth,angle=90,origin=c]{segmentation/example_mask.png}
 	\captionof{figure}{Przykładowy obraz z badania MRI}
@@ -815,17 +815,9 @@ Przygotowane maski podzielone zostały na dwa regiony gruczołu PZ oraz CG. Obsz
 W przypadku analizy obrazów medycznych problemem jest mały zbiór danych testowych dobrej jakości. Zostały do tego celu wykorzystane dane pochodzące z konkursu opisane powyżej. Eksplorację danych rozpoczęliśmy od przeglądania obrazów DICOM. Na wstępie zauważyliśmy, że granice pomiędzy tkankami miękkimi nie są dobrze podkreślone. Co więcej dane jakie otrzymano są niskiej rozdzielczości. Segmentacja gruczołu krokowego nie jest zadaniem trywialnym z powodu podobnych intensywności obrazu między gruczołem prostaty a sąsiadującą tkanką oraz z powodu niejednorodności intensywności obrazu w okolicy prostaty. Co więcej, gruczoł krokowy ma dużą różnorodność wyglądu i kształtów u różnych pacjentów.
 Z uwagi na bardzo ograniczony zbiór testowy zastosowaliśmy mechanizmy \textit{Data augmentation}, dzięki czemu w efektywny sposób został zwiększony zbiór testowy. Rozwiązanie jest  procesem stosowanym przy przetwarzaniu obrazów medycznych, polega na zwielokrotnieniu zbioru testowego poprzez zastosowanie na obrazach inicjalnych podstawowych operacji przetwarzających obraz takich jak np. rotowanie obrazu, stosowanie filtru Gaussowskiego lub progowania.
 \par
-Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-Net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawia poniższy diagram. 
+Przed wyborem rozwiązania przerowadziliśmy analizę aktualnie wykorzystywanych algorytmów do segmentacji obrazów. Jednym z założeń było znalezienie rozwiązania, które pomimo niewielkiego zbioru danych treningowych poradzi sobie z obrazami o niskiej rozdzielczości. Najbardziej dopasowanym rozwiązaniem okazała się uproszczona sieć U-Net, która powstała jako zgłoszenie do konkursu Automated Segmentation of Prostate Structures \cite{zgloszenie}. Wybraliśmy te rozwiązanie ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych. Rozwiązanie nauczyliśmy ponownie na danych opisanych w rozdziale powyżej. Architekturę sieci przedstawione jest na diagramie \ref{Architektura}. 
 
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=0.65\textwidth]{segmentation/our_architecture.png}
-	\captionof{figure}{Architektura sieci}
-\end{minipage}
-
-
-Architektura ta dzieli się na trzy części:
-
+\subsubsection{Architektura}
 \begin{description}
 	\item [Warstwa zstępująca] Zbiera informacje na temat kontekstu i znaczenia regionu. Interpretuje znaczenie obszaru poprzez zmniejszanie wielkości przestrzennej w każdym bloku. Wszytkie bloki w tej ścieżce składają się z następujących warstw:
 	\begin{description}
@@ -853,7 +845,12 @@ Architektura ta dzieli się na trzy części:
 
 \end{description} 
 
-\par 
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[height=0.8\textheight]{segmentation/our_architecture.png}
+	\captionof{figure}{Architektura sieci}
+	\label{Architektura}
+\end{minipage}
 
 Rozwiązanie oparte na prostej architekturze U-Net rozszerzyliśmy o odwrócenie wartości pixeli. Pomysł ten pojawił się po obserwacji jak lekarz diagnozuje obrazy z badania MRI oraz na co zwraca uwagę. Popularna praktyką jest inwersja pixeli w celu uzyskania lepszego kontrastu.
 
@@ -913,13 +910,13 @@ Analizując wyniki segmentacji zauważyliśmy, że sieć radzi sobie bardzo dobr
 	\label{fig:images}
 \end{figure}
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.65\textwidth]{segmentation/maski_segmentacji.png}
 	\captionof{figure}{Dostarczone maski z konkursu pacjenta ProstateDx-03-0003}
 \end{minipage}
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.65\textwidth]{segmentation/predykcje_segmentacji.png}
 	\captionof{figure}{Predykcje masek pacjenta ProstateDx-03-0003}
@@ -969,9 +966,9 @@ Ze wzoru wynika, że wartości atrybutów nie wpływają na poprawność wyniku.
 
 Aby zobrazować niedokładność aproksymacji elipsoidą postanowiliśmy porównać objętości za pomocą algorytmu aproksymującego oraz sumy objętości objętości kolejnych warstw voxeli na bazie masek określonych przez lekarzy. 
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
-	\includegraphics[width=\textwidth]{WstepObjetosc.png}
+	\includegraphics[width=0.7\textwidth]{WstepObjetosc.png}
 	\captionof{figure}{Średnia objętość uzyskana przy obliczaniu objętości przybliżając elipsoidą oraz przy sumowaniu voxeli}
 \end{minipage}
 
@@ -1000,80 +997,31 @@ Z uwagi na niedokładności masek zwracanych przez algorytm segmentacji proponuj
 \item Znalezienie otoczki wypukłej dla wszystkich elementów maski. Jest to modyfikacja poprzedniego algorytmu, w której szukano otoczki wypukłej dla wszystkich pixeli maski.
 \end{enumerate}
 
-Następnie pole powierzchni liczone jest jako pole poligonu uzyskanego w procesie poprawiania obrazu. Poniżej przedstawiono różnice wynikające z zastosowania każdego z algorytmów.
+Przykład pierwszy, w którym wysegmentowana maska jest jednym spójnym elementem. 
 
-Przykład pierwszy, w którym wysegmentowana maska jest jednym spójnym elementem. \\ \\
+\begin{minipage}[H]{\linewidth}
+	\centering
+	\includegraphics[width=0.8\textwidth]{Mask/segmentacja1.png}
+	\captionof{figure}{Przykład 1 wyników automatycznej segmentacji}
+	\label{przy1}
+\end{minipage}
+Algorytmy liczenia otoczek wypukłych dają ten sam rezultat w przypadku gdy maska jest spójna. Przykład obrazuje naddatek jaki pojawia się przy aproksymowaniu maski prostokątem. Prostata jest kształtem, który nie odpowiada, żadnemu kształtowi geometrycznemu, stąd przybliżanie go czworokątem jest nie efektywne.
+\\
+Przykład drugi, w którym wysegmentowana maska nie jest spójna. 
 
-
-\begin{figure}[htb]
-	\centering % <-- added
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/maska.png}
-		\caption{Maska przykład 1}
-		\label{fig:1}
-	\end{subfigure}\hfil % <-- added
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/square.png}
-		\caption{Maska przykład 1 Wpisana w prostokąt}
-		\label{fig:2}
-	\end{subfigure}\hfil % <-- added
-	
-	\medskip
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/hull.png}
-		\caption{Maska przykład 1 Otoczka wokół największego elementu}
-		\label{fig:3}
-	\end{subfigure}\hfil % <-- added
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/1/hull.png}
-		\caption{Maska przykład 1 Otoczka wypukła}
-		\label{fig:4}
-	\end{subfigure}\hfil % <-- added
-
-	\caption{Przykłady wyników automatycznej segmentacji}
-	\label{fig:images}
-\end{figure}
-
-
-Algorytmy liczenia otoczek wypukłych dają ten sam rezultat w przypadku gdy maska jest spójna. Przykład obrazuje naddatek jaki pojawia się przy aproksymowaniu maski prostokątem. Prostata jest kształtem, który nie odpowiada, żadnemu kształtowi geometrycznemu, stąd przybliżanie go czworokątem jest nieefektywne.
-
-Przykład drugi, w którym wysegmentowana maska nie jest spójna. \\ \\
-
-\begin{figure}[htb]
-	\centering % <-- added
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/mask.png}
-		\caption{Maska przykład 2}
-		\label{fig:1}
-	\end{subfigure}\hfil % <-- added
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/square.png}
-		\caption{Maska przykład 2 Wpisana w prostokąt}
-		\label{fig:2}
-	\end{subfigure}\hfil % <-- added
-	
-	\medskip
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/biggest.png}
-		\caption{Maska przykład 2 Otoczka wokół największego elementu}
-		\label{fig:3}
-	\end{subfigure}\hfil % <-- added
-	\begin{subfigure}{0.25\textwidth}
-		\includegraphics[width=\linewidth,angle=90,origin=c]{Mask/2/hull.png}
-		\caption{Maska przykład 2 Otoczka wypukła}
-		\label{fig:4}
-	\end{subfigure}\hfil % <-- added
-	
-	\caption{Przykłady wyników automatycznej segmentacji dla niespójnej maski}
-	\label{fig:images}
-\end{figure}
+\begin{minipage}[H]{\linewidth}
+	\centering
+	\includegraphics[width=0.8\textwidth]{Mask/segmentacja2.png}
+	\captionof{figure}{Przykład 2 wyników automatycznej segmentacji}
+	\label{przy2}
+\end{minipage}
 
 Widać dużą różnicę między algorytmami liczenia otoczek wypukłych. Ponieważ maska nie jest spójna, algorytm liczący otoczkę dla całości obrazu daje o wiele większy wynik niż liczący tylko dla pojedynczego fragmentu. Przykład obrazuje jak ważną rolę pełni algorytm segmentacji w procesie liczenia objętości.
 
 \subsection{Analiza wyników}
 Aby przeanalizować wyniki osiągnięte przez proponowany przez nas algorytm segmentacji oraz liczenia objętości postanowiliśmy porównać wyniki liczenia objętości algorytmem szpitalnym na danych konkursowych (segmentacja prostaty została wykonana przez lekarza) oraz proponowane przez nas metody liczenia objętości na maskach uzyskanych w przez aplikacyjny system segmentacji wraz z metodami poprawy obrazu. Zbiór testowy składał się z 13 pacjentów pochodzących z danych konkursowych. Po wykonaniu algorytmu uzyskaliśmy następujące wyniki.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Pacjenci.png}
 	\captionof{figure}{Objętości pacjentów na podstawie różnych algorytmów}
@@ -1112,9 +1060,9 @@ Największym problemem jaki zaobserwowaliśmy jest w przypadku gdy maska zostani
 Dla przypadków, w których maski są znalezione na tych samych warstwach (to znaczy początek i koniec na obrazach o tym samym indeksie w przypadku danych konkursowych oraz algorytmu segmentacji), jak na przykład \textit{Prostate3T-01-0007} uzyskujemy wyniki zbliżone do wartości źródłowej. Błąd ten wynika z niedokładności algorytmu segmentacji.
  
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
-	\includegraphics[width=\textwidth]{WynikiObjetosc.png}
+	\includegraphics[width=0.8\textwidth]{WynikiObjetosc.png}
 	\captionof{figure}{Porównanie metod liczenia}
 \end{minipage}
 
@@ -1157,7 +1105,7 @@ Moduł zaimplementowany w .NET Framework odpowiada za komunikację z warstwą pr
 Staraliśmy się w pracy zastosować wszystkie najlepsze praktyki wykorzystywane przy projektowaniu oprogramowania takie jak zasady \textit{SOLID} oraz wzorce projektowe jak \textit{Dependency Injection}. Za spełnienie tego ostatniego w aplikacji odpowiada kontener Autofac.
 
 \subsection{Diagram zależności}
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{Backend/ApplicationDependencies.png}
 	\captionof{figure}{Diagram zależności}
@@ -1182,9 +1130,9 @@ Ponieważ według standardu DICOM \cite{standardDICOM} zawiera ponad 4 tysiące 
 \par
 W bazie danych przechowujemy wybrane dane istotne z punktu widzenia działania aplikacji oraz potrzeb lekarza. Wybraliśmy strukturę gdzie dla jednego pacjenta informację na temat obrazów oraz danych są wspólne i nie zmieniają się dla kolejnych warstw obrazu. Dlatego jedyne informacje dotyczące obrazu są przechowywane dla każdego pliku osobno. Poniżej zamieszczono diagram encji jakie znajdują się w bazie danych.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[H]{\linewidth}
 	\centering
-	\includegraphics[width=\textwidth]{Backend/SchematBazy.png}
+	\includegraphics[width=0.7\textwidth]{Backend/SchematBazy.png}
 	\captionof{figure}{Schemat bazy danych}
 \end{minipage}
 
@@ -1204,17 +1152,17 @@ Pierwszy ekran jaki jest wyświetlany w naszej spełnia trzy podstawowe funkcjon
 Aby dodać nowego pacjenta, należy nacisnąć przycisk \textit{Add New Patient}.Pojawi się nowe okno w którym użytkownik powinien wybrać wszystkie pliki z danymi pacjenta, następnie nacisnąc \textit{Upload}. Po udanym procesie należy zamknąć okienko.
 \par
 Typowym scenariuszem jest dodawanie pacjenta wraz ze wszystkimi obrazami jakie mamy na jego temat. Pliki średnio ważą około 10 MB, w zależności od ilości wartstw obrazu oraz szybkości połączenia internetowego czasy dodawania mogą być wydłużone.
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/15.png}
 	\captionof{figure}{Dodawanie pacjenta}
 \end{minipage}
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/95.png}
 	\captionof{figure}{Wybór plików}
 \end{minipage}
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Main/114.png}
 	\captionof{figure}{Proces zakończony}
@@ -1225,7 +1173,7 @@ Typowym scenariuszem jest dodawanie pacjenta wraz ze wszystkimi obrazami jakie m
 
 Lista pacjentów wyświetla ich identyfikatory w systemie. Aby przejść do widoku wyświetlającego wszystkie informacje o pacjencie należy nacisnąć na wybranego pacjenta.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Patient/0.png}
 	\captionof{figure}{Przejście do widoku pacjenta}
@@ -1239,7 +1187,7 @@ Widok pacjenta przedstawia nam wszystkie informacje jakie posiadamy na temat dan
 \item Obraz z rezonansu magnetycznego oraz maskę znalezioną w procesie segmentacji wraz z możliwością edycji.
 \end{description}
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Patient/22.png}
 	\captionof{figure}{Widok pacjenta}
@@ -1247,7 +1195,7 @@ Widok pacjenta przedstawia nam wszystkie informacje jakie posiadamy na temat dan
 
 Aby obliczyć objętość na podstawie masek znajdujących się obecnie w bazie danych należy nacisnąć odpowiedni przycisk znajdujący się na górze strony. Udostępniamy trzy alternatywne metody opisane w poprzednim rozdziale. Po naciśnięciu przycisku objętość jest obliczana oraz automatycznie aktualizowana na stronie tak jak i w bazie danych.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Patient/343.png}
 	\captionof{figure}{Kalkulacja objęctości}
@@ -1255,7 +1203,7 @@ Aby obliczyć objętość na podstawie masek znajdujących się obecnie w bazie 
 
 Aby przełączać się pomiędzy poszczególnymi warstwami należy nacisnąć przycisk po prawej lub lewej stronie obrazu.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/15.png}
 	\captionof{figure}{Przechodzenie pomiędzy kolejnymi obrazami}
@@ -1265,12 +1213,12 @@ Aby przełączać się pomiędzy poszczególnymi warstwami należy nacisnąć pr
 
 Zapewniamy możliwość edycji masek obliczonych w procesie segmentacji. Udostępniamy opcje rysowani \textit{Pencil} oraz usuwania \textit{Rubber}. Po wybraniu narzędzia użytkownik może rysować po obrazie.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/117.png}
 	\captionof{figure}{Rysowanie maski}
 \end{minipage}
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/236.png}
 	\captionof{figure}{Usuwanie maski}
@@ -1278,7 +1226,7 @@ Zapewniamy możliwość edycji masek obliczonych w procesie segmentacji. Udostę
 
 Po zakończeniu edycji należy nacisnąć przycisk \textit{Update mask}.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/170.png}
 	\captionof{figure}{Aktualizacja mask}
@@ -1286,7 +1234,7 @@ Po zakończeniu edycji należy nacisnąć przycisk \textit{Update mask}.
 
 W przypadku gdy chcemy przywrócić pierwotną maskę znalezioną przez nasz algorytm segmentacji należy wybrać opcję \textit{Restore mask}
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/323.png}
 	\captionof{figure}{Resetowanie maski}
@@ -1294,7 +1242,7 @@ W przypadku gdy chcemy przywrócić pierwotną maskę znalezioną przez nasz alg
 
 Dodatkowo zapewniamy możliwość ukrycia maski w przypadku aby lekarz mógł przeglądać oryginał zdjęcia bez przysłaniania go maską.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/Editing/366.png}
 	\captionof{figure}{Ukryj maskę}
@@ -1304,7 +1252,7 @@ Dodatkowo zapewniamy możliwość ukrycia maski w przypadku aby lekarz mógł pr
 
 Przycisk Import patient from PACS pozwala na pobranie danych o pacjencie z systemu PACS.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}[h]{\linewidth}
 	\centering
 	\includegraphics[width=0.5\textwidth]{FrontScreen/PACS/pacs.png}
 	\captionof{figure}{Import z systemu PACS}
