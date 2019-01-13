@@ -13,10 +13,13 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[MeX]{polski}
-%\usepackage[T1]{fontenc}
+\usepackage[T1]{fontenc}
 \usepackage[english, polish]{babel}
+
+
 \usepackage{etoolbox,refcount}
 \usepackage{multicol}
+\usepackage{subfigure}
 
 \newcounter{countitems}
 \newcounter{nextitemizecount}
@@ -137,12 +140,59 @@ Na wykresie ~\ref{wrap-fig:1} przedstawiamy dokładne wyniki każdego z algorytm
       \begin{columns}[t,totalwidth=\threecolwid]	% split up that three-column-wide column
         \begin{column}{\onecolwid}
           \begin{block}{Opis badań}
-          
+			Zostało przeprowadzone badanie czy i w jakim stopniu objętości uzyskane poprzez badanie USG oraz MR są skorelowane. Analiza została wykonana na próbce szpitalnej pochodzącej ze szpitala MSWiA zawierającą dane 222 mężczyzn, w wieku między 31 a 87 lat.  
+			W danych szczególną uwagę należało zwrócić na: 			
+            \begin{AutoMultiColItemize}
+                \item wiek pacjenta 
+                \item wywiad środowiskowy 
+                \item wynik w skali Gleasona
+                \item wynik biopsji
+                \item PSA
+                \item PIRADS 
+            \end{AutoMultiColItemize}
+			Z przeprowadzonych obliczeń wynika, że te dwie objętości są ze sobą w silnej korelacji. Współczynnik korelacji dla tych dwóch zmiennych wynosi 0.76 (p<0,001).
+          	\begin{figure}
+				\caption{Korelacja USG i MR}
+				\includegraphics[width=20cm]{Scatter.png}
+			\end{figure}
           \end{block}
         \end{column}
         \begin{column}{\onecolwid}
   			\begin{block}{Segmentacja}
-
+			Do segmentacji prostaty został użyty algorytm oparty o uproszczoną sieć U-Net. Rozwiązanie zostało wybrane, ponieważ sieć jest symetryczna, dzięki czemu zyskujemy większą dokładność znajdowania regionów obrazu oraz pomija kilka warstw co skutkuje lepszymi rezultatami przy małej ilości danych.
+			Do wytrenowania sieci zostały użyte dane pochodzące z konkursu \textit{Automated Segmentation of Prostate Structures Challange}. Zawierały 60 pacjentów, łącznie 1073 obrazów.
+			Po nauczeniu sieci osiągnęliśmy współczynnik podobieństwa równy około 0.70 na danych testowych.
+                \begin{figure}[htb]
+                    \centering % <-- added
+                    \begin{subfigure}{}
+                        \includegraphics[width=7cm,angle=270,origin=c]{../segmentation/segmentation_train_1.png}
+                        \label{fig:1}
+                    \end{subfigure}\hfil % <-- added
+                    \begin{subfigure}{}
+                        \includegraphics[width=7cm,angle=270,origin=c]{../segmentation/segmentaion_mask_1.png}
+                        \label{fig:2}
+                    \end{subfigure}\hfil % <-- added
+                    \begin{subfigure}{}
+                        \includegraphics[width=7cm,angle=270,origin=c]{../segmentation/pred_mask_1.png}
+                        \label{fig:3}
+                    \end{subfigure}
+                    
+                    \medskip
+                    \begin{subfigure}{}
+                        \includegraphics[width=7cm,angle=270,origin=c]{../segmentation/segmentation_train_2.png}
+                        \label{fig:4}
+                    \end{subfigure}\hfil % <-- added
+                    \begin{subfigure}{}
+                        \includegraphics[width=7cm,angle=270,origin=c]{../segmentation/pred_mask_2.png}
+                        \label{fig:5}
+                    \end{subfigure}\hfil % <-- added
+                    \begin{subfigure}{}
+                        \includegraphics[width=7cm,angle=270,origin=c]{../segmentation/segmentation_mask_2.png}
+                        \label{fig:6}
+                    \end{subfigure}
+                    \caption{Przykłady wyników}
+                    \label{fig:images}
+                \end{figure}
   			\end{block}       
         \end{column}
         \begin{column}{\onecolwid}
